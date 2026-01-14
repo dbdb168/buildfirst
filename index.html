@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuildFirst - AI Fluency Through Building</title>
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Claude-inspired colors */
+      --terracotta: #da7756;
+      --terracotta-dark: #C15F3C;
+      --black: #000000;
+      --off-white: #FAF9F7;
+      --warm-white: #FFFBF5;
+      --light-grey: #E8E5E0;
+      --mid-grey: #6B6B6B;
+      --dark-grey: #333333;
+      --white: #ffffff;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Georgia, Cambria, 'Times New Roman', serif;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--dark-grey);
+      background: var(--white);
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-weight: 600;
+      color: var(--black);
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.1;
+    }
+
+    h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      margin-bottom: 24px;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    a {
+      color: var(--terracotta);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--terracotta-dark);
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-light {
+      background: var(--off-white);
+    }
+
+    .section-warm {
+      background: var(--warm-white);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--light-grey);
+      z-index: 1000;
+      padding: 16px 0;
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--terracotta);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--dark-grey);
+      font-size: 16px;
+    }
+
+    .nav-links a:hover {
+      color: var(--terracotta);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--terracotta);
+      color: var(--white);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--terracotta-dark);
+      color: var(--white);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--terracotta);
+      border: 2px solid var(--terracotta);
+    }
+
+    .btn-secondary:hover {
+      background: var(--terracotta);
+      color: var(--white);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 160px 0 100px;
+      background: var(--warm-white);
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      margin-bottom: 24px;
+    }
+
+    .hero .subtitle {
+      font-size: 22px;
+      color: var(--mid-grey);
+      margin-bottom: 40px;
+      line-height: 1.5;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Problem Section */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .problem-list {
+      list-style: none;
+    }
+
+    .problem-list li {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--light-grey);
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .problem-list li::before {
+      content: "✗";
+      position: absolute;
+      left: 0;
+      color: var(--terracotta);
+      font-weight: bold;
+    }
+
+    .insight-box {
+      background: var(--white);
+      border-left: 4px solid var(--terracotta);
+      padding: 32px;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .insight-box p {
+      font-size: 20px;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .insight-box .source {
+      font-size: 14px;
+      color: var(--mid-grey);
+    }
+
+    /* Method Section */
+    .method-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: var(--terracotta);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 20px;
+      margin: 0 auto 16px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .step h3 {
+      font-size: 18px;
+    }
+
+    .step p {
+      font-size: 16px;
+      color: var(--mid-grey);
+    }
+
+    /* Offerings Section */
+    .offerings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .offering-card {
+      background: var(--white);
+      border: 1px solid var(--light-grey);
+      border-radius: 16px;
+      padding: 40px;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .offering-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+
+    .offering-label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--terracotta);
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .offering-card h3 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .offering-card .description {
+      color: var(--mid-grey);
+      margin-bottom: 24px;
+    }
+
+    .offering-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .offering-features li {
+      padding: 8px 0;
+      padding-left: 28px;
+      position: relative;
+    }
+
+    .offering-features li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--terracotta);
+    }
+
+    .offering-price {
+      font-size: 14px;
+      color: var(--mid-grey);
+      margin-bottom: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--light-grey);
+    }
+
+    .offering-price strong {
+      font-size: 24px;
+      color: var(--black);
+    }
+
+    /* Proof Section */
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 48px;
+    }
+
+    .proof-item {
+      padding: 32px;
+      background: var(--white);
+      border-radius: 12px;
+    }
+
+    .proof-item h4 {
+      color: var(--terracotta);
+      font-size: 16px;
+      margin-bottom: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .proof-item blockquote {
+      font-size: 18px;
+      font-style: italic;
+      margin-bottom: 16px;
+      padding-left: 20px;
+      border-left: 3px solid var(--light-grey);
+    }
+
+    .proof-item .attribution {
+      font-size: 14px;
+      color: var(--mid-grey);
+    }
+
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .credentials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .credential {
+      background: var(--white);
+      border: 1px solid var(--light-grey);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .philosophy-box {
+      background: var(--terracotta);
+      color: var(--white);
+      padding: 32px;
+      border-radius: 12px;
+    }
+
+    .philosophy-box h3 {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .philosophy-box p {
+      opacity: 0.9;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      text-align: center;
+      padding: 100px 0;
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .cta-section h2 {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      color: rgba(255,255,255,0.7);
+      font-size: 20px;
+      margin-bottom: 40px;
+    }
+
+    .cta-section .btn-primary {
+      background: var(--terracotta);
+      padding: 20px 48px;
+      font-size: 18px;
+    }
+
+    .cta-section .btn-primary:hover {
+      background: var(--terracotta-dark);
+    }
+
+    .cta-contact {
+      margin-top: 24px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .cta-contact a {
+      color: var(--terracotta);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--off-white);
+      padding: 48px 0;
+      border-top: 1px solid var(--light-grey);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--mid-grey);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .problem-grid,
+      .offerings-grid,
+      .proof-grid,
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      .method-steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .method-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">Build<span>First</span></a>
+      <ul class="nav-links">
+        <li><a href="#method">Method</a></li>
+        <li><a href="#offerings">Workshops</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact" class="btn btn-primary" style="padding: 12px 24px;">Let's Talk</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>You can't delegate rebuilding your intuition.</h1>
+        <p class="subtitle">AI fluency through hands-on building — not lectures, not demos, not theory. Leaders and teams leave with working tools they built themselves.</p>
+        <div class="hero-buttons">
+          <a href="#offerings" class="btn btn-primary">See Workshops</a>
+          <a href="#method" class="btn btn-secondary">How It Works</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section class="section">
+    <div class="container">
+      <div class="problem-grid">
+        <div>
+          <h2>Most AI training doesn't work.</h2>
+          <p>You've probably tried:</p>
+          <ul class="problem-list">
+            <li>Watching demos that looked impressive but didn't stick</li>
+            <li>Taking courses you never finished</li>
+            <li>Reading about AI without ever building anything</li>
+            <li>Attending conferences that felt exciting but changed nothing</li>
+          </ul>
+          <p style="margin-top: 24px;">Here's the problem: <strong>Your intuition about what's possible, what's hard, and what's BS is now miscalibrated.</strong> The pattern recognition you've built over a decade of leading — those instincts were formed in a world without AI. They're not wrong. They're just incomplete.</p>
+          <p><strong>And there's no shortcut to recalibrating them except to use the tools yourself.</strong></p>
+        </div>
+        <div class="insight-box">
+          <p>"The #1 predictor of whether a company succeeds with AI is whether the CEO is using ChatGPT, Claude, or similar tools — many times a day."</p>
+          <span class="source">— Dan Shipper, via Lenny's Podcast</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method Section -->
+  <section id="method" class="section section-light">
+    <div class="container">
+      <h2 style="text-align: center;">Build first. Theory later.</h2>
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 16px; color: var(--mid-grey);">
+        Our method is inspired by <strong>Safe Danger</strong>, the book by Ben Swire (ex-IDEO, founder of Make Believe Works).
+      </p>
+      <p style="text-align: center; max-width: 700px; margin: 0 auto; color: var(--mid-grey);">
+        His insight: safety alone leads to stagnation. Danger alone overwhelms. The sweet spot — where people feel safe enough to leave safety behind, but challenged enough to grow — is where real learning happens. <strong>Play creates the conditions for trust and transformation.</strong>
+      </p>
+
+      <div class="method-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Build something real</h3>
+          <p>In the first 30 minutes — not a toy demo</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Break it</h3>
+          <p>Learn that errors are part of the process</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Iterate</h3>
+          <p>Use the build-test-report loop</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Leave with tools</h3>
+          <p>Working software you'll use tomorrow</p>
+        </div>
+      </div>
+
+      <!-- Safe Danger Principles -->
+      <div class="principles-section" style="margin-top: 64px; max-width: 1000px; margin-left: auto; margin-right: auto;">
+        <h3 style="text-align: center; margin-bottom: 32px;">Why Play Works</h3>
+        <div class="principles-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+
+          <div class="principle-card" style="background: var(--white); padding: 24px; border-radius: 12px; border-left: 4px solid var(--terracotta);">
+            <h4 style="font-size: 16px; margin-bottom: 8px; color: var(--terracotta);">Celebrate Joyful Failing</h4>
+            <p style="font-size: 15px; margin: 0; color: var(--mid-grey);">Normalize failure as part of growth. When something breaks, we troubleshoot together. The mess is the learning.</p>
+          </div>
+
+          <div class="principle-card" style="background: var(--white); padding: 24px; border-radius: 12px; border-left: 4px solid var(--terracotta);">
+            <h4 style="font-size: 16px; margin-bottom: 8px; color: var(--terracotta);">Connect Through Low Stakes</h4>
+            <p style="font-size: 15px; margin: 0; color: var(--mid-grey);">Start with personally useful tools, not work projects. A recipe organizer. A family scheduler. Where failure has no consequences.</p>
+          </div>
+
+          <div class="principle-card" style="background: var(--white); padding: 24px; border-radius: 12px; border-left: 4px solid var(--terracotta);">
+            <h4 style="font-size: 16px; margin-bottom: 8px; color: var(--terracotta);">Jump the Tracks of Thought</h4>
+            <p style="font-size: 15px; margin: 0; color: var(--mid-grey);">Break out of conventional thinking. AI isn't just for efficiency — it's a creativity catalyst that opens new possibilities.</p>
+          </div>
+
+        </div>
+        <p style="text-align: center; margin-top: 24px; font-size: 14px; color: var(--mid-grey);">
+          Based on <em>Safe Danger</em> by Ben Swire
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Offerings Section -->
+  <section id="offerings" class="section">
+    <div class="container">
+      <h2 style="text-align: center;">For leaders. For teams.</h2>
+
+      <div class="offerings-grid">
+        <!-- Executive Card -->
+        <div class="offering-card">
+          <div class="offering-label">For Leaders</div>
+          <h3>Executive AI Immersion</h3>
+          <p class="description">Rebuild your decision-making intuition through hands-on building. You've built instincts over 10-15 years — those instincts need recalibrating for an AI world.</p>
+
+          <ul class="offering-features">
+            <li>Build working AI tools yourself</li>
+            <li>Calibrate what's possible vs. what's BS</li>
+            <li>Evaluate AI proposals from experience</li>
+            <li>Establish a daily practice you can sustain</li>
+          </ul>
+
+          <div class="offering-price">
+            <strong>From $1,500</strong> per person<br>
+            Half-day workshop, 4-week cohort, or 1:1 coaching
+          </div>
+
+          <a href="#contact" class="btn btn-primary">Learn More</a>
+        </div>
+
+        <!-- Team Card -->
+        <div class="offering-card">
+          <div class="offering-label">For Teams</div>
+          <h3>Team AI Activation</h3>
+          <p class="description">75% of companies say the hardest part of AI is getting people to change behavior. Teams that learn together, adopt together.</p>
+
+          <ul class="offering-features">
+            <li>Leave with 2-6 working tools</li>
+            <li>Build shared vocabulary for AI collaboration</li>
+            <li>Normalize failure and experimentation</li>
+            <li>Same-day value, not someday knowledge</li>
+          </ul>
+
+          <div class="offering-price">
+            <strong>From $4,000</strong> for teams up to 10<br>
+            Half-day, full-day, or 4-week program
+          </div>
+
+          <a href="#contact" class="btn btn-primary">Learn More</a>
+        </div>
+      </div>
+
+      <p style="text-align: center; margin-top: 32px; color: var(--mid-grey);">
+        <strong>20% cascade discount</strong> when you book team training within 60 days of executive workshop.
+      </p>
+    </div>
+  </section>
+
+  <!-- Proof Section -->
+  <section class="section section-warm">
+    <div class="container">
+      <h2 style="text-align: center;">This isn't theory. It's pattern recognition.</h2>
+
+      <div class="proof-grid">
+        <div class="proof-item">
+          <h4>The Research</h4>
+          <blockquote>"Leaders have built intuitions over 10 or 15 years and they are highly regarded for those intuitions. But now with AI in the picture, those intuitions will have to be relearned."</blockquote>
+          <p class="attribution">— Aishwarya Raanti, ex-Alexa, ex-Microsoft</p>
+        </div>
+
+        <div class="proof-item">
+          <h4>The Pattern</h4>
+          <blockquote>"We didn't just save money. We are learning and validating what we actually need."</blockquote>
+          <p class="attribution">— Andy Frank, CEO of UDig (Richmond), on building an AI agent himself</p>
+        </div>
+
+        <div class="proof-item">
+          <h4>The Evidence</h4>
+          <p style="font-size: 18px;"><strong>83%</strong> of executives say psychological safety measurably improves AI initiative success.</p>
+          <p class="attribution">No safety, no experiments. No experiments, no learning.</p>
+        </div>
+
+        <div class="proof-item">
+          <h4>The Commitment</h4>
+          <p style="font-size: 18px;">The Rackspace CEO blocks <strong>4-6am daily</strong> for AI learning. Plus weekend "vibecoding" sessions.</p>
+          <p class="attribution">Result: Can evaluate AI proposals from experience, not briefings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="about-content">
+        <div>
+          <h2>Built by a practitioner, not a professor.</h2>
+          <p>I've spent 20+ years building products and leading transformation at places like <strong>IDEO</strong>, <strong>Capital One</strong>, <strong>DBS</strong>, and <strong>3Pillar Global</strong>.</p>
+          <p>Now I build AI tools daily and document the process — including what breaks — at <a href="#">The AI Cookbook</a> on Substack. You can see the mess, not just the wins.</p>
+
+          <div class="credentials">
+            <span class="credential">IDEO</span>
+            <span class="credential">Capital One</span>
+            <span class="credential">DBS Bank</span>
+            <span class="credential">3Pillar Global</span>
+            <span class="credential">Design Thinking</span>
+            <span class="credential">Google Sprints</span>
+          </div>
+        </div>
+
+        <div class="philosophy-box">
+          <h3>The philosophy</h3>
+          <p>The technology is new. How to build isn't.</p>
+          <p>Design thinking, experimentation, starting with real problems — these fundamentals still apply. AI just makes them faster.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="contact" class="cta-section">
+    <div class="container">
+      <h2>Ready to build?</h2>
+      <p>No pitch deck. No 47-slide proposal. Just a conversation about whether this is right for you.</p>
+      <a href="mailto:dave@buildfirst.io" class="btn btn-primary">Let's Talk</a>
+      <p class="cta-contact">Or email directly: <a href="mailto:dave@buildfirst.io">dave@buildfirst.io</a></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <span class="logo">Build<span>First</span></span>
+        <ul class="footer-links">
+          <li><a href="#">The AI Cookbook</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="mailto:dave@buildfirst.io">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
