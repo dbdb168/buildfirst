@@ -207,8 +207,6 @@
 
     .time-out-content {
       max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
     }
 
     .time-out h2 {
@@ -333,49 +331,49 @@
       margin-bottom: 0;
     }
 
-    /* Why Play Section */
-    .why-play {
-      max-width: 900px;
-      margin: 0 auto;
-      padding-top: 16px;
+    /* Why Play Section - now standalone */
+    .why-play-section {
+      padding: 80px 0;
+      background: var(--warm-white);
     }
 
-    .why-play h3 {
+    .why-play-section h2 {
       text-align: center;
-      margin-bottom: 28px;
-      font-size: 22px;
+      margin-bottom: 40px;
     }
 
     .principles-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
     .principle-card {
       background: var(--white);
-      padding: 24px;
+      padding: 28px;
       border-radius: 12px;
       border-left: 4px solid var(--terracotta);
     }
 
     .principle-card h4 {
-      font-size: 15px;
-      margin-bottom: 8px;
-      color: var(--terracotta);
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: var(--black);
     }
 
     .principle-card p {
-      font-size: 15px;
+      font-size: 16px;
       margin: 0;
       color: var(--mid-grey);
+      line-height: 1.5;
     }
 
     .attribution {
       text-align: center;
-      margin-top: 24px;
-      font-size: 14px;
+      margin-top: 28px;
+      font-size: 15px;
       color: var(--mid-grey);
     }
 
@@ -610,17 +608,34 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
     }
 
     .footer-links {
       display: flex;
       gap: 28px;
       list-style: none;
+      flex-wrap: wrap;
     }
 
     .footer-links a {
       color: var(--mid-grey);
       font-size: 14px;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 12px;
+      }
     }
 
     /* Responsive */
@@ -674,7 +689,7 @@
         <li><a href="#method">Method</a></li>
         <li><a href="#offerings">Workshops</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#contact" class="btn btn-primary" style="padding: 12px 24px;">Let's Talk</a></li>
+        <li><a href="https://calendar.app.google/LoBnGNiaqtJAXTqE9" target="_blank" class="btn btn-primary" style="padding: 12px 24px;">Let's Talk</a></li>
       </ul>
     </div>
   </nav>
@@ -698,7 +713,7 @@
     <div class="container">
       <div class="time-out-content">
         <h2>You don't have time to "learn AI." That's exactly the point.</h2>
-        <p>Busy leaders can't spend weeks on courses that may or may not stick. But you <em>can</em> carve out four hours to build something real. <strong>That's enough to recalibrate your intuition</strong>—to see for yourself what the technology does and doesn't do. Everything else follows from there.</p>
+        <p>Busy leaders can't spend weeks on courses that may or may not stick. But you <em>can</em> carve out a few hours to build something real. <strong>That's enough to recalibrate your intuition</strong>—to see for yourself what the technology does and doesn't do. Everything else follows from there.</p>
       </div>
     </div>
   </section>
@@ -720,7 +735,7 @@
 
         <div class="insight-callout">
           <p>"The #1 predictor of whether a company succeeds with AI is whether the CEO is using ChatGPT, Claude, or similar tools—many times a day."</p>
-          <span class="source">— Dan Shipper, via Lenny's Podcast</span>
+          <span class="source">— Dan Shipper, CEO Every.to</span>
         </div>
       </div>
     </div>
@@ -756,24 +771,26 @@
           <p>Working software for tomorrow</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="why-play">
-        <h3>Why play is the method</h3>
-        <div class="principles-grid">
-          <div class="principle-card">
-            <h4>Joyful Failing</h4>
-            <p>When something breaks, we troubleshoot together. The mess is the learning. No one's keeping score.</p>
-          </div>
-          <div class="principle-card">
-            <h4>Low Stakes First</h4>
-            <p>Start with personally useful tools—a recipe organizer, a family scheduler—where failure has no consequences.</p>
-          </div>
-          <div class="principle-card">
-            <h4>Safe Danger</h4>
-            <p>Safety alone leads to stagnation. Danger alone overwhelms. The sweet spot is where real learning happens.</p>
-          </div>
+  <!-- Why Play Section -->
+  <section class="why-play-section">
+    <div class="container">
+      <h2>Why play is the method.</h2>
+      <div class="principles-grid">
+        <div class="principle-card">
+          <h4>Joyful Failing</h4>
+          <p>When something breaks, we troubleshoot together. The mess is the learning. No one's keeping score.</p>
         </div>
-        <p class="attribution">Method inspired by <em>Safe Danger</em> by Ben Swire</p>
+        <div class="principle-card">
+          <h4>Low Stakes First</h4>
+          <p>Start with personally useful tools—a recipe organizer, a family scheduler—where failure has no consequences.</p>
+        </div>
+        <div class="principle-card">
+          <h4>Safe Danger</h4>
+          <p>Safety alone leads to stagnation. Danger alone overwhelms. The sweet spot is where real learning happens.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -788,7 +805,7 @@
         <div class="offering-card">
           <div class="offering-label">For Leaders</div>
           <h3>Executive AI Immersion</h3>
-          <p class="description">Four hours to rebuild the intuition you've built over 10-15 years. You'll leave with working tools and calibrated judgment about AI.</p>
+          <p class="description">Six hours to start recalibrating the intuition you've built over your career. You'll leave with working tools and calibrated judgment about AI.</p>
 
           <ul class="offering-features">
             <li>Build working AI tools yourself</li>
@@ -802,7 +819,7 @@
             Half-day workshop, 4-week cohort, or 1:1 coaching
           </div>
 
-          <a href="#contact" class="btn btn-primary">Learn More</a>
+          <a href="https://calendar.app.google/LoBnGNiaqtJAXTqE9" target="_blank" class="btn btn-primary">Learn More</a>
         </div>
 
         <!-- Team Card -->
@@ -823,7 +840,7 @@
             Half-day, full-day, or 4-week program
           </div>
 
-          <a href="#contact" class="btn btn-primary">Learn More</a>
+          <a href="https://calendar.app.google/LoBnGNiaqtJAXTqE9" target="_blank" class="btn btn-primary">Learn More</a>
         </div>
       </div>
 
@@ -899,8 +916,8 @@
     <div class="container">
       <h2>Ready to build?</h2>
       <p>No pitch deck. No 47-slide proposal. Just a conversation about whether this is right for you.</p>
-      <a href="mailto:dave@db8.io" class="btn btn-primary">Let's Talk</a>
-      <p class="cta-contact">Or email directly: <a href="mailto:dave@db8.io">dave@db8.io</a></p>
+      <a href="https://calendar.app.google/LoBnGNiaqtJAXTqE9" target="_blank" class="btn btn-primary">Let's Talk</a>
+      <p class="cta-contact">Or email directly: <a href="mailto:david@thisisluminary.co">david@thisisluminary.co</a></p>
     </div>
   </section>
 
@@ -910,9 +927,9 @@
       <div class="footer-content">
         <span class="logo">Build<span>First</span></span>
         <ul class="footer-links">
-          <li><a href="#">The AI Cookbook</a></li>
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="mailto:dave@db8.io">Contact</a></li>
+          <li><a href="https://theaicookbook.substack.com/" target="_blank">The AI Cookbook</a></li>
+          <li><a href="https://www.linkedin.com/in/dbeath/" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:david@thisisluminary.co">Contact</a></li>
         </ul>
       </div>
     </div>
