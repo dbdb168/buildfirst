@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildFirst | Tell Me What You Want to Build</title>
+<meta name="description" content="Tell me what you want to build. You invest 5 minutes sharing what you need, and I'll show up to our first conversation with a prototype.">
+
+<!-- Open Graph / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="BuildFirst | Tell Me What You Want to Build">
+<meta property="og:description" content="You invest 5 minutes sharing what you need, and I'll show up to our first conversation with a prototype. Not a proposal. Not a slide.">
+<meta property="og:url" content="https://buildfirst.io/build-intake.html">
+<meta property="og:site_name" content="BuildFirst">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BuildFirst | Tell Me What You Want to Build">
+<meta name="twitter:description" content="You invest 5 minutes sharing what you need, and I'll show up to our first conversation with a prototype. Not a proposal. Not a slide.">
+
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MKWKYTLT70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MKWKYTLT70');
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --amber:#D4912E;--amber-light:#E8A84C;--amber-soft:rgba(212,145,46,0.06);
+  --blue:#3A7BB5;--blue-soft:rgba(58,123,181,0.06);
+  --gradient:linear-gradient(135deg,#D4912E 0%,#C4A060 35%,#7EA8BF 65%,#3A7BB5 100%);
+  --gradient-h:linear-gradient(to right,#D4912E 0%,#C4A060 35%,#7EA8BF 65%,#3A7BB5 100%);
+  --bg:#FAFAF7;--bg-warm:#F5F3EE;--bg-card:#FFFFFF;--bg-dark:#1C1C28;
+  --text:#1C1C28;--text-2:#3A3A4A;--text-3:#6A6A7A;
+  --border:rgba(0,0,0,0.08);--border-s:rgba(0,0,0,0.12);--white:#FFFFFF;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* LAYOUT */
+.page{max-width:640px;margin:0 auto;padding:60px 24px 80px;}
+.gradient-bar{height:3px;background:var(--gradient-h);}
+.logo{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:var(--text);margin-bottom:48px;display:inline-block;}
+.logo span{color:var(--amber);}
+.logo,.logo:hover{text-decoration:none;}
+
+/* HEADER */
+.page-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(1.8rem,4vw,2.4rem);font-weight:400;color:var(--text);margin-bottom:12px;line-height:1.2;}
+.page-intro{font-size:1.05rem;color:var(--text-2);line-height:1.75;margin-bottom:40px;}
+.page-intro strong{color:var(--text);}
+
+/* STEP NAVIGATION */
+.steps{display:flex;gap:4px;margin-bottom:40px;}
+.step-dot{width:100%;height:4px;border-radius:2px;background:var(--border);transition:all 0.4s ease;}
+.step-dot.active{background:var(--amber);}
+.step-dot.done{background:var(--blue);}
+
+/* FORM STEPS */
+.form-step{display:none;animation:fadeIn 0.4s ease;}
+.form-step.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+.step-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--amber);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;}
+.step-question{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;font-weight:400;color:var(--text);margin-bottom:6px;line-height:1.3;}
+.step-hint{font-size:0.92rem;color:var(--text-3);margin-bottom:24px;line-height:1.6;}
+
+/* FORM ELEMENTS */
+input[type="text"],input[type="email"],textarea,select{
+  width:100%;padding:14px 16px;border:1px solid var(--border-s);border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--text);
+  background:var(--bg-card);transition:all 0.2s;line-height:1.6;
+}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(212,145,46,0.1);}
+textarea{min-height:120px;resize:vertical;}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236A6A7A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer;}
+
+.field-group{margin-bottom:20px;}
+.field-label{font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:6px;display:block;}
+
+/* OPTION CARDS */
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+.option-card{background:var(--bg-card);border:1px solid var(--border-s);border-radius:10px;padding:16px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.option-card:hover{border-color:var(--amber);transform:translateY(-1px);}
+.option-card.selected{border-color:var(--amber);background:var(--amber-soft);box-shadow:0 0 0 2px rgba(212,145,46,0.15);}
+.option-card h4{font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:4px;}
+.option-card p{font-size:0.82rem;color:var(--text-3);line-height:1.4;}
+@media(max-width:480px){.option-grid{grid-template-columns:1fr;}}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:12px;margin-top:32px;}
+.btn-next{display:inline-flex;align-items:center;gap:8px;background:var(--gradient);color:var(--white);padding:14px 28px;border-radius:6px;font-size:1rem;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;}
+.btn-next:hover{opacity:0.9;transform:translateY(-1px);}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+.btn-back{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--text-3);padding:14px 20px;border-radius:6px;font-size:0.95rem;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;}
+.btn-back:hover{color:var(--text);}
+
+/* REVIEW */
+.review-card{background:var(--bg-warm);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;}
+.review-label{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--amber);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.review-value{font-size:1rem;color:var(--text);line-height:1.6;}
+.review-value.empty{color:var(--text-3);font-style:italic;}
+
+/* SUCCESS */
+.success-screen{text-align:center;padding:60px 0;}
+.success-icon{width:64px;height:64px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:1.8rem;color:white;}
+.success-screen h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.8rem;font-weight:400;margin-bottom:12px;}
+.success-screen p{font-size:1.02rem;color:var(--text-2);max-width:440px;margin:0 auto 32px;line-height:1.7;}
+.success-screen a{display:inline-block;background:var(--gradient);color:var(--white);padding:14px 28px;border-radius:6px;font-size:1rem;font-weight:600;text-decoration:none;transition:all 0.2s;}
+.success-screen a:hover{opacity:0.9;}
+
+/* VALIDATION ERRORS */
+input.error,textarea.error,select.error{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,0.1);}
+.field-error{font-size:0.82rem;color:#c0392b;margin-top:4px;}
+.req{color:#c0392b;margin-left:2px;}
+</style>
+</head>
+<body>
+
+<div class="gradient-bar"></div>
+
+<div class="page">
+  <a href="/" class="logo">Build<span>First</span></a>
+
+  <h1 class="page-title">Tell me what you want to build.</h1>
+  <p class="page-intro">This takes about 5 minutes. <strong>Here's the deal: you invest a few minutes sharing what you need, and I'll invest the time to show up to our first conversation with a prototype.</strong> Not a proposal. Not a slide. Something you can actually react to.</p>
+
+  <!-- STEP INDICATORS -->
+  <div class="steps">
+    <div class="step-dot active" id="dot-0"></div>
+    <div class="step-dot" id="dot-1"></div>
+    <div class="step-dot" id="dot-2"></div>
+    <div class="step-dot" id="dot-3"></div>
+    <div class="step-dot" id="dot-4"></div>
+    <div class="step-dot" id="dot-5"></div>
+    <div class="step-dot" id="dot-6"></div>
+    <div class="step-dot" id="dot-7"></div>
+  </div>
+
+  <!-- STEP 0: WHO ARE YOU -->
+  <div class="form-step active" id="step-0">
+    <div class="step-label">Step 1 of 8</div>
+    <div class="step-question">First, a bit about you.</div>
+    <div class="step-hint">So I know who I'm talking to.</div>
+
+    <div class="field-group">
+      <label class="field-label" for="f-name">Your name <span class="req">*</span></label>
+      <input type="text" id="f-name" placeholder="e.g. Sarah Chen">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-email">Email <span class="req">*</span></label>
+      <input type="email" id="f-email" placeholder="sarah@company.com">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-role">Your role <span class="req">*</span></label>
+      <input type="text" id="f-role" placeholder="e.g. VP Operations, Founder, CTO">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-next" onclick="goTo(1)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 1: INDUSTRY & CONTEXT -->
+  <div class="form-step" id="step-1">
+    <div class="step-label">Step 2 of 8</div>
+    <div class="step-question">What world do you operate in?</div>
+    <div class="step-hint">Industry, company size, the kind of work your team does day to day. This helps me understand the landscape before we talk.</div>
+
+    <div class="field-group">
+      <label class="field-label" for="f-industry">Industry <span class="req">*</span></label>
+      <select id="f-industry">
+        <option value="">Select your industry</option>
+        <option>Healthcare</option>
+        <option>Financial Services</option>
+        <option>Insurance</option>
+        <option>Legal</option>
+        <option>Technology / SaaS</option>
+        <option>Professional Services / Consulting</option>
+        <option>Education</option>
+        <option>Media / Publishing</option>
+        <option>Manufacturing</option>
+        <option>Real Estate</option>
+        <option>Government / Public Sector</option>
+        <option>Non-Profit</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-context">Tell me about your business in a sentence or two. <span class="req">*</span></label>
+      <textarea id="f-context" placeholder="e.g. We're a 200-person insurance broker. My team handles commercial underwriting and we process about 500 submissions a month."></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(0)">← Back</button>
+      <button class="btn-next" onclick="goTo(2)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: WHAT DO YOU WANT TO BUILD -->
+  <div class="form-step" id="step-2">
+    <div class="step-label">Step 3 of 8</div>
+    <div class="step-question">What do you want to build? <span class="req">*</span></div>
+    <div class="step-hint">Don't worry about technical details. Describe it like you'd describe it to a colleague. What would this thing do?</div>
+
+    <div class="field-group">
+      <textarea id="f-build" rows="5" placeholder="e.g. I want a tool that takes our client intake forms, extracts the key data, and pre-fills our underwriting templates. Right now it's all manual and takes about 2 hours per submission."></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(1)">← Back</button>
+      <button class="btn-next" onclick="goTo(3)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: WHO HAS THIS PROBLEM -->
+  <div class="form-step" id="step-3">
+    <div class="step-label">Step 4 of 8</div>
+    <div class="step-question">Who has this problem?</div>
+    <div class="step-hint">Is this something you deal with personally? Your team? Your customers? Understanding who feels the pain helps me build the right thing.</div>
+
+    <div class="field-group">
+      <label class="field-label" for="f-who">Who would use this? <span class="req">*</span></label>
+      <textarea id="f-who" rows="3" placeholder="e.g. My underwriting team of 8 people. They're the ones spending hours on data entry. Some are tech-savvy, some aren't."></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-howmany">Roughly how many people are affected? <span class="req">*</span></label>
+      <input type="text" id="f-howmany" placeholder="e.g. 8 people on my team, but it touches 50+ brokers downstream">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(2)">← Back</button>
+      <button class="btn-next" onclick="goTo(4)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: WHAT HAPPENS TODAY -->
+  <div class="form-step" id="step-4">
+    <div class="step-label">Step 5 of 8</div>
+    <div class="step-question">Walk me through what happens today. <span class="req">*</span></div>
+    <div class="step-hint">The current process, step by step. Where does it start? Where does it end? Where does it break or slow down? This is the gold. The more you share here, the better the prototype I can build before we talk.</div>
+
+    <div class="field-group">
+      <textarea id="f-process" rows="6" placeholder="e.g. 1. Broker emails us a submission PDF&#10;2. Underwriter opens it, reads through 20-40 pages&#10;3. They manually pull out key data points (revenue, claims history, coverage limits)&#10;4. They type this into our quoting system&#10;5. They cross-reference against our appetite guide&#10;6. Total time: about 2 hours per submission, and we get 25 a day"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(3)">← Back</button>
+      <button class="btn-next" onclick="goTo(5)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: WHAT DOES SUCCESS LOOK LIKE -->
+  <div class="form-step" id="step-5">
+    <div class="step-label">Step 6 of 8</div>
+    <div class="step-question">If this worked perfectly, what changes? <span class="req">*</span></div>
+    <div class="step-hint">Time saved, revenue unlocked, errors eliminated, team freed up. What's the outcome you're really after?</div>
+
+    <div class="field-group">
+      <textarea id="f-outcome" rows="4" placeholder="e.g. My team gets 2 hours back per submission. That's 1,000 hours a month. We can handle more volume without hiring, and the data entry errors drop significantly."></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(4)">← Back</button>
+      <button class="btn-next" onclick="goTo(6)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: WHAT EXISTS TODAY -->
+  <div class="form-step" id="step-6">
+    <div class="step-label">Step 7 of 8</div>
+    <div class="step-question">What are you working with today?</div>
+    <div class="step-hint">Tools, systems, AI you're already using. This helps me understand what we'd be building on top of or replacing.</div>
+
+    <div class="option-grid">
+      <div class="option-card" onclick="toggleOption(this,'tools')" data-val="No AI yet">
+        <h4>No AI yet</h4>
+        <p>Haven't started with AI tools</p>
+      </div>
+      <div class="option-card" onclick="toggleOption(this,'tools')" data-val="ChatGPT / OpenAI">
+        <h4>ChatGPT / OpenAI</h4>
+        <p>Using ChatGPT or the API</p>
+      </div>
+      <div class="option-card" onclick="toggleOption(this,'tools')" data-val="Copilot / Microsoft">
+        <h4>Copilot / Microsoft</h4>
+        <p>Microsoft 365 Copilot</p>
+      </div>
+      <div class="option-card" onclick="toggleOption(this,'tools')" data-val="Claude / Anthropic">
+        <h4>Claude / Anthropic</h4>
+        <p>Already using Claude</p>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label" for="f-systems">Any specific systems or tools involved? (optional)</label>
+      <input type="text" id="f-systems" placeholder="e.g. Salesforce, Excel, internal CRM, SharePoint">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(5)">← Back</button>
+      <button class="btn-next" onclick="goTo(7)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 7: REVIEW & SEND -->
+  <div class="form-step" id="step-7">
+    <div class="step-label">Step 8 of 8</div>
+    <div class="step-question">Here's what I've got.</div>
+    <div class="step-hint">Check this looks right. When you hit send, I'll get this and come prepared for our conversation.</div>
+
+    <div id="review-container"></div>
+
+    <div class="field-group" style="margin-top:24px;">
+      <label class="field-label" for="f-anything">Anything else I should know? (optional)</label>
+      <textarea id="f-anything" rows="3" placeholder="Timeline, budget constraints, stakeholders involved, concerns..."></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(6)">← Back</button>
+      <button class="btn-next" onclick="submitForm()">Send to David →</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS SCREEN -->
+  <div class="form-step" id="step-success">
+    <div class="success-screen">
+      <div class="success-icon">&#10003;</div>
+      <h2>Got it. Now it's my turn.</h2>
+      <p>You've done your part. Now I'll do mine. I'll review everything you've shared and start building. When we meet, I'll have a prototype for you to react to, not a pitch deck.</p>
+      <p style="font-size:0.95rem;color:var(--text-2);max-width:440px;margin:0 auto 24px;">Book a time and let's see what's possible.</p>
+      <a href="https://calendar.app.google/rkTTjqxVoTrrZAki8" target="_blank" style="display:inline-block;background:var(--gradient);color:var(--white);padding:16px 32px;border-radius:6px;font-size:1.05rem;font-weight:600;text-decoration:none;margin-bottom:24px;">Schedule 30 minutes with David →</a>
+      <br>
+      <a href="/" style="font-size:0.88rem;color:var(--text-3);background:none;padding:0;text-decoration:none;">← Back to BuildFirst</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let currentStep = 0;
+let selectedTools = [];
+let maxStepReached = 0;
+
+// Required fields per step
+const requiredByStep = {
+  0: ['f-name', 'f-email', 'f-role'],
+  1: ['f-industry', 'f-context'],
+  2: ['f-build'],
+  3: ['f-who', 'f-howmany'],
+  4: ['f-process'],
+  5: ['f-outcome'],
+  6: [],
+  7: [],
+};
+
+// ---- PARTIAL SAVE & ANALYTICS ----
+// PRODUCTION SETUP: Replace WEBHOOK_URL with your Make.com webhook endpoint.
+// Recommended: Make.com webhook → Google Sheet + email notification to David.
+const WEBHOOK_URL = 'https://hook.us2.make.com/6942t09md4wpx7nb6rpimv70rcu63f8z';
+
+function gatherPartialData() {
+  return {
+    name: document.getElementById('f-name').value || '',
+    email: document.getElementById('f-email').value || '',
+    role: document.getElementById('f-role').value || '',
+    industry: document.getElementById('f-industry').value || '',
+    context: document.getElementById('f-context').value || '',
+    build: document.getElementById('f-build').value || '',
+    who: document.getElementById('f-who') ? document.getElementById('f-who').value || '' : '',
+    howmany: document.getElementById('f-howmany') ? document.getElementById('f-howmany').value || '' : '',
+    process: document.getElementById('f-process') ? document.getElementById('f-process').value || '' : '',
+    outcome: document.getElementById('f-outcome') ? document.getElementById('f-outcome').value || '' : '',
+    tools: selectedTools.join(', '),
+    systems: document.getElementById('f-systems') ? document.getElementById('f-systems').value || '' : '',
+    anything: document.getElementById('f-anything') ? document.getElementById('f-anything').value || '' : '',
+    step_reached: maxStepReached,
+    completed: false,
+    timestamp: new Date().toISOString(),
+  };
+}
+
+function savePartial() {
+  const data = gatherPartialData();
+  if (!data.email) return;
+
+  if (WEBHOOK_URL) {
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }).catch(function(err) { console.warn('[BuildFirst] Save failed:', err); });
+  }
+}
+
+function saveOnExit() {
+  const data = gatherPartialData();
+  if (!data.email || data.completed) return;
+  data.dropped = true;
+  data.drop_step = currentStep;
+
+  if (WEBHOOK_URL) {
+    navigator.sendBeacon(WEBHOOK_URL, JSON.stringify(data));
+  }
+}
+
+function trackEvent(action, label, value) {
+  if (typeof gtag === 'function') {
+    gtag('event', action, {
+      event_category: 'build_intake',
+      event_label: label,
+      value: value || 0,
+    });
+  }
+}
+
+window.addEventListener('beforeunload', function() {
+  if (currentStep > 0 && currentStep <= 7) {
+    saveOnExit();
+    trackEvent('intake_drop', 'step_' + currentStep, currentStep);
+  }
+});
+
+// ---- VALIDATION ----
+function validate(step) {
+  const fields = requiredByStep[step] || [];
+  let valid = true;
+
+  document.querySelectorAll('.field-error').forEach(function(e) { e.remove(); });
+  document.querySelectorAll('.error').forEach(function(e) { e.classList.remove('error'); });
+
+  for (var i = 0; i < fields.length; i++) {
+    var id = fields[i];
+    var el = document.getElementById(id);
+    var val = el.value.trim();
+    if (!val) {
+      valid = false;
+      el.classList.add('error');
+      var msg = document.createElement('div');
+      msg.className = 'field-error';
+      msg.textContent = 'This field is required';
+      el.parentNode.appendChild(msg);
+    }
+    if (id === 'f-email' && val && !val.includes('@')) {
+      valid = false;
+      el.classList.add('error');
+      var msg2 = document.createElement('div');
+      msg2.className = 'field-error';
+      msg2.textContent = 'Please enter a valid email address';
+      el.parentNode.appendChild(msg2);
+    }
+  }
+
+  return valid;
+}
+
+function goTo(step) {
+  if (step > currentStep) {
+    if (!validate(currentStep)) return;
+    trackEvent('intake_step_complete', 'step_' + currentStep, currentStep);
+    if (currentStep >= 0) savePartial();
+  }
+
+  document.querySelectorAll('.form-step').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('step-' + step).classList.add('active');
+
+  document.querySelectorAll('.step-dot').forEach(function(d, i) {
+    d.className = 'step-dot';
+    if (i < step) d.classList.add('done');
+    if (i === step) d.classList.add('active');
+  });
+
+  if (step === 7) buildReview();
+
+  if (step > maxStepReached) maxStepReached = step;
+  currentStep = step;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleOption(el, group) {
+  var val = el.dataset.val;
+  if (el.classList.contains('selected')) {
+    el.classList.remove('selected');
+    selectedTools = selectedTools.filter(function(t) { return t !== val; });
+  } else {
+    el.classList.add('selected');
+    selectedTools.push(val);
+  }
+}
+
+function buildReview() {
+  var fields = [
+    { label: 'Name', val: document.getElementById('f-name').value },
+    { label: 'Email', val: document.getElementById('f-email').value },
+    { label: 'Role', val: document.getElementById('f-role').value },
+    { label: 'Industry', val: document.getElementById('f-industry').value },
+    { label: 'Business Context', val: document.getElementById('f-context').value },
+    { label: 'What They Want to Build', val: document.getElementById('f-build').value },
+    { label: 'Who Has This Problem', val: document.getElementById('f-who').value },
+    { label: 'How Many People Affected', val: document.getElementById('f-howmany').value },
+    { label: 'Current Process', val: document.getElementById('f-process').value },
+    { label: 'Most Desired Outcome', val: document.getElementById('f-outcome').value },
+    { label: 'Current AI Tools', val: selectedTools.join(', ') },
+    { label: 'Existing Systems', val: document.getElementById('f-systems').value },
+  ];
+
+  var container = document.getElementById('review-container');
+  container.innerHTML = fields.map(function(f) {
+    var isEmpty = !f.val || f.val.trim() === '';
+    return '<div class="review-card">' +
+      '<div class="review-label">' + f.label + '</div>' +
+      '<div class="review-value ' + (isEmpty ? 'empty' : '') + '">' + (isEmpty ? 'Not provided' : escapeHtml(f.val)) + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function escapeHtml(text) {
+  var div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function submitForm() {
+  var data = {
+    name: document.getElementById('f-name').value,
+    email: document.getElementById('f-email').value,
+    role: document.getElementById('f-role').value,
+    industry: document.getElementById('f-industry').value,
+    context: document.getElementById('f-context').value,
+    build: document.getElementById('f-build').value,
+    who: document.getElementById('f-who').value,
+    howmany: document.getElementById('f-howmany').value,
+    process: document.getElementById('f-process').value,
+    outcome: document.getElementById('f-outcome').value,
+    tools: selectedTools.join(', '),
+    systems: document.getElementById('f-systems').value,
+    anything: document.getElementById('f-anything').value,
+  };
+
+  trackEvent('intake_submitted', data.email, 8);
+
+  // Mark as completed and do final save
+  var finalData = gatherPartialData();
+  finalData.completed = true;
+  finalData.step_reached = 8;
+  if (WEBHOOK_URL) {
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(finalData),
+    }).catch(function(err) { console.warn('[BuildFirst] Final save failed:', err); });
+  }
+
+  // Mailto fallback — replace with webhook POST in production
+  var subject = encodeURIComponent('BuildFirst: Build Inquiry from ' + (data.name || 'Website'));
+  var body = encodeURIComponent(
+    'BUILD INQUIRY\n' +
+    '=============\n\n' +
+    'Name: ' + data.name + '\n' +
+    'Email: ' + data.email + '\n' +
+    'Role: ' + data.role + '\n\n' +
+    'INDUSTRY & CONTEXT\n' +
+    'Industry: ' + data.industry + '\n' +
+    'Context: ' + data.context + '\n\n' +
+    'THE BUILD\n' +
+    'What they want to build:\n' + data.build + '\n\n' +
+    'THE PROBLEM\n' +
+    'Who has this problem: ' + data.who + '\n' +
+    'How many affected: ' + data.howmany + '\n\n' +
+    'CURRENT PROCESS\n' +
+    data.process + '\n\n' +
+    'DESIRED OUTCOME\n' +
+    data.outcome + '\n\n' +
+    'CURRENT TOOLS\n' +
+    'AI Tools: ' + (data.tools || 'Not specified') + '\n' +
+    'Systems: ' + (data.systems || 'Not specified') + '\n\n' +
+    'ADDITIONAL NOTES\n' +
+    (data.anything || 'None') + '\n'
+  );
+
+  // Open mailto in new tab so success screen stays visible
+  window.open('mailto:david@thisisluminary.co?subject=' + subject + '&body=' + body, '_blank');
+
+  document.querySelectorAll('.form-step').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('step-success').classList.add('active');
+  document.querySelectorAll('.step-dot').forEach(function(d) {
+    d.className = 'step-dot done';
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Track form start
+trackEvent('intake_started', 'step_0', 0);
+</script>
+
+</body>
+</html>

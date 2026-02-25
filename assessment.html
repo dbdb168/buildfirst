@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildFirst | AI Assessment</title>
+<meta name="description" content="How do you engage with AI? 10 questions, 5 minutes. Find out where you are and what to focus on next.">
+
+<!-- Open Graph / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="BuildFirst | AI Assessment">
+<meta property="og:description" content="How do you engage with AI? 10 questions, 5 minutes. Find out where you are and what to focus on next.">
+<meta property="og:url" content="https://buildfirst.io/assessment.html">
+<meta property="og:site_name" content="BuildFirst">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BuildFirst | AI Assessment">
+<meta name="twitter:description" content="How do you engage with AI? 10 questions, 5 minutes. Find out where you are and what to focus on next.">
+
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MKWKYTLT70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MKWKYTLT70');
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --amber:#D4912E;--amber-light:#E8A84C;--amber-soft:rgba(212,145,46,0.06);
+  --blue:#3A7BB5;--blue-soft:rgba(58,123,181,0.06);
+  --gradient:linear-gradient(135deg,#D4912E 0%,#C4A060 35%,#7EA8BF 65%,#3A7BB5 100%);
+  --gradient-h:linear-gradient(to right,#D4912E 0%,#C4A060 35%,#7EA8BF 65%,#3A7BB5 100%);
+  --bg:#FAFAF7;--bg-warm:#F5F3EE;--bg-card:#FFFFFF;--bg-dark:#1C1C28;
+  --text:#1C1C28;--text-2:#3A3A4A;--text-3:#6A6A7A;
+  --border:rgba(0,0,0,0.08);--border-s:rgba(0,0,0,0.12);--white:#FFFFFF;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* LAYOUT */
+.page{max-width:680px;margin:0 auto;padding:60px 24px 80px;}
+.gradient-bar{height:3px;background:var(--gradient-h);}
+.logo{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:var(--text);margin-bottom:48px;display:inline-block;text-decoration:none;}
+.logo:hover{text-decoration:none;}
+.logo span{color:var(--amber);}
+
+/* HEADER */
+.page-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(1.8rem,4vw,2.4rem);font-weight:400;color:var(--text);margin-bottom:12px;line-height:1.2;}
+.page-intro{font-size:1.05rem;color:var(--text-2);line-height:1.75;margin-bottom:40px;}
+.page-intro strong{color:var(--text);}
+
+/* PROGRESS */
+.progress-wrap{margin-bottom:40px;}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--gradient-h);transition:width 0.4s ease;width:0%;}
+.progress-text{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--text-3);margin-top:8px;}
+
+/* QUESTION STEP */
+.q-step{display:none;animation:fadeIn 0.4s ease;}
+.q-step.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+.q-number{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--amber);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;}
+.q-dimension{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text-3);letter-spacing:0.06em;margin-bottom:16px;}
+.q-text{font-family:'DM Serif Display',Georgia,serif;font-size:1.35rem;font-weight:400;color:var(--text);margin-bottom:8px;line-height:1.35;}
+.q-context{font-size:0.92rem;color:var(--text-3);margin-bottom:28px;line-height:1.6;}
+
+/* ANSWER OPTIONS */
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:32px;}
+.option{background:var(--bg-card);border:1px solid var(--border-s);border-radius:10px;padding:16px 20px;cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:14px;}
+.option:hover{border-color:var(--amber);transform:translateY(-1px);}
+.option.selected{border-color:var(--amber);background:var(--amber-soft);box-shadow:0 0 0 2px rgba(212,145,46,0.15);}
+.option-marker{width:20px;height:20px;border-radius:50%;border:2px solid var(--border-s);flex-shrink:0;margin-top:2px;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
+.option.selected .option-marker{border-color:var(--amber);background:var(--amber);}
+.option.selected .option-marker::after{content:'';width:8px;height:8px;border-radius:50%;background:white;}
+.option-content h4{font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:2px;}
+.option-content p{font-size:0.88rem;color:var(--text-3);line-height:1.5;}
+
+/* NAV BUTTONS */
+.btn-row{display:flex;gap:12px;margin-top:8px;}
+.btn-next{display:inline-flex;align-items:center;gap:8px;background:var(--gradient);color:var(--white);padding:14px 28px;border-radius:6px;font-size:1rem;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;}
+.btn-next:hover{opacity:0.9;transform:translateY(-1px);}
+.btn-next:disabled{opacity:0.3;cursor:not-allowed;transform:none;}
+.btn-back{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--text-3);padding:14px 20px;border-radius:6px;font-size:0.95rem;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;}
+.btn-back:hover{color:var(--text);}
+
+/* ===== RESULTS PAGE ===== */
+.results{display:none;animation:fadeIn 0.5s ease;}
+.results.active{display:block;}
+
+.results-header{text-align:center;margin-bottom:48px;}
+.results-header h1{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(1.8rem,4vw,2.4rem);font-weight:400;margin-bottom:8px;}
+.results-header p{font-size:1.05rem;color:var(--text-2);}
+
+/* SPECTRUM RESULT */
+.spectrum-result{margin-bottom:48px;}
+.spectrum-bar{display:flex;height:56px;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:16px;position:relative;}
+.spectrum-segment{flex:1;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:600;color:var(--text-2);transition:all 0.4s;position:relative;}
+.spectrum-segment:nth-child(1){background:rgba(212,145,46,0.08);}
+.spectrum-segment:nth-child(2){background:rgba(196,160,96,0.09);}
+.spectrum-segment:nth-child(3){background:rgba(126,168,191,0.09);}
+.spectrum-segment:nth-child(4){background:rgba(58,123,181,0.09);}
+.spectrum-segment.you{font-weight:700;color:var(--text);}
+.spectrum-segment.you::after{content:'You are here';position:absolute;bottom:-24px;font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--amber);white-space:nowrap;}
+.spectrum-segment:nth-child(1).you{background:rgba(212,145,46,0.2);}
+.spectrum-segment:nth-child(2).you{background:rgba(196,160,96,0.2);}
+.spectrum-segment:nth-child(3).you{background:rgba(126,168,191,0.2);}
+.spectrum-segment:nth-child(4).you{background:rgba(58,123,181,0.2);}
+
+.spectrum-desc{background:var(--bg-warm);border:1px solid var(--border);border-radius:10px;padding:24px;margin-top:32px;}
+.spectrum-desc h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;font-weight:400;margin-bottom:8px;}
+.spectrum-desc p{font-size:0.98rem;color:var(--text-2);line-height:1.7;}
+
+/* 4D PROFILE */
+.profile-section{margin-bottom:48px;}
+.profile-section h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;font-weight:400;margin-bottom:20px;}
+.d-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:520px){.d-cards{grid-template-columns:1fr;}}
+.d-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:20px;position:relative;overflow:hidden;}
+.d-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.d-card.strong::before{background:var(--gradient-h);}
+.d-card.developing::before{background:var(--border-s);}
+.d-card.growing::before{background:linear-gradient(to right,var(--amber),var(--amber-light));}
+.d-letter{font-family:'DM Serif Display',Georgia,serif;font-size:1.6rem;color:var(--amber);line-height:1;}
+.d-name{font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:2px;}
+.d-level{font-family:'JetBrains Mono',monospace;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+.d-level.strong{color:var(--blue);}
+.d-level.growing{color:var(--amber);}
+.d-level.developing{color:var(--text-3);}
+.d-card p{font-size:0.88rem;color:var(--text-2);line-height:1.55;}
+.d-bar{height:4px;border-radius:2px;background:var(--border);margin-top:12px;overflow:hidden;}
+.d-bar-fill{height:100%;border-radius:2px;transition:width 0.6s ease;}
+
+/* INSIGHT */
+.insight-box{background:var(--bg-warm);border-left:3px solid var(--amber);border-radius:0 10px 10px 0;padding:24px 28px;margin-bottom:48px;}
+.insight-box h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.15rem;font-weight:400;margin-bottom:8px;}
+.insight-box p{font-size:0.98rem;color:var(--text-2);line-height:1.7;}
+
+/* CTA */
+.results-cta{text-align:center;padding:40px 0;border-top:1px solid var(--border);}
+.results-cta h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;font-weight:400;margin-bottom:8px;}
+.results-cta p{font-size:0.95rem;color:var(--text-2);margin-bottom:24px;}
+.results-cta .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{display:inline-block;background:var(--gradient);color:var(--white);padding:14px 28px;border-radius:6px;font-size:1rem;font-weight:600;text-decoration:none;transition:all 0.2s;}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px);}
+.btn-secondary{display:inline-block;background:transparent;color:var(--text);padding:14px 28px;border-radius:6px;font-size:1rem;font-weight:500;border:1px solid var(--border-s);text-decoration:none;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--amber);color:var(--amber);}
+
+/* EMAIL CAPTURE */
+.email-capture{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:32px;text-align:center;}
+.email-capture p{font-size:0.92rem;color:var(--text-2);margin-bottom:14px;}
+.email-row{display:flex;gap:10px;max-width:400px;margin:0 auto;}
+.email-row input{flex:1;padding:12px 14px;border:1px solid var(--border-s);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.95rem;}
+.email-row input:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(212,145,46,0.1);}
+.email-row button{padding:12px 20px;background:var(--gradient);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.9rem;white-space:nowrap;}
+.email-sent{display:none;font-size:0.9rem;color:var(--blue);font-weight:500;}
+
+/* FRAMEWORK CREDIT */
+.fw-credit{margin-top:24px;font-size:0.82rem;color:var(--text-3);font-style:italic;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="gradient-bar"></div>
+
+<div class="page">
+  <a href="/" class="logo">Build<span>First</span></a>
+
+  <!-- ===== INTRO ===== -->
+  <div id="intro" class="q-step active">
+    <h1 class="page-title">How do you engage with AI?</h1>
+    <p class="page-intro">10 questions. About 5 minutes. No wrong answers. This isn't a test. It's a mirror. You'll see where you are, where the gaps are, and what to focus on next.</p>
+    <p class="page-intro" style="margin-bottom:32px;">Your answers map to <strong>four stages of AI engagement</strong> (Asking through Agency) and Anthropic's <strong>4D Framework</strong> (Delegation, Description, Discernment, Diligence).</p>
+    <div class="btn-row">
+      <button class="btn-next" onclick="startAssessment()">Let's find out</button>
+    </div>
+  </div>
+
+  <!-- ===== QUESTIONS ===== -->
+  <div id="assessment" style="display:none;">
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">Question 1 of 10</div>
+    </div>
+
+    <div id="questions-container"></div>
+
+    <div class="btn-row" id="navRow">
+      <button class="btn-back" id="btnBack" onclick="prevQuestion()" style="display:none;">&#8592; Back</button>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()" disabled>Next &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ===== RESULTS ===== -->
+  <div id="results" class="results">
+    <div class="results-header">
+      <h1 id="results-title">Your AI Profile</h1>
+      <p id="results-subtitle"></p>
+    </div>
+
+    <!-- Spectrum position -->
+    <div class="spectrum-result">
+      <div class="spectrum-bar" id="spectrumBar">
+        <div class="spectrum-segment" data-stage="asking">Asking</div>
+        <div class="spectrum-segment" data-stage="automation">Automation</div>
+        <div class="spectrum-segment" data-stage="augmentation">Augmentation</div>
+        <div class="spectrum-segment" data-stage="agency">Agency</div>
+      </div>
+      <div class="spectrum-desc" id="spectrumDesc"></div>
+    </div>
+
+    <!-- 4D Profile -->
+    <div class="profile-section">
+      <h2>Your 4D Profile</h2>
+      <div class="d-cards" id="dCards"></div>
+      <p class="fw-credit">Built on Anthropic's 4D Framework for AI Fluency.</p>
+    </div>
+
+    <!-- Personalised insight -->
+    <div class="insight-box" id="insightBox"></div>
+
+    <!-- Email capture -->
+    <div class="email-capture" id="emailCapture">
+      <p>Want a copy of your results? I'll send them to your inbox.</p>
+      <div class="email-row" id="emailRow">
+        <input type="email" id="resultsEmail" placeholder="you@company.com">
+        <button onclick="sendResults()">Send</button>
+      </div>
+      <div class="email-sent" id="emailSent">Done. Your results are on their way to <span id="emailConfirm"></span>.</div>
+      <p style="font-size:0.78rem;color:var(--text-3);margin-top:8px;" id="emailNote">Your email goes to David at BuildFirst. No spam, no list. Just your results.</p>
+    </div>
+
+    <!-- CTA: Introduction call -->
+    <div class="results-cta">
+      <h3>Let's talk about your AI profile.</h3>
+      <p style="margin-bottom:28px;">You've got a read on where you are. Now let's talk about what to do about it. Book 30 minutes with David to walk through your results and figure out the right next step.</p>
+
+      <a href="https://calendar.app.google/YcKijHth3KuxVZi28" target="_blank" class="btn-primary" style="display:inline-block;margin-bottom:24px;">Book a 30-minute introduction call</a>
+
+      <a href="/" class="btn-secondary">Back to BuildFirst</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ========================================
+// ASSESSMENT ENGINE
+// ========================================
+
+var questions = [
+  // Q1 - SPECTRUM: How do you currently use AI?
+  {
+    id: 'q1',
+    dimension: 'spectrum',
+    label: 'How you use AI today',
+    text: 'When you think about AI in your work right now, which sounds most like you?',
+    context: 'Be honest. There\'s no wrong answer here.',
+    options: [
+      { text: 'I ask it questions when I\'m stuck', detail: 'Like a smarter search engine. I type a question, it gives me an answer.', spectrum: 'asking', score: 1 },
+      { text: 'I\'ve set up a few things that run on their own', detail: 'Email summaries, template drafts, maybe a Zapier flow. Useful but fairly contained.', spectrum: 'automation', score: 2 },
+      { text: 'I think with it', detail: 'I iterate on ideas, challenge its outputs, use it as a collaborator. It makes my thinking better.', spectrum: 'augmentation', score: 3 },
+      { text: 'I\'ve built systems where AI handles entire workflows', detail: 'I design the systems, review outputs, and intervene when needed. It runs without me.', spectrum: 'agency', score: 4 },
+    ]
+  },
+  // Q2 - DELEGATION: What to hand off
+  {
+    id: 'q2',
+    dimension: 'delegation',
+    label: 'Delegation',
+    text: 'A complex project lands on your desk. How do you decide what AI could help with?',
+    context: 'Think about your actual process, not what you think you should do.',
+    options: [
+      { text: 'I wouldn\'t really think about AI for it', detail: 'I\'d handle it the way I always have. AI might come up later if I get stuck.', score: 1 },
+      { text: 'I\'d try the obvious parts', detail: 'Drafting emails, summarising documents, maybe some research. The standard stuff.', score: 2 },
+      { text: 'I\'d break the project down and map where AI adds real value', detail: 'Some tasks are better for AI, some aren\'t. I think about which is which before starting.', score: 3 },
+      { text: 'I\'d design the entire workflow with AI as a partner from the start', detail: 'I think about the project as a system and decide where human judgment is essential vs. where AI handles it.', score: 4 },
+    ]
+  },
+  // Q3 - DESCRIPTION: Clarity of communication
+  {
+    id: 'q3',
+    dimension: 'description',
+    label: 'Description',
+    text: 'You need AI to help with something important. How do you typically communicate what you need?',
+    context: 'This isn\'t about prompting tricks. It\'s about clarity of thought.',
+    options: [
+      { text: 'I type what I need and see what comes back', detail: 'Short instructions, then adjust if the result isn\'t right.', score: 1 },
+      { text: 'I give it context and examples', detail: 'I explain the background, show it what good looks like, and describe what I\'m after.', score: 2 },
+      { text: 'I define the role, the output format, the constraints, and the quality bar', detail: 'I think carefully about what I\'m asking for before I ask. I\'m specific about what "done" looks like.', score: 3 },
+      { text: 'I build reusable frameworks that encode how I think', detail: 'System prompts, templates, structured workflows. I\'ve codified my approach so the AI consistently delivers.', score: 4 },
+    ]
+  },
+  // Q4 - DISCERNMENT: Evaluating output
+  {
+    id: 'q4',
+    dimension: 'discernment',
+    label: 'Discernment',
+    text: 'AI gives you a piece of analysis that looks polished and confident. What do you do?',
+    context: 'This is about your instinct, not your ideal process.',
+    options: [
+      { text: 'If it looks good, I use it', detail: 'It\'s usually right. I trust it unless something seems obviously off.', score: 1 },
+      { text: 'I skim it for obvious errors', detail: 'I check the big claims and correct anything that jumps out. Quick scan.', score: 2 },
+      { text: 'I stress-test the reasoning', detail: 'I push back, ask it to defend its logic, check the sources, and look for what it might have missed.', score: 3 },
+      { text: 'I have a systematic verification process', detail: 'I know where AI is likely to hallucinate in my domain and check those spots specifically. I cross-reference against known data.', score: 4 },
+    ]
+  },
+  // Q5 - DILIGENCE: Risk and governance
+  {
+    id: 'q5',
+    dimension: 'diligence',
+    label: 'Diligence',
+    text: 'Your team starts using an AI tool for client-facing work. What\'s your first thought?',
+    context: 'Think about the governance instinct, not the excitement.',
+    options: [
+      { text: 'Great, we should be using more AI', detail: 'The more we use it, the faster we\'ll learn. Let\'s go.', score: 1 },
+      { text: 'I\'d want to see the output before it goes to clients', detail: 'Someone should review it, but I\'m not sure we need a formal process.', score: 2 },
+      { text: 'I\'d want clear guidelines on what AI can and can\'t do with client work', detail: 'Use cases, review steps, escalation paths. People need to know the boundaries.', score: 3 },
+      { text: 'I\'d want a full framework: approved uses, data handling, review gates, audit trail', detail: 'We need to know who used what, when, and what the AI touched. Especially for regulated work.', score: 4 },
+    ]
+  },
+  // Q6 - SPECTRUM: Frequency and depth
+  {
+    id: 'q6',
+    dimension: 'spectrum',
+    label: 'How embedded is AI in your work',
+    text: 'In the last working week, roughly how much did AI touch your work?',
+    context: 'Include any AI tool: ChatGPT, Claude, Copilot, Gemini, anything.',
+    options: [
+      { text: 'I didn\'t really use it', detail: 'Maybe once or twice for something minor. Or not at all.', spectrum: 'asking', score: 1 },
+      { text: 'A few tasks', detail: 'I used it for specific things: drafting, summarising, quick research. Handful of times.', spectrum: 'automation', score: 2 },
+      { text: 'It was part of most of my thinking', detail: 'Multiple times a day. I bounce ideas off it, draft with it, iterate with it.', spectrum: 'augmentation', score: 3 },
+      { text: 'It ran in the background continuously', detail: 'Systems I\'ve built are processing, analysing, or creating without me actively driving them.', spectrum: 'agency', score: 4 },
+    ]
+  },
+  // Q7 - DELEGATION: Knowing what NOT to delegate
+  {
+    id: 'q7',
+    dimension: 'delegation',
+    label: 'Delegation',
+    text: 'Where do you draw the line on what AI should not do in your work?',
+    context: 'Everyone has a line. Where\'s yours?',
+    options: [
+      { text: 'I haven\'t really thought about it', detail: 'I use it when it seems useful. Haven\'t mapped out specific boundaries.', score: 1 },
+      { text: 'I wouldn\'t let it make decisions about people or money', detail: 'It can draft things, but anything with real consequences needs a human.', score: 2 },
+      { text: 'I have clear categories', detail: 'I know which tasks need human judgment (strategy, relationships, ethics) vs. where AI is fine (processing, drafting, analysis).', score: 3 },
+      { text: 'I\'ve built it into my workflow design', detail: 'My AI systems have explicit human-in-the-loop checkpoints for sensitive decisions. The boundaries are structural, not just guidelines.', score: 4 },
+    ]
+  },
+  // Q8 - DESCRIPTION: Iteration
+  {
+    id: 'q8',
+    dimension: 'description',
+    label: 'Description',
+    text: 'When AI gives you something that\'s close but not right, what happens next?',
+    context: 'The gap between "close" and "right" is where fluency lives.',
+    options: [
+      { text: 'I fix it myself', detail: 'It\'s usually faster to just edit the output than try to explain what I wanted differently.', score: 1 },
+      { text: 'I ask it to try again with a bit more direction', detail: '"Make it more formal" or "Add more detail about X." One or two more rounds usually gets it there.', score: 2 },
+      { text: 'I diagnose why it missed and adjust my approach', detail: 'I think about what was unclear in my instructions and give it better context, constraints, or examples.', score: 3 },
+      { text: 'I refine the underlying system', detail: 'I update my prompts, templates, or workflows so the same issue doesn\'t happen again. Each iteration improves the system.', score: 4 },
+    ]
+  },
+  // Q9 - DISCERNMENT: Domain-specific judgment
+  {
+    id: 'q9',
+    dimension: 'discernment',
+    label: 'Discernment',
+    text: 'How confident are you in spotting when AI gets something wrong in your specific field?',
+    context: 'AI is better at some things than others. Your domain knowledge matters.',
+    options: [
+      { text: 'I\'m not always sure', detail: 'Sometimes the output sounds right but I can\'t always tell if it\'s accurate in the details.', score: 1 },
+      { text: 'I catch the big mistakes', detail: 'If it says something clearly wrong about my industry, I\'d notice. Subtle errors are harder.', score: 2 },
+      { text: 'I know where AI is reliable and where it\'s not in my domain', detail: 'I\'ve learned its blind spots. I know which types of questions it handles well and where it tends to fabricate.', score: 3 },
+      { text: 'I\'ve built verification into my process', detail: 'I have specific checks for the types of errors AI makes in my field. My team knows what to look for too.', score: 4 },
+    ]
+  },
+  // Q10 - DILIGENCE + SPECTRUM: Future state
+  {
+    id: 'q10',
+    dimension: 'diligence',
+    label: 'Your AI future',
+    text: 'In 12 months, what role do you want AI to play in your work?',
+    context: 'Not what you think is realistic. What you actually want.',
+    options: [
+      { text: 'I\'d like to use it more consistently', detail: 'Right now it\'s sporadic. I\'d like it to be a regular part of how I work.', score: 1 },
+      { text: 'I want it handling my routine work reliably', detail: 'Drafts, summaries, scheduling, research. The admin that eats my day.', score: 2 },
+      { text: 'I want it to be my thinking partner', detail: 'Strategy sessions, problem-solving, creative work. I want to think better with AI, not just faster.', score: 3 },
+      { text: 'I want AI systems running key parts of my operation', detail: 'Autonomous workflows, intelligent routing, predictive analysis. I want to architect, not operate.', score: 4 },
+    ]
+  },
+];
+
+// ========================================
+// STATE
+// ========================================
+var currentQ = 0;
+var answers = {};
+
+// ========================================
+// RENDER
+// ========================================
+function renderQuestions() {
+  var container = document.getElementById('questions-container');
+  container.innerHTML = '';
+
+  questions.forEach(function(q, i) {
+    var step = document.createElement('div');
+    step.className = 'q-step' + (i === 0 ? ' active' : '');
+    step.id = 'q-step-' + i;
+
+    var dimLabel = q.dimension === 'spectrum' ? q.label : 'Measures: ' + q.label;
+
+    step.innerHTML =
+      '<div class="q-number">Question ' + (i + 1) + ' of ' + questions.length + '</div>' +
+      '<div class="q-dimension">' + dimLabel + '</div>' +
+      '<div class="q-text">' + q.text + '</div>' +
+      (q.context ? '<div class="q-context">' + q.context + '</div>' : '') +
+      '<div class="options" id="options-' + i + '">' +
+        q.options.map(function(opt, j) {
+          return '<div class="option" onclick="selectOption(' + i + ', ' + j + ')" id="opt-' + i + '-' + j + '">' +
+            '<div class="option-marker"></div>' +
+            '<div class="option-content">' +
+              '<h4>' + opt.text + '</h4>' +
+              (opt.detail ? '<p>' + opt.detail + '</p>' : '') +
+            '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>';
+    container.appendChild(step);
+  });
+}
+
+function selectOption(qIdx, optIdx) {
+  var q = questions[qIdx];
+  var opt = q.options[optIdx];
+
+  answers[q.id] = {
+    score: opt.score,
+    dimension: q.dimension,
+    spectrum: opt.spectrum || null,
+    optionIndex: optIdx,
+  };
+
+  document.querySelectorAll('#options-' + qIdx + ' .option').forEach(function(el) { el.classList.remove('selected'); });
+  document.getElementById('opt-' + qIdx + '-' + optIdx).classList.add('selected');
+
+  document.getElementById('btnNext').disabled = false;
+}
+
+function updateProgress() {
+  var pct = ((currentQ + 1) / questions.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = 'Question ' + (currentQ + 1) + ' of ' + questions.length;
+}
+
+function showQuestion(idx) {
+  document.querySelectorAll('.q-step').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('q-step-' + idx).classList.add('active');
+
+  document.getElementById('btnBack').style.display = idx === 0 ? 'none' : '';
+  document.getElementById('btnNext').textContent = idx === questions.length - 1 ? 'See my results' : 'Next \u2192';
+  document.getElementById('btnNext').disabled = !answers[questions[idx].id];
+
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========================================
+// NAVIGATION
+// ========================================
+function startAssessment() {
+  document.getElementById('intro').classList.remove('active');
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('assessment').style.display = 'block';
+  renderQuestions();
+  showQuestion(0);
+}
+
+function nextQuestion() {
+  if (!answers[questions[currentQ].id]) return;
+
+  if (currentQ === questions.length - 1) {
+    showResults();
+    return;
+  }
+
+  currentQ++;
+  showQuestion(currentQ);
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    showQuestion(currentQ);
+  }
+}
+
+// ========================================
+// SCORING ENGINE
+// ========================================
+function calculateResults() {
+  var allScores = Object.values(answers).map(function(a) { return a.score; });
+  var avgScore = allScores.reduce(function(a, b) { return a + b; }, 0) / allScores.length;
+
+  var spectrumPosition;
+  if (avgScore < 1.75) spectrumPosition = 'asking';
+  else if (avgScore < 2.5) spectrumPosition = 'automation';
+  else if (avgScore < 3.25) spectrumPosition = 'augmentation';
+  else spectrumPosition = 'agency';
+
+  var dims = { delegation: [], description: [], discernment: [], diligence: [] };
+  Object.values(answers).forEach(function(a) {
+    if (dims[a.dimension]) dims[a.dimension].push(a.score);
+  });
+
+  var dScores = {};
+  for (var dim in dims) {
+    var scores = dims[dim];
+    if (scores.length > 0) {
+      dScores[dim] = scores.reduce(function(a, b) { return a + b; }, 0) / scores.length;
+    }
+  }
+
+  var dEntries = Object.entries(dScores).sort(function(a, b) { return b[1] - a[1]; });
+  var strongest = dEntries[0];
+  var weakest = dEntries[dEntries.length - 1];
+
+  return { spectrumPosition: spectrumPosition, avgScore: avgScore, dScores: dScores, strongest: strongest, weakest: weakest };
+}
+
+// ========================================
+// RESULTS RENDERING
+// ========================================
+var spectrumData = {
+  asking: {
+    title: 'You\'re at the Asking stage.',
+    desc: 'You use AI like a search engine. Questions in, answers out. It helps sometimes, but you\'re barely scratching the surface of what it can do. The good news: you don\'t need weeks to move forward. You need one real project and someone to show you what\'s possible.',
+    next: 'Your next move: stop asking AI questions and start giving it tasks. Pick one repetitive part of your week and hand it to AI. That\'s the bridge to Automation.',
+  },
+  automation: {
+    title: 'You\'re at the Automation stage.',
+    desc: 'You\'ve started putting AI to work on specific, repeatable tasks. Email summaries, template drafts, maybe some data processing. Useful, but you\'re still defining every step. AI does what you tell it, nothing more.',
+    next: 'Your next move: start iterating with AI, not just instructing it. Instead of "write me a summary," try "here\'s a summary I wrote, what am I missing?" That\'s the shift from Automation to Augmentation, where the real leverage lives.',
+  },
+  augmentation: {
+    title: 'You\'re at the Augmentation stage.',
+    desc: 'This is where it gets interesting. You and AI think together. You iterate, challenge, build. Your judgment plus its capability creates something neither could alone. You\'re already ahead of most leaders.',
+    next: 'Your next move: start thinking in systems. Can you build reusable workflows that encode your expertise? Can you design processes where AI handles entire sequences with you reviewing outputs? That\'s the path to Agency.',
+  },
+  agency: {
+    title: 'You\'re at the Agency stage.',
+    desc: 'You\'ve built systems where AI handles entire workflows. You design, review, and intervene when needed, but you\'re not driving every task. You\'re operating at the frontier of what most organisations are even imagining.',
+    next: 'Your next move: teach others. Your organisation probably isn\'t where you are. The biggest leverage now is helping your team develop the same capabilities. A Sherpa engagement can help you design that journey.',
+  },
+};
+
+var dData = {
+  delegation: {
+    name: 'Delegation',
+    strong: 'You have strong instincts about what AI should and shouldn\'t handle. You think about task boundaries before diving in.',
+    growing: 'You\'re developing a sense of what to hand off, but sometimes default to either doing everything yourself or giving AI too much.',
+    developing: 'You tend to either avoid AI for important work or hand things off without thinking through what it\'s good at. Start mapping tasks by type.',
+  },
+  description: {
+    name: 'Description',
+    strong: 'You communicate clearly with AI. You provide context, constraints, and quality bars. Your instructions produce consistent results.',
+    growing: 'You give AI reasonable direction but sometimes get inconsistent results. Spending more time on the brief before you start will pay off.',
+    developing: 'You tend to give AI short instructions and hope for the best. The gap between what you want and what you ask for is where most frustration lives.',
+  },
+  discernment: {
+    name: 'Discernment',
+    strong: 'You have a sharp eye for AI output quality. You know where it\'s reliable in your domain and where it fabricates. You verify before trusting.',
+    growing: 'You catch obvious errors but subtle mistakes can slip through. Building domain-specific verification habits will sharpen this.',
+    developing: 'You tend to trust polished-sounding output. AI is confidently wrong more often than most people realise. This is the most critical skill to develop.',
+  },
+  diligence: {
+    name: 'Diligence',
+    strong: 'You think about governance, risk, and responsible use. You have frameworks for when and how AI touches sensitive work.',
+    growing: 'You care about doing this right but haven\'t formalised your approach. Documenting your current practices would be a strong next step.',
+    developing: 'You\'re focused on what AI can do, not yet on what it shouldn\'t do without guardrails. As AI touches more of your work, this becomes essential.',
+  },
+};
+
+function getLevelLabel(score) {
+  if (score >= 3) return 'strong';
+  if (score >= 2) return 'growing';
+  return 'developing';
+}
+
+function getLevelText(dim, level) {
+  return dData[dim][level];
+}
+
+function showResults() {
+  document.getElementById('assessment').style.display = 'none';
+  document.getElementById('results').classList.add('active');
+
+  var r = calculateResults();
+
+  document.getElementById('results-subtitle').textContent =
+    'Based on your answers, here\'s where you stand.';
+
+  // Spectrum bar
+  document.querySelectorAll('.spectrum-segment').forEach(function(seg) {
+    if (seg.dataset.stage === r.spectrumPosition) {
+      seg.classList.add('you');
+    }
+  });
+
+  // Spectrum description
+  var sd = spectrumData[r.spectrumPosition];
+  document.getElementById('spectrumDesc').innerHTML =
+    '<h3>' + sd.title + '</h3>' +
+    '<p>' + sd.desc + '</p>' +
+    '<p style="margin-top:14px;font-weight:600;color:var(--text);">' + sd.next + '</p>';
+
+  // 4D cards
+  var cardsHTML = ['delegation', 'description', 'discernment', 'diligence'].map(function(dim) {
+    var score = r.dScores[dim] || 2;
+    var level = getLevelLabel(score);
+    var pct = (score / 4) * 100;
+    var colours = {
+      strong: 'var(--blue)',
+      growing: 'var(--amber)',
+      developing: 'var(--text-3)',
+    };
+
+    return '<div class="d-card ' + level + '">' +
+      '<div class="d-letter">' + dim.charAt(0).toUpperCase() + '</div>' +
+      '<div class="d-name">' + dData[dim].name + '</div>' +
+      '<div class="d-level ' + level + '">' + level + '</div>' +
+      '<p>' + getLevelText(dim, level) + '</p>' +
+      '<div class="d-bar"><div class="d-bar-fill" style="width:' + pct + '%;background:' + colours[level] + ';"></div></div>' +
+    '</div>';
+  }).join('');
+  document.getElementById('dCards').innerHTML = cardsHTML;
+
+  // Personalised insight
+  var weakDim = r.weakest[0];
+  var insights = {
+    delegation: 'Your biggest opportunity is in <strong>Delegation</strong>. Knowing what to give AI and what to keep is the foundation everything else builds on. Start by mapping your weekly tasks: which ones need your judgment, and which ones just need to get done?',
+    description: 'Your biggest opportunity is in <strong>Description</strong>. The gap between what you want and what you ask AI for is where most frustration lives. Try this: before your next AI task, write down what "done" looks like before you start.',
+    discernment: 'Your biggest opportunity is in <strong>Discernment</strong>. AI sounds confident whether it\'s right or wrong. Building the muscle to evaluate output, especially in your domain, is the most underrated AI skill. Start by picking one type of AI output and checking it against known sources for a week.',
+    diligence: 'Your biggest opportunity is in <strong>Diligence</strong>. As AI touches more of your work, the governance question becomes critical. Start simple: write down three rules for when AI output needs a human review before it goes anywhere.',
+  };
+
+  document.getElementById('insightBox').innerHTML =
+    '<h3>Where to focus next</h3>' +
+    '<p>' + insights[weakDim] + '</p>';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========================================
+// EMAIL CAPTURE
+// ========================================
+// PRODUCTION SETUP: Replace ASSESSMENT_WEBHOOK_URL with your Make.com webhook endpoint.
+// Recommended: Make.com webhook that:
+// 1. Sends the user an email with their results (from david@thisisluminary.co)
+// 2. Notifies David with the lead data (email, results, spectrum position, 4D scores)
+// 3. Logs to Google Sheet for funnel tracking (assessment -> diagnostic conversion)
+var ASSESSMENT_WEBHOOK_URL = 'https://hook.us2.make.com/eu3wwilrd2vemc9suktjywiyb809ud2b';
+
+function buildEmailHTML(r) {
+  const sd = spectrumData[r.spectrumPosition];
+  const dims = ['delegation', 'description', 'discernment', 'diligence'];
+  const levelColours = { strong: '#3A7BB5', growing: '#D4912E', developing: '#6A6A7A' };
+  const barTopColours = {
+    strong: 'background:linear-gradient(to right,#D4912E,#C4A060,#7EA8BF,#3A7BB5);',
+    growing: 'background:linear-gradient(to right,#D4912E,#E8A84C);',
+    developing: 'background:rgba(0,0,0,0.12);',
+  };
+  const stages = ['asking', 'automation', 'augmentation', 'agency'];
+  const stageLabels = ['Asking', 'Automation', 'Augmentation', 'Agency'];
+  const stageBgs = ['rgba(212,145,46,0.08)', 'rgba(196,160,96,0.09)', 'rgba(126,168,191,0.09)', 'rgba(58,123,181,0.09)'];
+  const stageActiveBgs = ['rgba(212,145,46,0.2)', 'rgba(196,160,96,0.2)', 'rgba(126,168,191,0.2)', 'rgba(58,123,181,0.2)'];
+
+  const weakDim = r.weakest[0];
+  const focusInsights = {
+    delegation: 'Your biggest opportunity is in <strong>Delegation</strong>. Knowing what to give AI and what to keep is the foundation everything else builds on. Start by mapping your weekly tasks: which ones need your judgment, and which ones just need to get done?',
+    description: 'Your biggest opportunity is in <strong>Description</strong>. The gap between what you want and what you ask AI for is where most frustration lives. Try this: before your next AI task, write down what "done" looks like before you start.',
+    discernment: 'Your biggest opportunity is in <strong>Discernment</strong>. AI sounds confident whether it\'s right or wrong. Building the muscle to evaluate output, especially in your domain, is the most underrated AI skill. Start by picking one type of AI output and checking it against known sources for a week.',
+    diligence: 'Your biggest opportunity is in <strong>Diligence</strong>. As AI touches more of your work, the governance question becomes critical. Start simple: write down three rules for when AI output needs a human review before it goes anywhere.',
+  };
+
+  // Build spectrum bar cells
+  const spectrumCells = stages.map((stage, i) => {
+    const isActive = stage === r.spectrumPosition;
+    const bg = isActive ? stageActiveBgs[i] : stageBgs[i];
+    const fw = isActive ? 'font-weight:700;color:#1C1C28;' : 'font-weight:600;color:#6A6A7A;';
+    const youLabel = isActive ? '<br><span style="font-family:monospace;font-size:10px;color:#D4912E;letter-spacing:0.5px;">You are here</span>' : '';
+    return `<td style="width:25%;text-align:center;padding:16px 4px 12px;background:${bg};font-size:12px;${fw}">${stageLabels[i]}${youLabel}</td>`;
+  }).join('');
+
+  // Build 4D cards (2x2 table)
+  const dCards = dims.map(dim => {
+    const score = r.dScores[dim] || 2;
+    const level = getLevelLabel(score);
+    const pct = (score / 4) * 100;
+    const insight = getLevelText(dim, level);
+    const barColour = levelColours[level];
+    const topBar = barTopColours[level];
+    const levelLabel = level.charAt(0).toUpperCase() + level.slice(1);
+    const levelStyle = `font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:${levelColours[level]};`;
+
+    return `<td style="width:50%;vertical-align:top;padding:8px;">
+      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,0.08);border-radius:10px;overflow:hidden;">
+        <div style="height:3px;${topBar}"></div>
+        <div style="padding:24px 20px 20px;">
+          <div style="font-family:Georgia,serif;font-size:32px;color:#D4912E;line-height:1;margin-bottom:6px;">${dim.charAt(0).toUpperCase()}</div>
+          <div style="font-size:15px;font-weight:700;color:#1C1C28;margin-bottom:4px;">${dData[dim].name}</div>
+          <div style="${levelStyle}margin-bottom:14px;">${levelLabel}</div>
+          <p style="font-size:13px;color:#3A3A4A;line-height:1.6;margin:0 0 18px;">${insight}</p>
+          <div style="height:4px;background:rgba(0,0,0,0.08);border-radius:2px;overflow:hidden;">
+            <div style="height:100%;width:${pct}%;background:${barColour};border-radius:2px;"></div>
+          </div>
+        </div>
+      </div>
+    </td>`;
+  });
+
+  return `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background:#FAFAF7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+
+<!-- Gradient bar -->
+<div style="height:3px;background:linear-gradient(to right,#D4912E,#C4A060,#7EA8BF,#3A7BB5);"></div>
+
+<div style="max-width:600px;margin:0 auto;padding:40px 24px;">
+
+  <!-- Logo -->
+  <div style="font-family:Georgia,serif;font-size:20px;color:#1C1C28;margin-bottom:40px;">Build<span style="color:#D4912E;">First</span></div>
+
+  <!-- Header -->
+  <div style="text-align:center;margin-bottom:40px;">
+    <h1 style="font-family:Georgia,serif;font-size:28px;font-weight:400;color:#1C1C28;margin:0 0 8px;">Your AI Profile</h1>
+    <p style="font-size:15px;color:#3A3A4A;margin:0;">Based on your answers, here's where you stand.</p>
+  </div>
+
+  <!-- Spectrum Bar -->
+  <table style="width:100%;border-collapse:collapse;border:1px solid rgba(0,0,0,0.08);border-radius:10px;overflow:hidden;margin-bottom:28px;" cellpadding="0" cellspacing="0">
+    <tr>${spectrumCells}</tr>
+  </table>
+
+  <!-- Spectrum Description -->
+  <div style="background:#F5F3EE;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:24px;margin-bottom:40px;">
+    <h3 style="font-family:Georgia,serif;font-size:19px;font-weight:400;color:#1C1C28;margin:0 0 10px;">${sd.title}</h3>
+    <p style="font-size:14px;color:#3A3A4A;line-height:1.7;margin:0 0 14px;">${sd.desc}</p>
+    <p style="font-size:14px;color:#1C1C28;font-weight:600;line-height:1.7;margin:0;">${sd.next}</p>
+  </div>
+
+  <!-- 4D Profile Header -->
+  <h2 style="font-family:Georgia,serif;font-size:20px;font-weight:400;color:#1C1C28;margin:0 0 16px;">Your 4D Profile</h2>
+
+  <!-- 4D Cards Grid (2x2) -->
+  <table style="width:100%;border-collapse:collapse;margin-bottom:8px;" cellpadding="0" cellspacing="0">
+    <tr>${dCards[0]}${dCards[1]}</tr>
+    <tr>${dCards[2]}${dCards[3]}</tr>
+  </table>
+
+  <p style="font-size:11px;color:#6A6A7A;text-align:center;margin:4px 0 36px;">Built on Anthropic's 4D Framework for AI Fluency</p>
+
+  <!-- Where to focus next (insight box with amber left border) -->
+  <div style="background:#F5F3EE;border-left:3px solid #D4912E;border-radius:0 10px 10px 0;padding:24px 24px;margin-bottom:40px;">
+    <h3 style="font-family:Georgia,serif;font-size:17px;font-weight:400;color:#1C1C28;margin:0 0 10px;">Where to focus next</h3>
+    <p style="font-size:14px;color:#3A3A4A;line-height:1.7;margin:0;">${focusInsights[weakDim]}</p>
+  </div>
+
+  <!-- CTA Section -->
+  <div style="text-align:center;border-top:1px solid rgba(0,0,0,0.08);padding-top:32px;margin-bottom:16px;">
+    <h3 style="font-family:Georgia,serif;font-size:19px;font-weight:400;color:#1C1C28;margin:0 0 8px;">Let's talk about your AI profile.</h3>
+    <p style="font-size:14px;color:#3A3A4A;line-height:1.7;margin:0 0 24px;">You've got a read on where you are. Now let's talk about what to do about it. Book 30 minutes with David to walk through your results and figure out the right next step.</p>
+    <a href="https://calendar.app.google/YcKijHth3KuxVZi28" style="display:inline-block;background:linear-gradient(135deg,#D4912E 0%,#C4A060 35%,#7EA8BF 65%,#3A7BB5 100%);color:#FFFFFF;padding:14px 28px;border-radius:6px;font-size:15px;font-weight:600;text-decoration:none;">Book a 30-minute introduction call</a>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center;padding-top:24px;color:#6A6A7A;font-size:12px;line-height:1.6;">
+    <p style="margin:0;">Reply to this email or visit <a href="https://thisisluminary.co" style="color:#D4912E;text-decoration:none;">thisisluminary.co</a></p>
+  </div>
+
+</div>
+</body></html>`;
+}
+
+function sendResults() {
+  var email = document.getElementById('resultsEmail').value.trim();
+  if (!email || !email.includes('@')) return;
+
+  var r = calculateResults();
+
+  // Build pre-rendered text for every field so Make.com needs zero logic
+  var dims = ['delegation', 'description', 'discernment', 'diligence'];
+  var dLevels = {};
+  var dTexts = {};
+  dims.forEach(function(dim) {
+    var score = r.dScores[dim] || 2;
+    var level = getLevelLabel(score);
+    dLevels[dim] = level.charAt(0).toUpperCase() + level.slice(1);
+    dTexts[dim] = getLevelText(dim, level);
+  });
+
+  var sd = spectrumData[r.spectrumPosition];
+  var insightTexts = {
+    delegation: 'Your biggest opportunity is in Delegation. Knowing what to give AI and what to keep is the foundation everything else builds on. Start by mapping your weekly tasks: which ones need your judgment, and which ones just need to get done?',
+    description: 'Your biggest opportunity is in Description. The gap between what you want and what you ask AI for is where most frustration lives. Try this: before your next AI task, write down what "done" looks like before you start.',
+    discernment: 'Your biggest opportunity is in Discernment. AI sounds confident whether it\'s right or wrong. Building the muscle to evaluate output, especially in your domain, is the most underrated AI skill. Start by picking one type of AI output and checking it against known sources for a week.',
+    diligence: 'Your biggest opportunity is in Diligence. As AI touches more of your work, the governance question becomes critical. Start simple: write down three rules for when AI output needs a human review before it goes anywhere.',
+  };
+
+  var payload = {
+    email: email,
+    spectrum_position: r.spectrumPosition,
+    spectrum_label: r.spectrumPosition.charAt(0).toUpperCase() + r.spectrumPosition.slice(1),
+    spectrum_title: sd.title,
+    spectrum_desc: sd.desc,
+    spectrum_next: sd.next,
+    avg_score: Math.round(r.avgScore * 10) / 10,
+    d_scores: r.dScores,
+    d_levels: dLevels,
+    d_texts: dTexts,
+    strongest_d: r.strongest[0],
+    weakest_d: r.weakest[0],
+    focus_insight: insightTexts[r.weakest[0]],
+    email_html: buildEmailHTML(r),
+    timestamp: new Date().toISOString(),
+    source: 'assessment',
+  };
+
+  if (ASSESSMENT_WEBHOOK_URL) {
+    fetch(ASSESSMENT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(function(err) { console.warn('[BuildFirst Assessment] Send failed:', err); });
+  }
+
+  document.getElementById('emailRow').style.display = 'none';
+  document.getElementById('emailNote').style.display = 'none';
+  document.getElementById('emailConfirm').textContent = email;
+  document.getElementById('emailSent').style.display = 'block';
+}
+</script>
+
+</body>
+</html>

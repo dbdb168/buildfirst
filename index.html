@@ -1,979 +1,563 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MKWKYTLT70"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-MKWKYTLT70');
-    </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>BuildFirst - AI Fluency Through Building</title>
-  <style>
-    /* Reset & Base */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --terracotta: #da7756;
-      --terracotta-dark: #C15F3C;
-      --black: #1a1a1a;
-      --off-white: #FAF9F7;
-      --warm-white: #FFFBF5;
-      --light-grey: #E8E5E0;
-      --mid-grey: #6B6B6B;
-      --dark-grey: #333333;
-      --white: #ffffff;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: Georgia, Cambria, 'Times New Roman', serif;
-      font-size: 18px;
-      line-height: 1.6;
-      color: var(--dark-grey);
-      background: var(--white);
-    }
-
-    /* Typography */
-    h1, h2, h3, h4 {
-      font-weight: 600;
-      color: var(--black);
-      line-height: 1.2;
-    }
-
-    h1 {
-      font-size: clamp(36px, 5vw, 52px);
-      line-height: 1.1;
-    }
-
-    h2 {
-      font-size: clamp(28px, 4vw, 38px);
-      margin-bottom: 24px;
-    }
-
-    h3 {
-      font-size: 24px;
-      margin-bottom: 16px;
-    }
-
-    p {
-      margin-bottom: 16px;
-    }
-
-    a {
-      color: var(--terracotta);
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: var(--terracotta-dark);
-    }
-
-    /* Layout */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    .section {
-      padding: 80px 0;
-    }
-
-    .section-light {
-      background: var(--off-white);
-    }
-
-    .section-warm {
-      background: var(--warm-white);
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: var(--white);
-      border-bottom: 1px solid var(--light-grey);
-      z-index: 1000;
-      padding: 16px 0;
-    }
-
-    nav .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--black);
-      letter-spacing: -0.5px;
-    }
-
-    .logo span {
-      color: var(--terracotta);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--dark-grey);
-      font-size: 15px;
-    }
-
-    .nav-links a:hover {
-      color: var(--terracotta);
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-block;
-      padding: 14px 28px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 15px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background: var(--terracotta);
-      color: var(--white);
-      border: none;
-    }
-
-    .btn-primary:hover {
-      background: var(--terracotta-dark);
-      color: var(--white);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--terracotta);
-      border: 2px solid var(--terracotta);
-    }
-
-    .btn-secondary:hover {
-      background: var(--terracotta);
-      color: var(--white);
-    }
-
-    /* Hero */
-    .hero {
-      padding: 160px 0 100px;
-      background: var(--warm-white);
-    }
-
-    .hero-content {
-      max-width: 780px;
-    }
-
-    .hero h1 {
-      margin-bottom: 28px;
-    }
-
-    .hero .subtitle {
-      font-size: 21px;
-      color: var(--mid-grey);
-      margin-bottom: 40px;
-      line-height: 1.55;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    /* Time-out Section - NEW */
-    .time-out {
-      background: var(--white);
-      padding: 64px 0;
-      border-bottom: 1px solid var(--light-grey);
-    }
-
-    .time-out-content {
-      max-width: 800px;
-    }
-
-    .time-out h2 {
-      font-size: clamp(26px, 3.5vw, 34px);
-      margin-bottom: 16px;
-    }
-
-    .time-out p {
-      font-size: 19px;
-      color: var(--mid-grey);
-      line-height: 1.6;
-    }
-
-    .time-out em {
-      font-style: normal;
-      color: var(--dark-grey);
-    }
-
-    .time-out strong {
-      color: var(--dark-grey);
-    }
-
-    /* Problem Section */
-    .problem-content {
-      max-width: 800px;
-    }
-
-    .lead {
-      font-size: 19px;
-      color: var(--mid-grey);
-    }
-
-    .problem-list {
-      list-style: none;
-      margin: 24px 0;
-    }
-
-    .problem-list li {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--light-grey);
-      padding-left: 28px;
-      position: relative;
-      font-size: 17px;
-    }
-
-    .problem-list li::before {
-      content: "✗";
-      position: absolute;
-      left: 0;
-      color: var(--terracotta);
-      font-weight: bold;
-    }
-
-    .insight-callout {
-      background: var(--warm-white);
-      border-left: 4px solid var(--terracotta);
-      padding: 28px 32px;
-      margin-top: 32px;
-      border-radius: 0 12px 12px 0;
-    }
-
-    .insight-callout p {
-      font-size: 18px;
-      font-style: italic;
-      margin-bottom: 12px;
-      line-height: 1.6;
-    }
-
-    .source {
-      font-size: 14px;
-      color: var(--mid-grey);
-      font-style: normal;
-    }
-
-    /* Method Section */
-    .method-intro {
-      max-width: 800px;
-      margin-bottom: 48px;
-    }
-
-    .method-intro p {
-      font-size: 19px;
-      color: var(--mid-grey);
-      line-height: 1.6;
-    }
-
-    .method-steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .step {
-      text-align: center;
-      padding: 24px 16px;
-    }
-
-    .step-number {
-      width: 44px;
-      height: 44px;
-      background: var(--terracotta);
-      color: var(--white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 18px;
-      margin: 0 auto 14px;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    .step h3 {
-      font-size: 17px;
-      margin-bottom: 8px;
-    }
-
-    .step p {
-      font-size: 15px;
-      color: var(--mid-grey);
-      margin: 0;
-    }
-
-    /* Why Play Section */
-    .why-play-section {
-      padding: 64px 0;
-      background: var(--off-white);
-    }
-
-    .why-play-section h2 {
-      text-align: center;
-      margin-bottom: 32px;
-      font-size: clamp(24px, 3vw, 30px);
-    }
-
-    .principles-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .principle-card {
-      background: var(--white);
-      padding: 24px;
-      border-radius: 12px;
-      border-left: 4px solid var(--terracotta);
-    }
-
-    .principle-card h4 {
-      font-size: 16px;
-      margin-bottom: 8px;
-      color: var(--terracotta);
-    }
-
-    .principle-card p {
-      font-size: 16px;
-      margin: 0;
-      color: var(--mid-grey);
-      line-height: 1.5;
-    }
-
-    .attribution {
-      text-align: center;
-      margin-top: 28px;
-      font-size: 15px;
-      color: var(--mid-grey);
-    }
-
-    /* Calibrated Section */
-    .calibrated-section {
-      padding: 100px 0 120px;
-      background: var(--white);
-      border-top: 1px solid var(--light-grey);
-    }
-
-    .calibrated-section .container {
-      display: flex;
-      justify-content: center;
-    }
-
-    .calibrated-content {
-      max-width: 680px;
-      text-align: center;
-    }
-
-    .calibrated-content h2 {
-      margin-bottom: 28px;
-      text-align: center;
-    }
-
-    .calibrated-content p {
-      font-size: 20px;
-      line-height: 1.75;
-      color: var(--dark-grey);
-      margin-bottom: 0;
-      text-align: center;
-    }
-
-    .calibrated-content em {
-      color: var(--terracotta);
-      font-style: normal;
-      font-weight: 600;
-    }
-
-    /* Offerings Section */
-    .offerings-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      margin-top: 48px;
-    }
-
-    .offering-card {
-      background: var(--white);
-      border: 1px solid var(--light-grey);
-      border-radius: 16px;
-      padding: 36px;
-      transition: box-shadow 0.2s ease;
-    }
-
-    .offering-card:hover {
-      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    }
-
-    .offering-label {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--terracotta);
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .offering-card h3 {
-      font-size: 26px;
-      margin-bottom: 14px;
-    }
-
-    .offering-card .description {
-      color: var(--mid-grey);
-      margin-bottom: 24px;
-      font-size: 17px;
-      line-height: 1.5;
-    }
-
-    .offering-features {
-      list-style: none;
-      margin-bottom: 28px;
-    }
-
-    .offering-features li {
-      padding: 8px 0;
-      padding-left: 24px;
-      position: relative;
-      font-size: 16px;
-    }
-
-    .offering-features li::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: var(--terracotta);
-    }
-
-    .offering-price {
-      font-size: 14px;
-      color: var(--mid-grey);
-      margin-bottom: 24px;
-      padding-top: 20px;
-      border-top: 1px solid var(--light-grey);
-    }
-
-    .offering-price strong {
-      font-size: 22px;
-      color: var(--black);
-    }
-
-    .discount-note {
-      text-align: center;
-      margin-top: 32px;
-      color: var(--mid-grey);
-      font-size: 16px;
-    }
-
-    /* Proof Section */
-    .proof-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      margin-top: 48px;
-    }
-
-    .proof-item {
-      padding: 28px;
-      background: var(--white);
-      border-radius: 12px;
-    }
-
-    .proof-item h4 {
-      color: var(--terracotta);
-      font-size: 13px;
-      margin-bottom: 14px;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .proof-item blockquote {
-      font-size: 17px;
-      font-style: italic;
-      margin-bottom: 14px;
-      padding-left: 16px;
-      border-left: 3px solid var(--light-grey);
-      line-height: 1.5;
-    }
-
-    .proof-item .stat {
-      font-size: 17px;
-      line-height: 1.5;
-    }
-
-    .proof-item .stat strong {
-      font-size: 32px;
-      color: var(--terracotta);
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .proof-attribution {
-      font-size: 14px;
-      color: var(--mid-grey);
-    }
-
-    /* About Section */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 48px;
-      align-items: start;
-    }
-
-    .about-content p {
-      font-size: 18px;
-      line-height: 1.6;
-    }
-
-    .credentials {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .credential {
-      background: var(--white);
-      border: 1px solid var(--light-grey);
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    .philosophy-box {
-      background: var(--terracotta);
-      color: var(--white);
-      padding: 28px;
-      border-radius: 12px;
-    }
-
-    .philosophy-box h3 {
-      color: var(--white);
-      margin-bottom: 14px;
-      font-size: 20px;
-    }
-
-    .philosophy-box p {
-      opacity: 0.92;
-      margin-bottom: 12px;
-      font-size: 17px;
-      line-height: 1.5;
-    }
-
-    .philosophy-box p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* CTA Section */
-    .cta-section {
-      text-align: center;
-      padding: 100px 0;
-      background: var(--black);
-      color: var(--white);
-    }
-
-    .cta-section h2 {
-      color: var(--white);
-      margin-bottom: 16px;
-    }
-
-    .cta-section p {
-      color: rgba(255,255,255,0.7);
-      font-size: 19px;
-      margin-bottom: 36px;
-    }
-
-    .cta-section .btn-primary {
-      padding: 18px 40px;
-      font-size: 17px;
-    }
-
-    .cta-contact {
-      margin-top: 20px;
-      font-size: 15px;
-      color: rgba(255,255,255,0.6);
-    }
-
-    .cta-contact a {
-      color: var(--terracotta);
-    }
-
-    /* Footer */
-    footer {
-      background: var(--off-white);
-      padding: 40px 0;
-      border-top: 1px solid var(--light-grey);
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-
-    .footer-links a {
-      color: var(--mid-grey);
-      font-size: 14px;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .offerings-grid,
-      .proof-grid,
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .method-steps {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .principles-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      .nav-links {
-        display: none;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .method-steps {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-buttons {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-        text-align: center;
-      }
-
-      .footer-content {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildFirst | AI Fluency for Leaders</title>
+<meta name="description" content="BuildFirst. Learn Fast. Repeat. Creating a generation of GenAI fluent executives. AI adoption starts with personal exploration, not team rollouts.">
+
+<!-- Open Graph / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="BuildFirst | AI Fluency for Leaders">
+<meta property="og:description" content="Creating a generation of GenAI fluent executives. AI adoption starts with personal exploration, not team rollouts.">
+<meta property="og:url" content="https://buildfirst.io">
+<meta property="og:site_name" content="BuildFirst">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BuildFirst | AI Fluency for Leaders">
+<meta name="twitter:description" content="Creating a generation of GenAI fluent executives. AI adoption starts with personal exploration, not team rollouts.">
+
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MKWKYTLT70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MKWKYTLT70');
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --amber:#D4912E;--amber-light:#E8A84C;--amber-soft:rgba(212,145,46,0.06);
+  --blue:#3A7BB5;--blue-soft:rgba(58,123,181,0.06);
+  --gradient:linear-gradient(135deg,#D4912E 0%,#C4A060 35%,#7EA8BF 65%,#3A7BB5 100%);
+  --gradient-h:linear-gradient(to right,#D4912E 0%,#C4A060 35%,#7EA8BF 65%,#3A7BB5 100%);
+  --bg:#FAFAF7;--bg-warm:#F5F3EE;--bg-card:#FFFFFF;--bg-dark:#1C1C28;
+  --text:#1C1C28;--text-2:#3A3A4A;--text-3:#6A6A7A;
+  --border:rgba(0,0,0,0.08);--border-s:rgba(0,0,0,0.12);--white:#FFFFFF;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{color:var(--amber);text-decoration:none;transition:all 0.2s;}
+a:hover{opacity:0.8;}
+.container{max-width:1080px;margin:0 auto;padding:0 24px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 0;}
+nav .container{display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:var(--text);}
+.nav-logo span{color:var(--amber);}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{color:var(--text-2);font-size:0.9rem;font-weight:500;padding:8px 4px;}
+.nav-links a:hover{color:var(--text);}
+.btn-nav{background:var(--gradient);color:var(--white)!important;padding:10px 22px;border-radius:6px;font-size:0.9rem;font-weight:600;}
+.btn-nav:hover{opacity:0.9;transform:translateY(-1px);}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;transition:all 0.3s;}
+.mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;bottom:0;background:var(--bg);z-index:99;padding:32px 24px;flex-direction:column;}
+.mobile-menu a{display:block;font-size:1.1rem;color:var(--text);padding:16px 0;border-bottom:1px solid var(--border);font-weight:500;}
+.mobile-menu.open{display:flex;}
+@media(max-width:768px){.nav-links{display:none;}.hamburger{display:block;}}
+
+/* BUTTONS */
+.btn-primary{display:inline-block;background:var(--gradient);color:var(--white);padding:14px 28px;border-radius:6px;font-size:1rem;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;}
+.btn-primary:hover{opacity:0.9;color:var(--white);transform:translateY(-1px);}
+.btn-secondary{display:inline-block;background:transparent;color:var(--text);padding:14px 28px;border-radius:6px;font-size:1rem;font-weight:500;border:1px solid var(--border-s);cursor:pointer;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--amber);color:var(--amber);}
+.btn-sm{padding:10px 20px;font-size:0.9rem;}
+.ctas{display:flex;gap:16px;flex-wrap:wrap;}
+.gradient-bar{height:3px;background:var(--gradient-h);}
+
+/* SECTION BASICS */
+section{padding:80px 0;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--amber);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;}
+.section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:400;color:var(--text);margin-bottom:16px;max-width:560px;line-height:1.25;}
+.section-body{font-size:1.02rem;color:var(--text-2);max-width:560px;margin-bottom:40px;line-height:1.7;}
+
+/* HERO */
+.hero{padding:140px 0 80px;}
+.hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:60px;align-items:start;}
+.hero-strapline{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(2.4rem,5vw,3.6rem);font-weight:400;line-height:1.12;color:var(--text);margin-bottom:12px;}
+.hero-strapline .line{display:block;}
+.hero-strapline .accent{color:var(--amber);}
+.hero-tagline{font-size:1.1rem;color:var(--text-2);font-style:italic;margin-bottom:28px;}
+.hero-body{font-size:1.05rem;color:var(--text-2);line-height:1.75;margin-bottom:32px;}
+.hero-body strong{color:var(--text);font-weight:600;}
+@media(max-width:800px){.hero-grid{grid-template-columns:1fr;gap:40px;}}
+
+/* ANIMATED CHAT */
+.chat-box{background:var(--bg-warm);border-radius:12px;padding:28px;border:1px solid var(--border);overflow:hidden;}
+.chat-q{font-size:0.9rem;color:var(--text-3);margin-bottom:20px;font-style:italic;opacity:0;animation:fadeUp 0.6s ease forwards;animation-delay:0.3s;}
+.chat-a{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px;opacity:0;transform:translateY(12px);}
+.chat-a.show{opacity:1;transform:translateY(0);transition:all 0.5s ease;}
+.chat-avatar{width:32px;height:32px;border-radius:50%;background:var(--gradient);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:white;font-weight:700;}
+.chat-bubble{background:var(--bg-card);border:1px solid var(--border);border-radius:2px 10px 10px 10px;padding:14px 16px;font-size:0.92rem;color:var(--text-2);line-height:1.55;}
+.chat-bubble cite{display:block;font-size:0.78rem;color:var(--text-3);margin-top:6px;font-style:normal;}
+.chat-pov{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);opacity:0;transform:translateY(12px);}
+.chat-pov.show{opacity:1;transform:translateY(0);transition:all 0.6s ease;}
+.chat-pov p{font-size:0.95rem;color:var(--text);line-height:1.6;}
+.chat-pov strong{color:var(--amber);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* BELIEF */
+#belief{background:var(--bg-warm);}
+.belief-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.belief-grid p{font-size:1.05rem;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+.belief-grid p strong{color:var(--text);}
+.belief-grid p.callout{font-family:'DM Serif Display',Georgia,serif;font-size:1.25rem;color:var(--text);line-height:1.5;margin:28px 0 0;}
+.belief-grid .what-not{margin-top:0;}
+.belief-grid .what-not p{font-size:0.98rem;}
+@media(max-width:800px){.belief-grid{grid-template-columns:1fr;}}
+
+/* SPECTRUM */
+#spectrum{background:var(--bg);}
+.spectrum-visual{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin:40px 0 28px;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+.spectrum-stage{padding:28px 18px;text-align:center;transition:all 0.3s;}
+.spectrum-stage:nth-child(1){background:rgba(212,145,46,0.06);}
+.spectrum-stage:nth-child(2){background:rgba(196,160,96,0.07);}
+.spectrum-stage:nth-child(3){background:rgba(126,168,191,0.07);}
+.spectrum-stage:nth-child(4){background:rgba(58,123,181,0.07);}
+.spectrum-stage:hover{transform:translateY(-2px);}
+.spectrum-stage h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;font-weight:400;color:var(--text);margin-bottom:8px;}
+.spectrum-stage p{font-size:0.9rem;color:var(--text-2);line-height:1.55;}
+.spectrum-cta{text-align:center;margin-top:24px;}
+@media(max-width:800px){.spectrum-visual{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.spectrum-visual{grid-template-columns:1fr;}}
+
+/* THREE WAYS TO LEARN */
+#learn{background:var(--bg-warm);}
+#learn .section-title{max-width:none;white-space:nowrap;}
+@media(max-width:600px){#learn .section-title{white-space:normal;}}
+.learn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.learn-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px;display:flex;flex-direction:column;transition:all 0.3s;}
+.learn-card:hover{border-color:var(--border-s);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.05);}
+.learn-card.featured{border-color:var(--amber);}
+.learn-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--amber);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+.learn-card h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.25rem;font-weight:400;color:var(--text);margin-bottom:4px;}
+.learn-price{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--amber);margin-bottom:14px;}
+.learn-card p{font-size:0.95rem;color:var(--text-2);line-height:1.65;margin-bottom:16px;}
+.learn-card ul{list-style:none;padding:0;margin:0 0 20px;flex:1;}
+.learn-card li{font-size:0.9rem;color:var(--text-2);padding:4px 0;padding-left:20px;position:relative;}
+.learn-card li::before{content:'\2192';position:absolute;left:0;color:var(--amber);}
+.learn-card .btn-primary,.learn-card .btn-secondary{align-self:flex-start;margin-top:auto;}
+@media(max-width:800px){.learn-grid{grid-template-columns:1fr;}}
+
+/* FRAMEWORK */
+#framework{background:var(--bg);border-top:1px solid var(--border);}
+.framework-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;}
+.fw-card{background:var(--bg-warm);border:1px solid var(--border);border-radius:8px;padding:20px 16px;}
+.fw-letter{font-family:'DM Serif Display',Georgia,serif;font-size:1.8rem;color:var(--amber);line-height:1;margin-bottom:8px;}
+.fw-card h4{font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.fw-card p{font-size:0.88rem;color:var(--text-2);line-height:1.5;}
+.fw-credit{margin-top:20px;font-size:0.82rem;color:var(--text-3);font-style:italic;}
+.fw-credit a{color:var(--blue);}
+@media(max-width:700px){.framework-grid{grid-template-columns:1fr 1fr;}}
+
+/* WORKSHOP + BUILD */
+#beyond{background:var(--bg-warm);}
+.beyond-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:32px;}
+.beyond-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 28px;display:flex;flex-direction:column;}
+.beyond-card:hover{border-color:var(--border-s);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.05);transition:all 0.3s;}
+.beyond-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--amber);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+.beyond-card h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.25rem;font-weight:400;color:var(--text);margin-bottom:4px;}
+.beyond-price{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--amber);margin-bottom:14px;}
+.beyond-card p{font-size:0.95rem;color:var(--text-2);line-height:1.65;margin-bottom:16px;}
+.beyond-card ul{list-style:none;padding:0;margin:0 0 20px;flex:1;}
+.beyond-card li{font-size:0.9rem;color:var(--text-2);padding:4px 0;padding-left:20px;position:relative;}
+.beyond-card li::before{content:'\2192';position:absolute;left:0;color:var(--amber);}
+.beyond-card .btn-primary,.beyond-card .btn-secondary{align-self:flex-start;margin-top:auto;}
+@media(max-width:700px){.beyond-grid{grid-template-columns:1fr;}}
+
+/* ABOUT */
+#about{background:var(--bg);}
+.about-content{display:grid;grid-template-columns:2fr 1fr;gap:48px;align-items:start;}
+.about-text p{font-size:1rem;color:var(--text-2);margin-bottom:18px;line-height:1.75;}
+.about-text p strong{color:var(--text);font-weight:600;}
+.about-sidebar{background:var(--bg-warm);border:1px solid var(--border);border-radius:10px;padding:24px;}
+.about-sidebar h4{font-size:0.82rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px;}
+.about-sidebar a{display:block;font-size:0.9rem;color:var(--text-2);padding:8px 0;border-bottom:1px solid var(--border);}
+.about-sidebar a:last-child{border-bottom:none;}
+.about-sidebar a:hover{color:var(--amber);}
+@media(max-width:700px){.about-content{grid-template-columns:1fr;}}
+
+/* CTA */
+.cta-section{text-align:center;padding:80px 0;background:var(--bg-dark);color:var(--white);position:relative;overflow:hidden;}
+.cta-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:var(--gradient);opacity:0.08;}
+.cta-section .container{position:relative;}
+.cta-section h2{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:400;margin-bottom:14px;}
+.cta-section p{font-size:1.02rem;color:rgba(255,255,255,0.7);max-width:500px;margin:0 auto 32px;}
+.cta-section .ctas{justify-content:center;}
+.cta-section .btn-secondary{color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.2);}
+.cta-section .btn-secondary:hover{border-color:var(--amber-light);color:var(--white);}
+
+/* FOOTER */
+footer{padding:40px 0;border-top:1px solid var(--border);background:var(--bg);}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;}
+.footer-brand p{color:var(--text-3);margin-top:8px;font-size:0.88rem;font-style:italic;}
+.footer-col h4{font-size:0.75rem;color:var(--text-2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;font-weight:600;}
+.footer-col a{display:block;color:var(--text-3);padding:4px 0;font-size:0.88rem;}
+.footer-col a:hover{color:var(--amber);}
+.footer-bottom{margin-top:32px;padding-top:20px;border-top:1px solid var(--border);font-size:0.8rem;color:var(--text-3);display:flex;justify-content:space-between;}
+@media(max-width:700px){.footer-grid{grid-template-columns:1fr;gap:24px;}}
+</style>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <nav>
-    <div class="container">
-      <a href="#" class="logo">Build<span>First</span></a>
-      <ul class="nav-links">
-        <li><a href="#method">Method</a></li>
-        <li><a href="#offerings">Workshops</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="https://calendar.app.google/LoBnGNiaqtJAXTqE9" target="_blank" class="btn btn-primary" style="padding: 10px 20px;">Let's Talk</a></li>
-      </ul>
-    </div>
-  </nav>
+<a href="#main" class="sr-only">Skip to content</a>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h1>Give yourself a day to find out what AI can actually do for you.</h1>
-        <p class="subtitle">Not a demo. Not a deck. You'll build working AI tools yourself—and leave knowing what's possible, what's hard, and what's BS.</p>
-        <div class="hero-buttons">
-          <a href="#offerings" class="btn btn-primary">See Workshops</a>
-          <a href="#method" class="btn btn-secondary">How It Works</a>
+<!-- NAV -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <a href="/" class="nav-logo">Build<span>First</span></a>
+    <div class="nav-links">
+      <a href="#belief">Our Belief</a>
+      <a href="#learn">Learn</a>
+      <a href="#about">About</a>
+      <a href="https://calendar.app.google/mS1HTnEVe4YkV7x68" target="_blank" class="btn-nav">Let's Talk</a>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu" onclick="document.getElementById('mm').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div id="mm" class="mobile-menu">
+  <a href="#belief" onclick="this.parentElement.classList.remove('open')">Our Belief</a>
+  <a href="#learn" onclick="this.parentElement.classList.remove('open')">Learn</a>
+  <a href="#beyond" onclick="this.parentElement.classList.remove('open')">Workshop & Build</a>
+  <a href="#about" onclick="this.parentElement.classList.remove('open')">About</a>
+  <a href="https://calendar.app.google/mS1HTnEVe4YkV7x68" target="_blank" class="btn-primary" style="text-align:center;margin-top:16px;">Let's Talk</a>
+</div>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-strapline">
+          <span class="line">BuildFirst.</span>
+          <span class="line accent">Learn Fast.</span>
+          <span class="line">Repeat.</span>
+        </div>
+        <p class="hero-tagline">Creating a generation of GenAI fluent executives.</p>
+        <p class="hero-body">We hear it again and again: <strong>executives don't have time to learn AI.</strong> They have businesses to run. But here's the thing: you don't need weeks to start. You need 90 minutes, something real to build, and someone who's done it before walking beside you.</p>
+        <div class="ctas">
+          <a href="https://calendar.app.google/mS1HTnEVe4YkV7x68" target="_blank" class="btn-primary">Let's have a conversation</a>
+          <a href="assessment.html" class="btn-secondary">Take the Assessment</a>
+        </div>
+      </div>
+
+      <!-- ANIMATED CHAT -->
+      <div class="chat-box" id="chatBox">
+        <div class="chat-q" id="chatQ"><strong>Anthropic's Economic Index Briefing, Feb 2026.</strong> Three leaders were asked: "What's your advice to those behind you on the AI adoption curve?"</div>
+
+        <div class="chat-a" id="c1">
+          <div class="chat-avatar">SH</div>
+          <div class="chat-bubble">I would immediately focus on open exploration, both personally as a leader within the organisation and for the team.<cite>— Seth Hain, SVP R&D, EPIC</cite></div>
+        </div>
+
+        <div class="chat-a" id="c2">
+          <div class="chat-avatar">SM</div>
+          <div class="chat-bubble">Innovation in AI is happening at the speed of an idea. You don't always have to be first movers, but be the fast adaptors.<cite>— Sridhar Masan, CEO, NYSE</cite></div>
+        </div>
+
+        <div class="chat-a" id="c3">
+          <div class="chat-avatar">SH</div>
+          <div class="chat-bubble">We all have to get personally involved and personally invested in using the tools. We've got to move fast. We cannot afford to get left behind.<cite>— Steve Hasker, CEO, Thomson Reuters</cite></div>
+        </div>
+
+        <div class="chat-pov" id="chatPov">
+          <p><strong>AI adoption starts with you.</strong> Personally. Not a committee, not a training programme. You, building something real.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- OUR BELIEF -->
+<section id="belief">
+  <div class="container">
+    <div class="section-label">Our Belief</div>
+    <div class="belief-grid">
+      <div>
+        <p>You've spent decades building the intuitions that make you good at what you do. Sharp instincts about people, markets, risk, opportunity.</p>
+
+        <p><strong>AI changes the landscape those intuitions were built on.</strong></p>
+      </div>
+      <div>
+        <p><strong>But, you can't calibrate AI intuition by reading about it.</strong></p>
+
+        <p>Busy leaders can't spend weeks on courses that may or may not stick. But you can carve out a few hours to build something real. The experience of building is enough to begin recalibrating your intuition. Once you see for yourself what the technology does and doesn't do, everything else follows from there.</p>
+
+        <div class="what-not">
+          <p><strong>What this is not.</strong> BuildFirst is not a demo. There are no decks. It's not another course you'll never finish. You'll build working AI tools yourself and leave knowing what's possible, what's hard, and what's BS.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Time-out Section - NEW -->
-  <section class="time-out">
-    <div class="container">
-      <div class="time-out-content">
-        <h2>You don't have time to "learn AI." That's exactly the point.</h2>
-        <p>Busy leaders can't spend weeks on courses that may or may not stick. But you <em>can</em> carve out a few hours to build something real. <strong>That's enough to recalibrate your intuition</strong>—to see for yourself what the technology does and doesn't do. Everything else follows from there.</p>
+<!-- SPECTRUM -->
+<section id="spectrum">
+  <div class="container">
+    <div class="section-label">The Spectrum</div>
+    <div class="section-title">Four ways people engage with AI.</div>
+    <div class="section-body">Anthropic calls them Automation, Augmentation, and Agency. We add a fourth, Asking, because that's where most people actually start. The question isn't where you are. It's what you do next.</div>
+    <div class="spectrum-visual">
+      <div class="spectrum-stage">
+        <h3>Asking</h3>
+        <p>Using AI like a search engine. Questions and answers. Helpful, but you're barely scratching the surface.</p>
+      </div>
+      <div class="spectrum-stage">
+        <h3>Automation</h3>
+        <p>AI handles specific tasks you've defined. Email summaries, template drafts. Repeatable and useful, but you're not learning.</p>
+      </div>
+      <div class="spectrum-stage">
+        <h3>Augmentation</h3>
+        <p>You and AI think together. You iterate, challenge, build. Your judgment plus its capability. This is where the real leverage lives.</p>
+      </div>
+      <div class="spectrum-stage">
+        <h3>Agency</h3>
+        <p>AI handles entire workflows on your behalf. You design the system, review the outputs. The frontier.</p>
       </div>
     </div>
-  </section>
+    <div class="spectrum-cta">
+      <a href="assessment.html" class="btn-secondary">Take the assessment: find out where you are and what to do next →</a>
+    </div>
+  </div>
+</section>
 
-  <!-- Problem Section -->
-  <section class="section section-light">
-    <div class="container">
-      <div class="problem-content">
-        <h2>Most AI training doesn't work.</h2>
-        <p class="lead">You've probably tried some version of it:</p>
-        <ul class="problem-list">
-          <li>Watching demos that looked impressive but didn't stick</li>
-          <li>Taking courses you never finished</li>
-          <li>Reading about AI without ever building anything</li>
-          <li>Attending conferences that felt exciting but changed nothing</li>
+<!-- THREE WAYS TO LEARN -->
+<section id="learn">
+  <div class="container">
+    <div class="section-label">Three Ways to Learn</div>
+    <div class="section-title">Start wherever makes sense for you.</div>
+    <div class="learn-grid">
+
+      <!-- ASSESSMENT -->
+      <div class="learn-card">
+        <div class="learn-label">The Assessment</div>
+        <h3>Find out where you are</h3>
+        <div class="learn-price">Free, 5 minutes</div>
+        <p>10 questions. See where you sit on the spectrum, get your fluency profile, and find out what to focus on next, regardless of where you're starting from.</p>
+        <a href="assessment.html" class="btn-secondary btn-sm">Take the Assessment</a>
+      </div>
+
+      <!-- DIAGNOSTIC -->
+      <div class="learn-card">
+        <div class="learn-label">The Guided Diagnostic</div>
+        <h3>90 minutes to clarity</h3>
+        <div class="learn-price">$650, 1:1 with David</div>
+        <p>I map your actual workflows against the spectrum. We identify the one thing AI could change in your work this month. You leave with Claude on your laptop and a personalised plan to start building fluency.</p>
+        <ul>
+          <li>Your personalised AI Fluency Map</li>
+          <li>Your first build identified</li>
+          <li>7 activities in 7 days to start your fluency journey</li>
+          <li>Fee credited against the Sherpa</li>
         </ul>
-        <p>Here's the problem: <strong>your intuition about what's possible, what's hard, and what's BS is miscalibrated.</strong> The pattern recognition you've built over a decade of leading—those instincts were formed before AI. They're not wrong. They're incomplete.</p>
-        <p>And there's no shortcut to recalibrating them except to use the tools yourself.</p>
-
-        <div class="insight-callout">
-          <p>"The #1 predictor of whether a company succeeds with AI is whether the CEO is using ChatGPT, Claude, or similar tools—many times a day."</p>
-          <span class="source">— Dan Shipper, CEO Every.to</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Method Section -->
-  <section id="method" class="section">
-    <div class="container">
-      <div class="method-intro">
-        <h2>Build first. Theory later.</h2>
-        <p>You don't learn to swim by watching videos. You don't calibrate AI intuition by reading about it. You build something, break it, iterate—and the concepts make sense because you've experienced them.</p>
+        <a href="https://calendar.app.google/sFn2sumtZ3JsTPKEA" target="_blank" class="btn-primary btn-sm">Let's have a conversation</a>
       </div>
 
-      <div class="method-steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h3>Build something real</h3>
-          <p>In the first 30 minutes—not a toy demo</p>
-        </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h3>Break it</h3>
-          <p>Errors are part of the process</p>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h3>Iterate</h3>
-          <p>Build-test-report until it works</p>
-        </div>
-        <div class="step">
-          <div class="step-number">4</div>
-          <h3>Leave with tools</h3>
-          <p>Working software for tomorrow</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Play Section -->
-  <section class="why-play-section">
-    <div class="container">
-      <h2>Why play is the method.</h2>
-      <div class="principles-grid">
-        <div class="principle-card">
-          <h4>Joyful Failing</h4>
-          <p>When something breaks, we troubleshoot together. The mess is the learning. No one's keeping score.</p>
-        </div>
-        <div class="principle-card">
-          <h4>Low Stakes First</h4>
-          <p>Start with personally useful tools—a recipe organizer, a family scheduler—where failure has no consequences.</p>
-        </div>
-        <div class="principle-card">
-          <h4>Safe Danger</h4>
-          <p>Safety alone leads to stagnation. Danger alone overwhelms. The sweet spot is where real learning happens.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Calibrated Section -->
-  <section class="calibrated-section">
-    <div class="container">
-      <div class="calibrated-content">
-        <h2>Calibrated to where you are.</h2>
-        <p>
-          A short assessment before we begin helps me understand where you and your team sit on the AI adoption spectrum—<em>what to automate, what to augment, what to leave alone.</em> The workshop meets you there. And you leave with a framework for making those calls yourself, long after we're done.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Offerings Section -->
-  <section id="offerings" class="section section-warm" style="padding-top: 100px;">
-    <div class="container">
-      <h2 style="text-align: center;">For leaders. For teams.</h2>
-
-      <div class="offerings-grid">
-        <!-- Executive Card -->
-        <div class="offering-card">
-          <div class="offering-label">For Leaders</div>
-          <h3>Executive AI Immersion</h3>
-          <p class="description">Six hours to start recalibrating the intuition you've built over your career. You'll leave with working tools and calibrated judgment about AI.</p>
-
-          <ul class="offering-features">
-            <li>Build working AI tools yourself</li>
-            <li>Calibrate what's possible vs. what's BS</li>
-            <li>Evaluate AI proposals from experience</li>
-            <li>Establish a practice you can sustain</li>
-          </ul>
-
-          <div class="offering-price">
-            <strong>From $1,500</strong> per person<br>
-            Half-day workshop, 4-week cohort, or 1:1 coaching
-          </div>
-
-          <a href="https://calendar.app.google/LoBnGNiaqtJAXTqE9" target="_blank" class="btn btn-primary">Learn More</a>
-        </div>
-
-        <!-- Team Card -->
-        <div class="offering-card">
-          <div class="offering-label">For Teams</div>
-          <h3>Team AI Activation</h3>
-          <p class="description">Teams that learn together adopt together. Your team leaves with working tools and shared vocabulary—not just another training checkbox.</p>
-
-          <ul class="offering-features">
-            <li>Leave with 2-6 working tools</li>
-            <li>Build shared vocabulary for collaboration</li>
-            <li>Normalize failure and experimentation</li>
-            <li>Same-day value, not someday knowledge</li>
-          </ul>
-
-          <div class="offering-price">
-            <strong>From $4,000</strong> for teams up to 10<br>
-            Half-day, full-day, or 4-week program
-          </div>
-
-          <a href="https://calendar.app.google/LoBnGNiaqtJAXTqE9" target="_blank" class="btn btn-primary">Learn More</a>
-        </div>
-      </div>
-
-      <p class="discount-note">
-        <strong>20% cascade discount</strong> when you book team training within 60 days of executive workshop.
-      </p>
-    </div>
-  </section>
-
-  <!-- Proof Section -->
-  <section class="section section-light">
-    <div class="container">
-      <h2 style="text-align: center;">This isn't theory. It's pattern recognition.</h2>
-
-      <div class="proof-grid">
-        <div class="proof-item">
-          <h4>The Research</h4>
-          <blockquote>"Leaders have built intuitions over 10 or 15 years and they are highly regarded for those intuitions. But now with AI in the picture, those intuitions will have to be relearned."</blockquote>
-          <p class="proof-attribution">— Aishwarya Raanti, ex-Alexa, ex-Microsoft</p>
-        </div>
-
-        <div class="proof-item">
-          <h4>The Pattern</h4>
-          <blockquote>"We didn't just save money. We are learning and validating what we actually need."</blockquote>
-          <p class="proof-attribution">— Andy Frank, CEO of UDig (Richmond), on building an AI agent himself</p>
-        </div>
-
-        <div class="proof-item">
-          <h4>The Evidence</h4>
-          <p class="stat"><strong>83%</strong> of executives say psychological safety measurably improves AI initiative success.</p>
-          <p class="proof-attribution">No safety, no experiments. No experiments, no learning.</p>
-        </div>
-
-        <div class="proof-item">
-          <h4>The Commitment</h4>
-          <p class="stat">The Rackspace CEO blocks <strong style="font-size: 24px;">4-6am</strong> daily for AI learning.</p>
-          <p class="proof-attribution">Result: Can evaluate AI proposals from experience, not briefings.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="section">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-content">
-          <h2>Built by a practitioner, not a professor.</h2>
-          <p>I've spent 20+ years building products and leading transformation at places like <strong>IDEO</strong>, <strong>Capital One</strong>, <strong>DBS</strong>, and <strong>3Pillar Global</strong>.</p>
-          <p>Now I build AI tools daily and document the process—including what breaks—at <a href="https://theaicookbook.substack.com/" target="_blank">The AI Cookbook</a> on Substack. You can see the mess, not just the wins.</p>
-
-          <div class="credentials">
-            <span class="credential">IDEO</span>
-            <span class="credential">Capital One</span>
-            <span class="credential">DBS Bank</span>
-            <span class="credential">3Pillar Global</span>
-            <span class="credential">Design Thinking</span>
-            <span class="credential">Google Sprints</span>
-          </div>
-        </div>
-
-        <div class="philosophy-box">
-          <h3>The philosophy</h3>
-          <p>The technology is new. How to build isn't.</p>
-          <p>Design thinking, experimentation, starting with real problems—these fundamentals still apply. AI just makes them faster.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section id="contact" class="cta-section">
-    <div class="container">
-      <h2>Ready to build?</h2>
-      <p>No pitch deck. No 47-slide proposal. Just a conversation about whether this is right for you.</p>
-      <a href="https://calendar.app.google/LoBnGNiaqtJAXTqE9" target="_blank" class="btn btn-primary">Let's Talk</a>
-      <p class="cta-contact">Or email directly: <a href="mailto:david@thisisluminary.co">david@thisisluminary.co</a></p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <span class="logo">Build<span>First</span></span>
-        <ul class="footer-links">
-          <li><a href="https://theaicookbook.substack.com/" target="_blank">The AI Cookbook</a></li>
-          <li><a href="https://www.linkedin.com/in/dbeath/" target="_blank">LinkedIn</a></li>
-          <li><a href="mailto:david@thisisluminary.co">Contact</a></li>
+      <!-- SHERPA -->
+      <div class="learn-card featured">
+        <div class="learn-label">The Sherpa</div>
+        <h3>From curious to fluent</h3>
+        <div class="learn-price">$4,000, 8 sessions over 10-12 weeks</div>
+        <p>We build something real in session one. Every session moves you further along the spectrum. Daily practice between sessions. Industry-specific AI briefings. By the end, you're fluent.</p>
+        <ul>
+          <li>Build something real in every phase</li>
+          <li>Daily practice between sessions</li>
+          <li>Industry AI briefings</li>
+          <li>The 4D fluency framework</li>
+          <li>Move toward Augmentation</li>
         </ul>
+        <a href="https://calendar.app.google/wm2yUS6S5tNN4Pas7" target="_blank" class="btn-primary btn-sm">Let's talk about the Sherpa</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORK -->
+<section id="framework">
+  <div class="container">
+    <div class="section-label">The Framework</div>
+    <div class="section-title">What we develop: four skills that matter more than prompting.</div>
+    <div class="section-body">Built on Anthropic's AI Fluency Framework. These are the four competencies the diagnostic measures and the Sherpa develops.</div>
+    <div class="framework-grid">
+      <div class="fw-card">
+        <div class="fw-letter">1</div>
+        <h4>Delegation</h4>
+        <p>Knowing what to hand off to AI and what to keep. Most people get this wrong.</p>
+      </div>
+      <div class="fw-card">
+        <div class="fw-letter">2</div>
+        <h4>Description</h4>
+        <p>Telling AI what you actually need. Not prompting. Clarity of thought.</p>
+      </div>
+      <div class="fw-card">
+        <div class="fw-letter">3</div>
+        <h4>Discernment</h4>
+        <p>Knowing when output is good, mediocre, or dangerous. The most underrated skill.</p>
+      </div>
+      <div class="fw-card">
+        <div class="fw-letter">4</div>
+        <h4>Diligence</h4>
+        <p>Verifying, checking, governing. The trust layer that makes everything safe to scale.</p>
       </div>
     </div>
-  </footer>
+    <p class="fw-credit">From Anthropic's AI Fluency Framework (Dakan, Feller & Anthropic, 2025), CC BY-NC-SA 4.0.</p>
+  </div>
+</section>
+
+<!-- WORKSHOP + BUILD -->
+<section id="beyond">
+  <div class="container">
+    <div class="section-label">Beyond Individual</div>
+    <div class="section-title">For teams and for builds.</div>
+    <div class="section-body">Not every engagement is a Sherpa. Sometimes you need your team up to speed in a day. Sometimes you already know what to build and need a partner to build it.</div>
+    <div class="beyond-grid">
+
+      <!-- WORKSHOP -->
+      <div class="beyond-card">
+        <div class="beyond-label">The Workshop</div>
+        <h3>Get your team up to speed</h3>
+        <div class="beyond-price">From $4,000, 5 hours, your team</div>
+        <p>A hands-on group session where your team builds something real together. Not a lecture. Not a demo. Everyone leaves with Claude on their laptop and a shared understanding of what AI can actually do in your business.</p>
+        <ul>
+          <li>Up to 12 participants</li>
+          <li>Tailored to your industry and workflows</li>
+          <li>Live builds, not slides</li>
+          <li>Everyone leaves with working tools</li>
+          <li>Follow-up resources for the team</li>
+        </ul>
+        <a href="https://calendar.app.google/mS1HTnEVe4YkV7x68" target="_blank" class="btn-primary btn-sm">Let's have a conversation</a>
+      </div>
+
+      <!-- THE BUILD -->
+      <div class="beyond-card">
+        <div class="beyond-label">The Build</div>
+        <h3>Know what you want to build? Let's build it.</h3>
+        <div class="beyond-price">Scoped and priced per project</div>
+        <p>Not everyone needs coaching. Some leaders already know the AI tool, workflow, or system they need. <strong>You don't need a programme. You need a build partner.</strong></p>
+        <ul>
+          <li>AI tools and workflows</li>
+          <li>Internal automations</li>
+          <li>Client-facing AI products</li>
+          <li>Integrations and systems</li>
+          <li>You own everything we build</li>
+        </ul>
+        <a href="build-intake.html" class="btn-secondary btn-sm">Tell me what you want to build</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">About</div>
+    <div class="section-title">Built by someone who builds.</div>
+    <div class="about-content">
+      <div class="about-text">
+        <p><strong>20+ years building products and leading transformation</strong> at IDEO, Capital One, DBS, and 3Pillar Global. I've been on both sides: the consultancy selling the vision and the company trying to make it real.</p>
+        <p>Now I build AI tools daily, documenting the process, including what breaks, at The AI Cookbook. I use Anthropic's Claude daily. It's where I do my best work. But I'm tool agnostic: we can play and learn in OpenAI, Copilot, wherever you're most comfortable.</p>
+        <p><strong>You can't calibrate AI intuition by reading about it.</strong> You build something, break it, and iterate. That's the BuildFirst philosophy.</p>
+        <p>No safety, no experiments. No experiments, no learning.</p>
+      </div>
+      <div class="about-sidebar">
+        <h4>Resources</h4>
+        <a href="https://theaicookbook.substack.com" target="_blank">The AI Cookbook →</a>
+        <a href="https://www.linkedin.com/in/dbeath" target="_blank">LinkedIn →</a>
+        <a href="https://www.youtube.com/watch?v=yGi1FZ4LHBM" target="_blank">Economic Index Briefing (Video) →</a>
+        <a href="https://www.anthropic.com/economic-index" target="_blank">Anthropic Economic Index →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Give yourself 90 minutes.</h2>
+    <p>Not a course. Not a deck. A diagnostic. You'll leave knowing exactly what AI can do for your business.</p>
+    <div class="ctas">
+      <a href="https://calendar.app.google/mS1HTnEVe4YkV7x68" target="_blank" class="btn-primary">Let's have a conversation</a>
+      <a href="assessment.html" class="btn-secondary">Take the Assessment</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="gradient-bar"></div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="nav-logo" style="font-family:'DM Serif Display',Georgia,serif;font-size:1.05rem;color:var(--text);">Build<span style="color:var(--amber);">First</span></span>
+        <p>Creating a generation of GenAI fluent executives.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="#belief">Our Belief</a>
+        <a href="#learn">Learn</a>
+        <a href="#beyond">Workshop & Build</a>
+        <a href="#about">About</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:david@thisisluminary.co">Email</a>
+        <a href="https://www.linkedin.com/in/dbeath" target="_blank">LinkedIn</a>
+        <a href="https://theaicookbook.substack.com" target="_blank">The AI Cookbook</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 BuildFirst</span>
+      <span>Built on research from Anthropic.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CHAT ANIMATION -->
+<script>
+(function(){
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        animateChat();
+        observer.disconnect();
+      }
+    });
+  },{threshold:0.3});
+  observer.observe(document.getElementById('chatBox'));
+
+  function animateChat(){
+    const delays=[800,2200,3800,5400];
+    ['c1','c2','c3'].forEach((id,i)=>{
+      setTimeout(()=>{
+        document.getElementById(id).classList.add('show');
+      },delays[i]);
+    });
+    setTimeout(()=>{
+      document.getElementById('chatPov').classList.add('show');
+    },delays[3]);
+  }
+})();
+</script>
 
 </body>
 </html>
