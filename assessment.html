@@ -180,8 +180,12 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
     <h1 class="page-title">How do you engage with AI?</h1>
     <p class="page-intro">10 questions. About 5 minutes. No wrong answers. This isn't a test. It's a mirror. You'll see where you are, where the gaps are, and what to focus on next.</p>
     <p class="page-intro" style="margin-bottom:32px;">Your answers map to <strong>four stages of AI engagement</strong> (Asking through Agency) and Anthropic's <strong>4D Framework</strong> (Delegation, Description, Discernment, Diligence).</p>
+    <div class="email-row" style="margin-bottom:24px;max-width:400px;">
+      <input type="email" id="introEmail" placeholder="you@company.com" style="flex:1;" onkeydown="if(event.key==='Enter'){event.preventDefault();startAssessment();}">
+    </div>
+    <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:32px;">We'll send your results to this address. Your email goes to David at BuildFirst. No spam, no list.</p>
     <div class="btn-row">
-      <button class="btn-next" onclick="startAssessment()">Let's find out</button>
+      <button class="btn-next" id="btnStart" onclick="startAssessment()">Let's find out</button>
     </div>
   </div>
 
@@ -228,15 +232,9 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
     <!-- Personalised insight -->
     <div class="insight-box" id="insightBox"></div>
 
-    <!-- Email capture -->
+    <!-- Email confirmation -->
     <div class="email-capture" id="emailCapture">
-      <p>Want a copy of your results? I'll send them to your inbox.</p>
-      <div class="email-row" id="emailRow">
-        <input type="email" id="resultsEmail" placeholder="you@company.com">
-        <button onclick="sendResults()">Send</button>
-      </div>
-      <div class="email-sent" id="emailSent">Done. Your results are on their way to <span id="emailConfirm"></span>.</div>
-      <p style="font-size:0.78rem;color:var(--text-3);margin-top:8px;" id="emailNote">Your email goes to David at BuildFirst. No spam, no list. Just your results.</p>
+      <p style="color:var(--text-2);">A copy of your results is on its way to <strong id="emailConfirm"></strong>.</p>
     </div>
 
     <!-- CTA: Introduction call -->
@@ -478,7 +476,17 @@ function showQuestion(idx) {
 // ========================================
 // NAVIGATION
 // ========================================
+var capturedEmail = '';
+
 function startAssessment() {
+  var emailInput = document.getElementById('introEmail');
+  var email = emailInput.value.trim();
+  if (!email || !email.includes('@')) {
+    emailInput.focus();
+    emailInput.style.borderColor = 'var(--amber)';
+    return;
+  }
+  capturedEmail = email;
   document.getElementById('intro').classList.remove('active');
   document.getElementById('intro').style.display = 'none';
   document.getElementById('assessment').style.display = 'block';
@@ -659,6 +667,9 @@ function showResults() {
     '<p>' + insights[weakDim] + '</p>';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Auto-send results to the email captured upfront
+  sendResults();
 }
 
 // ========================================
@@ -793,8 +804,10 @@ function buildEmailHTML(r) {
 }
 
 function sendResults() {
-  var email = document.getElementById('resultsEmail').value.trim();
+  var email = capturedEmail;
   if (!email || !email.includes('@')) return;
+
+  document.getElementById('emailConfirm').textContent = email;
 
   var r = calculateResults();
 
@@ -843,11 +856,6 @@ function sendResults() {
       body: JSON.stringify(payload),
     }).catch(function(err) { console.warn('[BuildFirst Assessment] Send failed:', err); });
   }
-
-  document.getElementById('emailRow').style.display = 'none';
-  document.getElementById('emailNote').style.display = 'none';
-  document.getElementById('emailConfirm').textContent = email;
-  document.getElementById('emailSent').style.display = 'block';
 }
 </script>
 
