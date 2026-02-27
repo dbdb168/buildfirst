@@ -599,6 +599,104 @@
     text-decoration: underline;
   }
 
+  /* Your responses */
+  .responses-section {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--divider);
+  }
+
+  .responses-section .section-header {
+    margin-bottom: 4px;
+  }
+
+  .response-item {
+    margin-bottom: 20px;
+  }
+
+  .response-item-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--warm-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+
+  .response-item-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--black);
+    padding: 12px 16px;
+    background: var(--light-gray);
+    border-radius: 6px;
+    white-space: pre-wrap;
+  }
+
+  /* AI prompt section */
+  .ai-prompt-section {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--divider);
+  }
+
+  .ai-prompt-section .section-header {
+    margin-bottom: 4px;
+  }
+
+  .ai-prompt-intro {
+    font-size: 14.5px;
+    color: var(--warm-gray);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .ai-prompt-intro strong {
+    color: var(--coral);
+  }
+
+  .prompt-box {
+    position: relative;
+    background: var(--black);
+    color: #E8E0DA;
+    border-radius: 8px;
+    padding: 24px;
+    padding-top: 48px;
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #E8E0DA;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 5px;
+    padding: 6px 14px;
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .copy-btn.copied {
+    background: var(--energy-5);
+    border-color: var(--energy-5);
+    color: var(--white);
+  }
+
   /* Responsive */
   @media (max-width: 600px) {
     .page { padding: 32px 20px 48px; }
@@ -784,6 +882,23 @@
     <div class="focus-area" id="focusArea">
       <div class="focus-area-title" id="focusTitle"></div>
       <p id="focusText"></p>
+    </div>
+
+    <!-- AI Prompt Section -->
+    <div class="ai-prompt-section" id="aiPromptSection">
+      <h2 class="section-header">Try this now</h2>
+      <p class="ai-prompt-intro">Copy this prompt into your AI — ChatGPT, Claude, Gemini, any of them — and start building your <strong id="promptDimName"></strong> skills right now. <em>You do not need to know how to use AI to do this. That is the point.</em></p>
+      <div class="prompt-box" id="promptBox">
+        <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">Copy prompt</button>
+        <span id="promptText"></span>
+      </div>
+    </div>
+
+    <!-- Your Responses -->
+    <div class="responses-section" id="responsesSection">
+      <h2 class="section-header">What you told us</h2>
+      <div class="section-desc">Your answers about what to build together.</div>
+      <div id="responsesList"></div>
     </div>
 
     <div class="framework-note">
@@ -1147,6 +1262,131 @@
   };
 
   // ========================
+  // AI prompts per dimension
+  // ========================
+  const dimPrompts = {
+    delegation: function(name, level, scores) {
+      return `I just completed an AI fluency assessment. My name is ${name}. Here are my results:
+
+- Overall stage: ${getStage(scores.overall).charAt(0).toUpperCase() + getStage(scores.overall).slice(1)}
+- Delegation: ${level} (my biggest growth area)
+- Description: ${getLevel(scores.description)}
+- Discernment: ${getLevel(scores.discernment)}
+- Diligence: ${getLevel(scores.diligence)}
+
+My weakest area is Delegation — knowing what tasks to hand off to AI versus what to keep for myself.
+
+I need your help to build this skill. Here is what I want you to do:
+
+1. Start by asking me about my typical work week — what I spend my time on, what drains me, what I keep doing because "it is faster if I just do it myself."
+
+2. Once you understand my work, help me sort my tasks into three buckets:
+   - AI-safe: hand off entirely, AI can do this well
+   - Human-only: requires my judgment, relationships, or creativity
+   - Collaborative: AI does the first pass, I review and refine
+
+3. For each AI-safe task you identify, give me a specific, concrete first step I can try right now. Not theory — something I can do in the next 10 minutes.
+
+4. Help me build a simple decision filter: a set of 3-4 questions I can ask myself whenever a new task comes up, to quickly decide whether AI should touch it.
+
+Be direct with me. If I am holding onto something I should be delegating, tell me. The goal is to free up my time for the work that actually needs me.
+
+Start by asking me about my work.`;
+    },
+    description: function(name, level, scores) {
+      return `I just completed an AI fluency assessment. My name is ${name}. Here are my results:
+
+- Overall stage: ${getStage(scores.overall).charAt(0).toUpperCase() + getStage(scores.overall).slice(1)}
+- Delegation: ${getLevel(scores.delegation)}
+- Description: ${level} (my biggest growth area)
+- Discernment: ${getLevel(scores.discernment)}
+- Diligence: ${getLevel(scores.diligence)}
+
+My weakest area is Description — communicating clearly with AI to get the output I actually need.
+
+I need your help to build this skill. Here is what I want you to do:
+
+1. Teach me a simple framework for writing better AI requests. I want something I can remember and use every time — like a checklist: role, context, task, format, constraints.
+
+2. Ask me about a task I do regularly where AI could help. Then build me a reusable prompt template for that task — something I can use again and again, not just once.
+
+3. Show me the difference between a weak request and a strong one, side by side, using my actual work as the example. I want to see what I have been doing wrong and what good looks like.
+
+4. Give me a challenge: one task I can try right now using the framework you taught me. Walk me through it step by step.
+
+I learn best by doing, so do not just explain — make me practice. If my instructions to you are vague or unclear during this conversation, point it out. That is exactly the skill I am trying to build.
+
+Start by asking me about a recent time I tried to use AI and the result was not what I wanted.`;
+    },
+    discernment: function(name, level, scores) {
+      return `I just completed an AI fluency assessment. My name is ${name}. Here are my results:
+
+- Overall stage: ${getStage(scores.overall).charAt(0).toUpperCase() + getStage(scores.overall).slice(1)}
+- Delegation: ${getLevel(scores.delegation)}
+- Description: ${getLevel(scores.description)}
+- Discernment: ${level} (my biggest growth area)
+- Diligence: ${getLevel(scores.diligence)}
+
+My weakest area is Discernment — evaluating AI output quality, knowing when to trust it, and catching when it gets things wrong.
+
+I need your help to build this skill. Here is what I want you to do:
+
+1. Ask me about my field of work and what I use AI for (or would use it for). Then tell me honestly: where is AI typically reliable in my domain, and where does it tend to confidently get things wrong?
+
+2. Give me a practical stress-test framework — a short set of questions I should ask myself every time before I use a piece of AI-generated work. Make it something I can do in 2 minutes, not a 20-step checklist.
+
+3. Run an exercise with me right now: generate a piece of work in my domain that contains a subtle but important error. Walk me through how to spot it. Then show me the red flags I should have caught. Build my instinct.
+
+4. Help me create a simple "trust calibration" for my work: a one-page reference of what AI does well for me, what it does poorly, and what always needs a human eye before it goes out.
+
+Do not be gentle. If I am too trusting of AI output, I need to know that. The goal is to make me a better editor and evaluator, not to scare me off using AI.
+
+Start by asking me what kind of work I do and how I currently decide whether to trust what AI gives me.`;
+    },
+    diligence: function(name, level, scores) {
+      return `I just completed an AI fluency assessment. My name is ${name}. Here are my results:
+
+- Overall stage: ${getStage(scores.overall).charAt(0).toUpperCase() + getStage(scores.overall).slice(1)}
+- Delegation: ${getLevel(scores.delegation)}
+- Description: ${getLevel(scores.description)}
+- Discernment: ${getLevel(scores.discernment)}
+- Diligence: ${level} (my biggest growth area)
+
+My weakest area is Diligence — responsible AI use, having clear guidelines, and making sure AI is used safely and appropriately in my work.
+
+I need your help to build this skill. Here is what I want you to do:
+
+1. Ask me about my work context — team size, whether I work with clients or customers, what data I handle, and what AI tools are already in use. I need a framework that fits my reality, not a generic policy.
+
+2. Help me draft a simple, practical AI usage guide for my work. One page maximum. It should cover: what AI is approved for, what it should never touch, who reviews AI-generated work before it goes out, and how sensitive data should be handled.
+
+3. Walk me through the real risks I should care about — not hypothetical doomsday scenarios, but the practical ones: data leaking into training sets, AI confidently producing wrong information that goes to a client, bias in outputs, or team members using AI without guardrails.
+
+4. Give me a pre-flight checklist I can run before any AI-assisted work goes out the door. Make it short enough that I will actually use it.
+
+Be practical, not paranoid. I want to use AI more, not less — but I want to do it properly. The goal is to build confidence and trust, both for myself and for anyone I work with.
+
+Start by asking me about my work situation so you can tailor this to what I actually need.`;
+    },
+  };
+
+  // ========================
+  // Copy prompt to clipboard
+  // ========================
+  function copyPrompt() {
+    const text = document.getElementById('promptText').textContent;
+    navigator.clipboard.writeText(text).then(function() {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'Copy prompt';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // ========================
   // Show results
   // ========================
   function showResults(scores) {
@@ -1191,6 +1431,45 @@
     if (lowestDim) {
       document.getElementById('focusTitle').textContent = dimFocus[lowestDim].title;
       document.getElementById('focusText').textContent = dimFocus[lowestDim].text;
+    }
+
+    // AI prompt for focus area
+    if (lowestDim) {
+      const name = document.getElementById('name').value || 'there';
+      const level = getLevel(scores[lowestDim]);
+      const levelLabel = level.charAt(0).toUpperCase() + level.slice(1);
+      const dimLabel = lowestDim.charAt(0).toUpperCase() + lowestDim.slice(1);
+
+      document.getElementById('promptDimName').textContent = dimLabel;
+      document.getElementById('promptText').textContent = dimPrompts[lowestDim](name, levelLabel, scores);
+    }
+
+    // Show open-ended responses
+    const responseFields = [
+      { id: 'handoff', label: 'What you would hand off to a machine' },
+      { id: 'problem', label: 'What takes too much time or energy' },
+      { id: 'problemWhy', label: 'Why it matters' },
+      { id: 'problemDetail', label: 'How it works today' },
+      { id: 'doneWell', label: 'What good looks like' },
+      { id: 'anythingElse', label: 'Anything else' },
+    ];
+
+    const responsesList = document.getElementById('responsesList');
+    let hasResponses = false;
+    responseFields.forEach(function(field) {
+      const val = document.getElementById(field.id).value.trim();
+      if (val) {
+        hasResponses = true;
+        const item = document.createElement('div');
+        item.className = 'response-item';
+        item.innerHTML = '<div class="response-item-label">' + field.label + '</div>' +
+          '<div class="response-item-text">' + val.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
+        responsesList.appendChild(item);
+      }
+    });
+
+    if (!hasResponses) {
+      document.getElementById('responsesSection').style.display = 'none';
     }
 
     // Show results, hide form
