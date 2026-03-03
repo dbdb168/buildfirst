@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Night for Parents | AI Cookbook x BuildFirst</title>
+<meta name="description" content="Date night with a difference. A two-hour virtual workshop where parents build something real with AI. Small group, hands-on, no coding required. $150 per person.">
+
+<!-- Open Graph / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Build Night for Parents — Date Night With a Difference">
+<meta property="og:description" content="Two hours. You'll build something real with AI — and finally understand what all the fuss is about. Small group, hands-on, no coding required.">
+<meta property="og:url" content="https://buildfirst.io/ai-cookbook-build-night">
+<meta property="og:site_name" content="BuildFirst">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Build Night for Parents — Date Night With a Difference">
+<meta name="twitter:description" content="Two hours. You'll build something real with AI — and finally understand what all the fuss is about.">
+
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MKWKYTLT70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MKWKYTLT70');
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+  :root {
+    --coral: #E8636B;
+    --amber: #DEB04A;
+    --terracotta: #CC7B4A;
+    --cream: #F8F4EC;
+    --cream-dark: #EDE7DA;
+    --text-dark: #2D2A26;
+    --text-mid: #5C5650;
+    --text-light: #8A837A;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Typography */
+  h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.15; }
+  h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); line-height: 1.25; margin-bottom: 1rem; }
+  h3 { font-size: 1.25rem; line-height: 1.35; margin-bottom: 0.5rem; }
+  p { font-size: 1.05rem; color: var(--text-mid); }
+
+  /* Layout */
+  .container { max-width: 680px; margin: 0 auto; padding: 0 1.5rem; }
+  section { padding: 4rem 0; }
+
+  /* Nav bar */
+  .nav {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--cream-dark);
+    position: sticky;
+    top: 0;
+    background: var(--cream);
+    z-index: 100;
+  }
+  .nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--text-dark);
+  }
+  .nav-logo {
+    width: 32px;
+    height: 32px;
+  }
+  .nav-logo .bar1 { fill: var(--coral); }
+  .nav-logo .bar2 { fill: var(--amber); }
+  .nav-logo .bar3 { fill: var(--terracotta); }
+  .nav-name {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .nav-cta {
+    background: var(--coral);
+    color: var(--white);
+    padding: 0.55rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #d4545c; }
+
+  /* Hero */
+  .hero {
+    padding: 5rem 0 4rem;
+    text-align: left;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    background: var(--amber);
+    color: var(--text-dark);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 span { color: var(--coral); }
+  .hero-sub {
+    font-size: 1.2rem;
+    color: var(--text-mid);
+    margin-bottom: 2rem;
+    max-width: 540px;
+  }
+  .hero-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .hero-detail {
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .hero-detail strong { color: var(--text-dark); }
+  .dot { color: var(--terracotta); font-size: 1.2rem; line-height: 1; }
+  .cta-primary {
+    display: inline-block;
+    background: var(--coral);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .cta-primary:hover { background: #d4545c; transform: translateY(-1px); }
+  .cta-note {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    height: 3px;
+    background: linear-gradient(90deg, var(--coral), var(--amber), var(--terracotta));
+    border-radius: 2px;
+    max-width: 120px;
+  }
+
+  /* The pitch */
+  .pitch { padding: 3rem 0 4rem; }
+  .pitch p {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    color: var(--text-dark);
+  }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  /* What you'll build */
+  .builds { background: var(--white); padding: 4rem 0; }
+  .build-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 520px) { .build-grid { grid-template-columns: 1fr; } }
+  .build-card {
+    background: var(--cream);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--terracotta);
+  }
+  .build-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+    color: var(--text-dark);
+  }
+  .build-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-mid);
+  }
+  .build-note {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: var(--cream);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    font-style: italic;
+  }
+
+  /* Walk away with */
+  .outcomes { padding: 4rem 0; }
+  .outcome-list {
+    list-style: none;
+    margin-top: 1.5rem;
+  }
+  .outcome-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--cream-dark);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .outcome-list li:last-child { border-bottom: none; }
+  .outcome-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--cream-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-top: 0.15rem;
+  }
+  .outcome-text h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  .outcome-text p { font-size: 0.95rem; }
+
+  /* How it works */
+  .how { background: var(--white); padding: 4rem 0; }
+  .steps {
+    margin-top: 2rem;
+    position: relative;
+  }
+  .step {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+  }
+  .step:last-child { margin-bottom: 0; }
+  .step-num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--white);
+  }
+  .step:nth-child(1) .step-num { background: var(--coral); }
+  .step:nth-child(2) .step-num { background: var(--amber); color: var(--text-dark); }
+  .step:nth-child(3) .step-num { background: var(--terracotta); }
+  .step:nth-child(4) .step-num { background: #6B9E78; }
+  .step-content h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
+  }
+  .step-content p { font-size: 0.95rem; }
+
+  /* About David */
+  .about { padding: 4rem 0; }
+  .about-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 2rem;
+    display: flex;
+    gap: 1.75rem;
+    align-items: flex-start;
+  }
+  @media (max-width: 520px) { .about-card { flex-direction: column; } }
+  .about-avatar {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--coral), var(--terracotta));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.8rem;
+  }
+  .about-text h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .about-text p {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  /* Details box */
+  .details { background: var(--white); padding: 4rem 0; }
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 1.5rem;
+    border: 1px solid var(--cream-dark);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  @media (max-width: 520px) { .details-grid { grid-template-columns: 1fr; } }
+  .detail-item {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+  .detail-item:nth-child(odd) { border-right: 1px solid var(--cream-dark); }
+  @media (max-width: 520px) { .detail-item:nth-child(odd) { border-right: none; } }
+  .detail-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+  }
+  .detail-value {
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+
+  /* Prerequisites */
+  .prereqs { padding: 4rem 0; }
+  .prereq-list {
+    list-style: none;
+    margin-top: 1.5rem;
+  }
+  .prereq-list li {
+    padding: 0.8rem 0;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    font-size: 1rem;
+    color: var(--text-mid);
+    border-bottom: 1px solid var(--cream-dark);
+  }
+  .prereq-list li:last-child { border-bottom: none; }
+  .check { color: var(--coral); font-weight: 700; font-size: 1.1rem; }
+
+  /* FAQ */
+  .faq { background: var(--white); padding: 4rem 0; }
+  .faq-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    margin-bottom: 0.4rem;
+  }
+  .faq-a {
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  /* Registration CTA */
+  .register {
+    padding: 5rem 0;
+    text-align: center;
+  }
+  .register h2 { margin-bottom: 0.75rem; }
+  .register p { margin-bottom: 2rem; font-size: 1.1rem; }
+
+  /* Registration form */
+  .reg-form {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 2.5rem;
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.4rem;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    background: var(--cream);
+    color: var(--text-dark);
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--coral);
+    background: var(--white);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-submit {
+    width: 100%;
+    padding: 0.9rem;
+    background: var(--coral);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: #d4545c; }
+  .form-price {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+
+  /* Footer */
+  .footer {
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    border-top: 1px solid var(--cream-dark);
+  }
+  .footer a { color: var(--terracotta); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="container">
+    <a href="#" class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect class="bar1" x="18" y="10" width="55" height="18" rx="9"/>
+        <rect class="bar2" x="12" y="40" width="60" height="18" rx="9"/>
+        <rect class="bar3" x="8" y="70" width="68" height="18" rx="9"/>
+      </svg>
+      <span class="nav-name">The AI Cookbook</span>
+    </a>
+    <a href="#register" class="nav-cta">Reserve your spot</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Date Night With a Difference</div>
+    <h1>Build Night <span>for Parents</span></h1>
+    <p class="hero-sub">One evening. Two hours. You'll build something real with AI &mdash; and finally understand what all the fuss is about.</p>
+    <div class="hero-details">
+      <span class="hero-detail"><span class="dot">&#9679;</span> <strong>Virtual</strong> &mdash; one evening</span>
+      <span class="hero-detail"><span class="dot">&#9679;</span> <strong>2 hours</strong> &mdash; hands-on</span>
+      <span class="hero-detail"><span class="dot">&#9679;</span> <strong>10 spots</strong> &mdash; small group</span>
+      <span class="hero-detail"><span class="dot">&#9679;</span> <strong>$150</strong> per person</span>
+    </div>
+    <a href="#register" class="cta-primary">Reserve your spot</a>
+    <span class="cta-note">Late March 2026 &middot; Exact date coming soon</span>
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<!-- The pitch -->
+<section class="pitch">
+  <div class="container">
+    <p>You've read the headlines. You're working out what AI means for you at work. Your kids can spot it better than you can. You've probably even chatted with it once or twice.</p>
+    <p>But you haven't <em>built</em> anything with it. That's the part that changes everything.</p>
+    <p>When you build something &mdash; even something small &mdash; the fear evaporates. You stop wondering what AI can do and start seeing it. You get a glimpse into your kids' future. And you walk away with something genuinely useful for your family, built by you, in a single evening.</p>
+    <p>Build Night is not a lecture. It's not a demo you watch. It's a small group of parents, a couple of hours, and a guide who'll help you build something real. Think of it as a paint-and-sip &mdash; except instead of a canvas, you leave with a tool your family will actually use this week.</p>
+  </div>
+</section>
+
+<!-- What you'll build -->
+<section class="builds">
+  <div class="container">
+    <h2>What people build</h2>
+    <p>Before the session, you tell us what would make your family life easier. Here are some things people have built in a single evening:</p>
+    <div class="build-grid">
+      <div class="build-card">
+        <h3>School Week Organizer</h3>
+        <p>Paste in a week's worth of school emails, and it pulls out what actually matters &mdash; who needs what, when, and a clean summary you can stick on the fridge.</p>
+      </div>
+      <div class="build-card">
+        <h3>Homework Helper</h3>
+        <p>Tuned to your child's grade level and subjects. Explains things at the right level &mdash; not too simple, not too complex. Like a patient tutor that's always available.</p>
+      </div>
+      <div class="build-card">
+        <h3>The Dinner Decider</h3>
+        <p>Knows who hates broccoli, who's gluten-free, and what's in the fridge. Ends the nightly "what should we eat?" standoff with a plan and a grocery list.</p>
+      </div>
+      <div class="build-card">
+        <h3>Weekend Planner</h3>
+        <p>Surfaces activities, camps, and day trips based on your kids' ages, your family's interests, and the weather. No more scrolling for ideas on a Saturday morning.</p>
+      </div>
+    </div>
+    <div class="build-note">
+      Or bring your own idea. The best builds come from real friction in your life &mdash; we'll help you shape it into something you can finish in the session.
+    </div>
+  </div>
+</section>
+
+<!-- The real thing -->
+<section class="pitch" style="padding-bottom: 2rem;">
+  <div class="container">
+    <h2 style="font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.6rem, 3.5vw, 2.2rem); line-height: 1.25; margin-bottom: 1rem;">The thing nobody talks about</h2>
+    <p>Most parents we speak to have the same quiet worry: <em>I don't really understand this AI thing, and it's moving fast, and I don't know what it means for my kids.</em></p>
+    <p>The fix isn't reading more articles or watching more videos. It's building something. When you go from chatting with AI to building with it, the fear turns into something else entirely. It becomes play.</p>
+  </div>
+</section>
+
+<!-- Walk away with -->
+<section class="outcomes">
+  <div class="container">
+    <h2>What you walk away with</h2>
+    <ul class="outcome-list">
+      <li>
+        <div class="outcome-icon">&#128295;</div>
+        <div class="outcome-text">
+          <h3>Something you built. That works. Tonight.</h3>
+          <p>Not a demo. Not a template. A tool you described, shaped, and brought to life &mdash; that you'll use this week. The joy is in the building.</p>
+        </div>
+      </li>
+      <li>
+        <div class="outcome-icon">&#128161;</div>
+        <div class="outcome-text">
+          <h3>The fear goes away</h3>
+          <p>AI stops being this vague, slightly scary thing. When you build with it, you see exactly what it can and can't do. The mystique evaporates. What replaces it is surprisingly fun.</p>
+        </div>
+      </li>
+      <li>
+        <div class="outcome-icon">&#128104;&#8205;&#128105;&#8205;&#128103;</div>
+        <div class="outcome-text">
+          <h3>A glimpse into your kids' future</h3>
+          <p>This is the world they're growing up in. After one evening, you'll understand it a little better &mdash; and you'll be set up to keep using it, which will give you a much clearer picture of what's coming for them.</p>
+        </div>
+      </li>
+      <li>
+        <div class="outcome-icon">&#9201;</div>
+        <div class="outcome-text">
+          <h3>More time with the people you love</h3>
+          <p>The things that eat your time as a parent &mdash; the logistics, the planning, the mental load &mdash; are exactly the things AI handles well. Build the tools so you can be present for what matters.</p>
+        </div>
+      </li>
+      <li>
+        <div class="outcome-icon">&#128220;</div>
+        <div class="outcome-text">
+          <h3>Recipe cards to keep playing</h3>
+          <p>Step-by-step guides so you can keep building after the session. Fair warning: most people catch the bug.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how">
+  <div class="container">
+    <h2>How the evening works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Sign up &amp; get set up</h3>
+          <p>Register below. We'll send you a simple setup guide &mdash; get Claude Pro on your laptop, and you're ready. Five minutes, max.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Tell us what bugs you</h3>
+          <p>A few days before, we'll ask two things: how comfortable are you with tech, and what's one thing you wish was easier in your family life? That's your build brief.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Build Night</h3>
+          <p>Two hours on Zoom, one evening. David builds something live in 10 minutes to show you how it works. Then you build yours &mdash; with hands-on guidance the whole way. Small group, so nobody gets left behind.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Show &amp; tell, then keep playing</h3>
+          <p>Everyone shares what they built. You'll walk out with recipe cards, a follow-up check-in from David, and &mdash; if you want to go deeper &mdash; a path to do that.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The backstory -->
+<section class="about" style="padding-bottom: 1rem;">
+  <div class="container">
+    <h2>How this started</h2>
+    <div class="about-card" style="flex-direction: column;">
+      <p>A few months ago, on a Friday afternoon, I had an idea for something I wanted to show some friends. I sat down with AI and described what I wanted. An hour later &mdash; glass of wine in hand &mdash; I was showing them a working prototype.</p>
+      <p>I didn't realize what I'd done was special until one of them said: <em>"Wait &mdash; you built this? In an hour?"</em></p>
+      <p>That was the moment I realized: if I can do this, anyone can. I'm not a developer. I'm a 52-year-old dad of two who spent his career in design thinking and innovation &mdash; at IDEO, Capital One, DBS Bank &mdash; and stumbled into building with AI because I was curious.</p>
+      <p>Since then, I've built about 80 things. Most of them I don't use anymore &mdash; and that's the point. The joy is in the building. The play. The surprise when something works that you didn't think was possible.</p>
+      <p>The things I kept? They give me more time with my kids, not less. That's the whole point. Build the tools that handle the logistics, so you can be present for the stuff that matters.</p>
+      <p style="color: var(--text-dark); font-weight: 500;">Build Night is me giving you that same Friday-evening moment. One evening, one build, and a completely different way of seeing what's possible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- About David -->
+<section class="about" style="padding-top: 1rem;">
+  <div class="container">
+    <h2>Your guide</h2>
+    <div class="about-card">
+      <div class="about-avatar">DB</div>
+      <div class="about-text">
+        <h3>David Beath</h3>
+        <p>Dad of two boys (13 and 10). Not a developer &mdash; learned to build with AI by doing it. Writes <a href="https://theaicookbook.substack.com" style="color: var(--terracotta);">The AI Cookbook</a>, a newsletter about building practical things with AI. No hype. No jargon. Just what works.</p>
+        <p style="color: var(--text-dark); font-weight: 500;">The same person who'll be in the session with you, helping you build.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Details -->
+<section class="details">
+  <div class="container">
+    <h2>The details</h2>
+    <div class="details-grid">
+      <div class="detail-item">
+        <div class="detail-label">Format</div>
+        <div class="detail-value">Virtual (Zoom)</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">When</div>
+        <div class="detail-value">Late March 2026, evening</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Duration</div>
+        <div class="detail-value">2 hours</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Group size</div>
+        <div class="detail-value">Max 10 people</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Price</div>
+        <div class="detail-value">$150 per person</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">You'll need</div>
+        <div class="detail-value">Laptop + Claude Pro ($20/mo)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Prerequisites -->
+<section class="prereqs">
+  <div class="container">
+    <h2>What you need to bring</h2>
+    <ul class="prereq-list">
+      <li><span class="check">&#10003;</span> A laptop (Mac or Windows)</li>
+      <li><span class="check">&#10003;</span> Claude Pro account &mdash; $20/month, we'll send you setup instructions</li>
+      <li><span class="check">&#10003;</span> An idea of something you'd like to build (we'll help you refine it)</li>
+      <li><span class="check">&#10003;</span> Curiosity. That's it. No coding skills required.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <h2>Questions people ask</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Do I need to know how to code?</div>
+      <div class="faq-a">No. Building with AI is more like having a conversation than writing code. You describe what you want in plain English, and AI helps you build it. David isn't a developer either &mdash; he learned by doing, which is exactly what you'll do.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is this better as a couple or can I come solo?</div>
+      <div class="faq-a">Both work great. Couples tend to build different things and then compare notes &mdash; it's one of the best parts. But plenty of people come on their own and have a brilliant time. Each person registers separately and needs their own laptop.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What's Claude Pro and why do I need it?</div>
+      <div class="faq-a">Claude is an AI tool made by Anthropic &mdash; it's what we'll use to build. The Pro plan ($20/month) gives you access to the best model available, which is what makes the builds work well. I make no money from this &mdash; it's simply the tool I use myself and trust the most. We'll send you step-by-step setup instructions after you register.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if I'm not very technical?</div>
+      <div class="faq-a">That's exactly who this is for. Being bad at tech is actually freeing here &mdash; there's nothing to unlearn. The most interesting builds often come from people who've never done anything like this before. Small group means nobody gets left behind.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Will this actually be useful, or is it a novelty?</div>
+      <div class="faq-a">You'll leave with something you'll use this week. Not a party trick &mdash; a tool that solves a real problem in your family life. But honestly, the bigger thing you walk away with is confidence. The fear of AI goes away when you've built something with it.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">I'm worried my family will just end up on screens more.</div>
+      <div class="faq-a">Fair concern. The whole point of what we build is to give you <em>more</em> time with the people you love &mdash; not less. The tools handle the logistics so you don't have to. Build it once, and it works quietly in the background while you're present for the stuff that matters.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if I want to go deeper after the session?</div>
+      <div class="faq-a">David runs 1:1 coaching for people who want to keep building and develop real AI fluency. It's optional, no pressure &mdash; but if you catch the bug, the path is there.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Registration -->
+<section class="register" id="register">
+  <div class="container">
+    <h2>Ready for date night?</h2>
+    <p>Reserve your spot. Small group. One evening. Something completely different.</p>
+
+    <div class="reg-form">
+      <div class="form-group">
+        <label for="name">Your name</label>
+        <input type="text" id="name" placeholder="First and last name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label for="attending">Who's coming?</label>
+        <select id="attending">
+          <option value="solo">Just me</option>
+          <option value="couple">Me and my partner (2 registrations)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="pain">What's one thing that eats your time as a parent?</label>
+        <textarea id="pain" placeholder="Meal planning, school logistics, keeping track of activities, the nightly 'what's for dinner' standoff... whatever comes to mind."></textarea>
+      </div>
+      <button class="form-submit" type="button" onclick="alert('This is a prototype. Payment integration (Stripe) will be connected before launch.')">Reserve your spot &mdash; $150</button>
+      <div class="form-price">Secure payment via Stripe. Claude Pro ($20/mo) purchased separately &mdash; setup instructions included.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>An <a href="https://theaicookbook.substack.com">AI Cookbook</a> experience &middot; Built by David Beath &middot; Richmond, Virginia</p>
+  </div>
+</footer>
+
+</body>
+</html>
