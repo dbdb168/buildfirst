@@ -118,7 +118,7 @@
   /* cookbook */
   .cook-lead{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,42px);line-height:1.02;letter-spacing:-.04em;max-width:20ch;}
   .cook-sub{font-size:17px;color:var(--bf-text-muted);max-width:52ch;margin-top:18px;line-height:1.55;}
-  .pcard{padding-top:0;overflow:hidden;}
+  .pcard{overflow:hidden;}
   .pcard-cover{display:block;width:100%;aspect-ratio:16/10;border-radius:8px;overflow:hidden;margin-bottom:18px;background:var(--bf-canvas);object-fit:cover;}
   .pcard-cover[data-empty]{background:var(--bf-canvas);}
   .pcard .date{font-family:var(--mono);font-size:11px;color:var(--bf-text-muted);letter-spacing:.06em;text-transform:uppercase;}
@@ -445,8 +445,19 @@ Now you've got to work out AI too.</p>
     iform.addEventListener('submit', function(e){
       e.preventDefault();
       var email=document.getElementById('ios-email');
-      var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value.trim());
+      var val=email.value.trim();
+      var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
       if(!ok){ email.focus(); email.style.borderColor='var(--bf-ink)'; return; }
+      // Capture the signup — emails David via FormSubmit (same service the assessment uses).
+      fetch('https://formsubmit.co/ajax/david@thisisluminary.co', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({
+          email: val,
+          _subject: 'IntelligenceOS waitlist signup',
+          source: 'buildfirst.io — IntelligenceOS waitlist'
+        })
+      }).catch(function(){ /* non-blocking: still confirm to the user */ });
       document.getElementById('ios-done').classList.add('show');
       email.value=''; email.blur();
     });
