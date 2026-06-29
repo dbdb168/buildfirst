@@ -119,7 +119,8 @@
   .cook-lead{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,42px);line-height:1.02;letter-spacing:-.04em;max-width:20ch;}
   .cook-sub{font-size:17px;color:var(--bf-text-muted);max-width:52ch;margin-top:18px;line-height:1.55;}
   .pcard{padding-top:0;overflow:hidden;}
-  .pcard-cover{display:block;width:100%;aspect-ratio:16/10;border-radius:8px;overflow:hidden;margin-bottom:18px;background:var(--bf-canvas);}
+  .pcard-cover{display:block;width:100%;aspect-ratio:16/10;border-radius:8px;overflow:hidden;margin-bottom:18px;background:var(--bf-canvas);object-fit:cover;}
+  .pcard-cover[data-empty]{background:var(--bf-canvas);}
   .pcard .date{font-family:var(--mono);font-size:11px;color:var(--bf-text-muted);letter-spacing:.06em;text-transform:uppercase;}
   .pcard h4{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.18;letter-spacing:-.03em;margin-top:12px;}
   .pcard .read{font-family:var(--mono);font-size:11px;color:var(--bf-text-faint);margin-top:auto;padding-top:18px;letter-spacing:.04em;text-transform:uppercase;}
@@ -329,29 +330,31 @@ Now you've got to work out AI too.</p>
     <div class="rule sec-rule" data-reveal></div>
     <h2 class="cook-lead" data-reveal>lessons, stories, recipes and observations from working with AI everyday.</h2>
     <p class="cook-sub" data-reveal>Notes from the practice. No hype — just what I'm building and learning.</p>
-    <div class="cards c2" style="margin-top:48px;">
-      <a class="card acc-lilac pcard" href="https://theaicookbook.substack.com/" target="_blank" rel="noopener" data-reveal>
-        <image-slot class="pcard-cover" id="cook-1" shape="rounded" radius="8" placeholder="Cover art"></image-slot>
-        <span class="date">Jun 16 · David Beath</span>
-        <h4>Perseverance Pays Off</h4>
+    <!-- Cards are live from the AI Cookbook Substack via /api/cookbook.
+         The markup below is a real-post fallback for no-JS / feed-down. -->
+    <div class="cards c2" id="cook-cards" style="margin-top:48px;">
+      <a class="card acc-lilac pcard" data-cook="0" href="https://theaicookbook.substack.com/p/perseverance-pays-off" target="_blank" rel="noopener" data-reveal>
+        <img class="pcard-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!LTjU!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F31fbd4b2-941b-4f46-a635-7fe51228e40c_1024x572.png">
+        <span class="date" data-cook-date>Jun 16 · David Beath</span>
+        <h4 data-cook-title>Perseverance Pays Off</h4>
         <span class="read">Read on Substack &rarr;</span>
       </a>
-      <a class="card acc-rose pcard" href="https://theaicookbook.substack.com/" target="_blank" rel="noopener" data-reveal>
-        <image-slot class="pcard-cover" id="cook-2" shape="rounded" radius="8" placeholder="Cover art"></image-slot>
-        <span class="date">Jun 11 · David Beath</span>
-        <h4>Small But Mighty Teams</h4>
+      <a class="card acc-rose pcard" data-cook="1" href="https://theaicookbook.substack.com/p/small-but-mighty-teams" target="_blank" rel="noopener" data-reveal>
+        <img class="pcard-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!pFv9!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac40d88a-bbd8-4491-bdc6-f48ac983af0e_1024x572.png">
+        <span class="date" data-cook-date>Jun 11 · David Beath</span>
+        <h4 data-cook-title>Small But Mighty Teams</h4>
         <span class="read">Read on Substack &rarr;</span>
       </a>
-      <a class="card acc-sage pcard" href="https://theaicookbook.substack.com/" target="_blank" rel="noopener" data-reveal>
-        <image-slot class="pcard-cover" id="cook-3" shape="rounded" radius="8" placeholder="Cover art"></image-slot>
-        <span class="date">Jun 8 · David Beath</span>
-        <h4>Put Authority Close to the Work</h4>
+      <a class="card acc-sage pcard" data-cook="2" href="https://theaicookbook.substack.com/p/put-authority-close-to-the-work" target="_blank" rel="noopener" data-reveal>
+        <img class="pcard-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!qZBO!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1e94b3dc-1176-4625-b3f1-dd5fde7aa18e_1024x572.png">
+        <span class="date" data-cook-date>Jun 8 · David Beath</span>
+        <h4 data-cook-title>Put Authority Close to the Work</h4>
         <span class="read">Read on Substack &rarr;</span>
       </a>
-      <a class="card acc-periwinkle pcard" href="https://theaicookbook.substack.com/" target="_blank" rel="noopener" data-reveal>
-        <image-slot class="pcard-cover" id="cook-4" shape="rounded" radius="8" placeholder="Cover art"></image-slot>
-        <span class="date">Jun 4 · David Beath</span>
-        <h4>The Three Principles of Adoption</h4>
+      <a class="card acc-periwinkle pcard" data-cook="3" href="https://theaicookbook.substack.com/p/the-three-principles-of-adoption" target="_blank" rel="noopener" data-reveal>
+        <img class="pcard-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!FxTT!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F78dcf383-6296-4cdf-bc8f-2b39209902c1_1024x572.png">
+        <span class="date" data-cook-date>Jun 4 · David Beath</span>
+        <h4 data-cook-title>The Three Principles of Adoption</h4>
         <span class="read">Read on Substack &rarr;</span>
       </a>
     </div>
@@ -412,7 +415,6 @@ Now you've got to work out AI too.</p>
   </div>
 </footer>
 
-<script src="image-slot.js"></script>
 <script src="assets/buildfirst.js"></script>
 <script>
 (function(){
@@ -429,8 +431,11 @@ Now you've got to work out AI too.</p>
     form.addEventListener('submit', function(e){
       e.preventDefault();
       var email=document.getElementById('sub-email');
-      var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value.trim());
+      var val=email.value.trim();
+      var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
       if(!ok){ email.focus(); email.style.borderColor='var(--bf-ink)'; return; }
+      // Hand off to Substack to complete the subscription (email pre-filled).
+      window.open('https://theaicookbook.substack.com/subscribe?email='+encodeURIComponent(val), '_blank', 'noopener');
       document.getElementById('sub-done').classList.add('show');
       email.value=''; email.blur();
     });
@@ -479,6 +484,36 @@ Now you've got to work out AI too.</p>
     });
     applyMode();
     if(mq.addEventListener){ mq.addEventListener('change', applyMode); } else if(mq.addListener){ mq.addListener(applyMode); }
+  }
+
+  /* The AI Cookbook — hydrate cards from the live Substack feed.
+     Falls back silently to the baked-in cards if the feed is unreachable. */
+  var cookGrid=document.getElementById('cook-cards');
+  if(cookGrid && 'fetch' in window){
+    var cookCards=[].slice.call(cookGrid.querySelectorAll('[data-cook]'));
+    if(cookCards.length){
+      fetch('/api/cookbook?limit='+cookCards.length, {headers:{'accept':'application/json'}})
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(data){
+          if(!data || !data.posts || !data.posts.length) return; // keep fallback
+          cookCards.forEach(function(card){
+            var i=parseInt(card.getAttribute('data-cook'), 10);
+            var post=data.posts[i];
+            if(!post){ card.style.display='none'; return; }
+            if(post.link) card.setAttribute('href', post.link);
+            var cover=card.querySelector('[data-cook-cover]');
+            if(cover){
+              if(post.image){ cover.setAttribute('src', post.image); cover.setAttribute('alt', post.title||''); cover.removeAttribute('data-empty'); }
+              else { cover.removeAttribute('src'); cover.setAttribute('data-empty',''); }
+            }
+            var date=card.querySelector('[data-cook-date]');
+            if(date){ date.textContent=(post.date ? post.date+' · ' : '')+(post.author||'David Beath'); }
+            var title=card.querySelector('[data-cook-title]');
+            if(title && post.title){ title.textContent=post.title; }
+          });
+        })
+        .catch(function(){ /* keep fallback cards */ });
+    }
   }
 })();
 </script>
