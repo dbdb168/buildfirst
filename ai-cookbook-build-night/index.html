@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* Cross-page view transitions (progressive enhancement) */
+@view-transition{navigation:auto;}
+::view-transition-old(root){animation:bfPageOut .26s cubic-bezier(.2,.7,.2,1) both;}
+::view-transition-new(root){animation:bfPageIn .42s cubic-bezier(.2,.7,.2,1) both;}
+@keyframes bfPageOut{to{opacity:0;}}
+@keyframes bfPageIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+@media(prefers-reduced-motion:reduce){@view-transition{navigation:none;}}
+</style>
 <title>Build Night for Parents | AI Cookbook x BuildFirst</title>
 <meta name="description" content="Date night with a difference. A two-hour virtual workshop where parents build something real with AI. Small group, hands-on, no coding required. $150 per person.">
 

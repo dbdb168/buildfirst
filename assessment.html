@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* Cross-page view transitions (progressive enhancement) */
+@view-transition{navigation:auto;}
+::view-transition-old(root){animation:bfPageOut .26s cubic-bezier(.2,.7,.2,1) both;}
+::view-transition-new(root){animation:bfPageIn .42s cubic-bezier(.2,.7,.2,1) both;}
+@keyframes bfPageOut{to{opacity:0;}}
+@keyframes bfPageIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+@media(prefers-reduced-motion:reduce){@view-transition{navigation:none;}}
+</style>
 <title>BuildFirst | AI Assessment</title>
 <meta name="description" content="How do you engage with AI? Your personalised AI fluency profile in 10 minutes.">
 <meta property="og:type" content="website">
