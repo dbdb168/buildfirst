@@ -47,13 +47,6 @@ a{color:inherit;}
 html.js .slash{animation:bfSpin360 .8s var(--ease) both;}
 @media(prefers-reduced-motion:reduce){html.js .slash{animation:none;}}
 
-/* the wordmark slash spins gently, forever (a touch faster on logo hover) */
-@keyframes bfSpinGentle{to{transform:rotate(360deg);}}
-.mark-slash{display:inline-block;}
-html.js .mark-slash{animation:bfSpinGentle 9s linear infinite;transform-origin:50% 50%;}
-html.js .mark:hover .mark-slash{animation-duration:2.4s;}
-@media(prefers-reduced-motion:reduce){html.js .mark-slash{animation:none;}}
-
 /* ── drawn-rule motif → ink hairline that draws in ── */
 .rule{height:1px;background:var(--bf-line-strong);transform:scaleX(0);transform-origin:left;}
 .rule.lead{height:2px;background:var(--bf-ink);}
