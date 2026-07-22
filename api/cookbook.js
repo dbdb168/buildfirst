@@ -95,7 +95,7 @@ module.exports = async (req, res) => {
     const xml = await upstream.text();
     const posts = parseFeed(xml, limit);
 
-    res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+    res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400');
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     return res.status(200).json({
       posts,
