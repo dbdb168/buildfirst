@@ -18,4 +18,9 @@
   --bf-band-pad:   30px 32px 26px;
   --bf-body-pad:   24px 32px 64px;
   --bf-measure:    680px;  /* max line length for lead copy */
+
+  /* Full-bleed background, contained content: responsive side gutter.
+     Content caps at --bf-content-max; below that the 52px floor applies. */
+  --bf-content-max: 1240px;
+  --edge: max(52px, calc((100% - var(--bf-content-max)) / 2));
 }

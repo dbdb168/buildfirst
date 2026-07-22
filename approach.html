@@ -32,7 +32,7 @@ a:hover{opacity:.72}
 .cap{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
 .slash{font-weight:400;color:var(--bf-text-faint);display:inline-block;margin-right:.1em;animation:bfSpin360 .8s cubic-bezier(.2,.7,.2,1) both}
 @media(prefers-reduced-motion:reduce){.slash{animation:none}}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:24px 52px;border-bottom:1px solid var(--bf-line);position:sticky;top:0;background:rgba(238,237,232,.85);backdrop-filter:blur(10px);z-index:20}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:24px var(--edge);border-bottom:1px solid var(--bf-line);position:sticky;top:0;background:rgba(238,237,232,.85);backdrop-filter:blur(10px);z-index:20}
 .nav a.cap{color:var(--bf-text-muted)}
 .nav a.solid{color:var(--bf-on-ink)}
 .nav-right{display:flex;align-items:center;gap:30px}
@@ -55,11 +55,11 @@ a:hover{opacity:.72}
 .ghost{background:transparent;color:var(--bf-ink);border:1px solid rgba(24,24,24,.32)}
 .ghost:hover{opacity:1;background:rgba(24,24,24,.05)}
 
-.hero{background:var(--bf-sage);padding:88px 52px 92px}
+.hero{background:var(--bf-sage);padding:88px var(--edge) 92px}
 .hero h1{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(42px,6vw,88px);line-height:.92;letter-spacing:-.045em;margin:24px 0 0}
 .lead{font-size:19px;line-height:1.55;color:rgba(24,24,24,.72);max-width:640px;margin-top:28px}
 
-.section{padding:80px 52px}
+.section{padding:80px var(--edge)}
 .section.divider{border-top:1px solid var(--bf-line)}
 .section.lilac{background:var(--bf-lilac)}
 .sec-head{max-width:760px}
@@ -79,13 +79,13 @@ a:hover{opacity:.72}
 .step h3{font-family:var(--bf-font-display);font-weight:600;font-size:22px;letter-spacing:-.02em;margin:0}
 .step p{font-size:15px;line-height:1.6;color:var(--bf-text-muted);margin:14px 0 0}
 
-.closing{background:var(--bf-ink);color:var(--bf-on-ink);padding:96px 52px}
+.closing{background:var(--bf-ink);color:var(--bf-on-ink);padding:96px var(--edge)}
 .closing .sec-title{color:var(--bf-on-ink)}
 .closing .big-copy{color:rgba(255,255,255,.72)}
 .closing .cap{color:rgba(255,255,255,.5)}
 .closing .sec-title .slash{color:rgba(255,255,255,.5)}
 
-footer{background:var(--bf-ink);color:var(--bf-on-ink);padding:56px 52px;border-top:1px solid rgba(255,255,255,.12)}
+footer{background:var(--bf-ink);color:var(--bf-on-ink);padding:56px var(--edge);border-top:1px solid rgba(255,255,255,.12)}
 footer a{color:rgba(255,255,255,.72)}
 footer a:hover{opacity:1}
 .foot-row{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
