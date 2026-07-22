@@ -32,7 +32,7 @@ a:hover{opacity:.72}
 .cap{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
 .slash{font-weight:400;color:var(--bf-text-faint);display:inline-block;margin-right:.1em;animation:bfSpin360 .8s cubic-bezier(.2,.7,.2,1) both}
 @media(prefers-reduced-motion:reduce){.slash{animation:none}}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:24px var(--edge);border-bottom:1px solid var(--bf-line);position:sticky;top:0;background:rgba(238,237,232,.85);backdrop-filter:blur(10px);z-index:20}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:24px max(52px, calc((100% - 1240px) / 2));border-bottom:1px solid var(--bf-line);position:sticky;top:0;background:rgba(238,237,232,.85);backdrop-filter:blur(10px);z-index:20}
 .nav a.cap{color:var(--bf-text-muted)}
 .nav a.solid{color:var(--bf-on-ink)}
 .nav-right{display:flex;align-items:center;gap:30px}
@@ -57,11 +57,11 @@ a:hover{opacity:.72}
 .disabled{background:transparent;color:var(--bf-text-faint);border:1px dashed rgba(24,24,24,.28);cursor:default}
 .disabled:hover{opacity:1}
 
-.hero{background:var(--bf-lilac);padding:88px var(--edge) 92px}
+.hero{background:var(--bf-lilac);padding:88px max(52px, calc((100% - 1240px) / 2)) 92px}
 .hero h1{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(42px,6vw,88px);line-height:.92;letter-spacing:-.045em;margin:24px 0 0}
 .lead{font-size:19px;line-height:1.55;color:rgba(24,24,24,.72);max-width:640px;margin-top:28px}
 
-.section{padding:80px var(--edge)}
+.section{padding:80px max(52px, calc((100% - 1240px) / 2))}
 .tag{display:inline-flex;align-items:center;font-family:var(--bf-font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bf-text-muted);border:1px solid var(--bf-line);border-radius:var(--bf-radius-pill);padding:5px 12px}
 
 .card{background:#fff;border:1px solid var(--bf-line);border-radius:var(--bf-radius-md);padding:28px 26px 26px;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.08)}
@@ -89,7 +89,7 @@ a:hover{opacity:.72}
 .usage-inner{max-width:720px}
 .usage p{font-size:20px;line-height:1.55;color:rgba(24,24,24,.72);margin:22px 0 0}
 
-footer{background:var(--bf-ink);color:var(--bf-on-ink);padding:56px var(--edge)}
+footer{background:var(--bf-ink);color:var(--bf-on-ink);padding:56px max(52px, calc((100% - 1240px) / 2))}
 footer a{color:rgba(255,255,255,.72)}
 footer a:hover{opacity:1}
 .foot-row{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
@@ -223,7 +223,7 @@ footer a:hover{opacity:1}
       <a class="cap" href="approach.html">Approach</a>
       <a class="cap" href="writing-tools.html">Writing & Tools</a>
       <a class="cap" href="mailto:david@thisisluminary.co">Email</a>
-      <a class="cap" href="https://www.linkedin.com/in/davidbeath/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="cap" href="https://www.linkedin.com/in/dbeath/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </div>
   <div class="foot-fine">© 2026 BuildFirst · Build first. Learn fast. Repeat.</div>
