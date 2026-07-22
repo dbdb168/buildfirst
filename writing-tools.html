@@ -35,6 +35,20 @@ a:hover{opacity:.72}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:24px 52px;border-bottom:1px solid var(--bf-line);position:sticky;top:0;background:rgba(238,237,232,.85);backdrop-filter:blur(10px);z-index:20}
 .nav a.cap{color:var(--bf-text-muted)}
 .nav a.solid{color:var(--bf-on-ink)}
+.nav-right{display:flex;align-items:center;gap:30px}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-burger{display:none;background:none;border:0;padding:6px 2px;cursor:pointer;flex-direction:column;gap:5px}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--bf-ink);transition:transform .25s,opacity .25s}
+@media(max-width:860px){
+  .nav-right{gap:14px}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;gap:0;background:#eeede8;border-bottom:1px solid var(--bf-line);padding:6px 24px 18px}
+  .nav-links a{padding:12px 0;width:100%}
+  .nav.open .nav-links{display:flex}
+  .nav-burger{display:flex}
+  .nav.open .nav-burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav.open .nav-burger span:nth-child(2){opacity:0}
+  .nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
 .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border-radius:var(--bf-radius-pill);padding:11px 20px;cursor:pointer;border:0}
 .solid{background:var(--bf-ink);color:var(--bf-on-ink)}
 .solid:hover{opacity:.86}
@@ -62,7 +76,8 @@ a:hover{opacity:.72}
 .featured h2{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(30px,3.6vw,42px);line-height:.98;letter-spacing:-.03em;margin:12px 0 0}
 .featured .lead-copy{font-size:17px;line-height:1.55;color:var(--bf-text-muted);max-width:560px;margin:16px 0 0}
 .posts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
-.post{background:var(--bf-canvas,#f4f3ee);border:1px solid var(--bf-line);border-radius:10px;padding:16px;display:flex;flex-direction:column;min-height:150px}
+.post{background:var(--bf-canvas,#f4f3ee);border:1px solid var(--bf-line);border-radius:10px;padding:16px;display:flex;flex-direction:column;min-height:150px;overflow:hidden}
+.post-cover{display:block;width:calc(100% + 32px);max-width:none;margin:-16px -16px 12px;aspect-ratio:16/9;object-fit:cover;border-bottom:1px solid var(--bf-line)}
 .post .kicker{font-family:var(--bf-font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bf-text-faint)}
 .post .title{font-family:var(--bf-font-display);font-weight:600;font-size:15px;line-height:1.15;letter-spacing:-.01em;margin-top:10px}
 .post .spacer{flex:1}
@@ -82,6 +97,7 @@ footer a:hover{opacity:1}
 .foot-fine{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-top:36px}
 
 @media(max-width:980px){.posts{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr}}
+@media(max-width:560px){.posts{grid-template-columns:1fr}}
 @media(max-width:860px){
   .nav{padding:18px 24px}
   .hero{padding:60px 24px 68px}
@@ -92,9 +108,10 @@ footer a:hover{opacity:1}
 <body>
 <div class="nav">
   <a href="index.html" style="font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--bf-ink)">BuildFirst</a>
-  <div style="display:flex;align-items:center;gap:30px">
-    <a class="cap" href="index.html#individuals">Individuals</a><a class="cap" href="index.html#companies">Companies</a><a class="cap" href="approach.html">Approach</a><a class="cap" href="writing-tools.html">Writing & Tools</a>
+  <div class="nav-right">
+    <nav class="nav-links" id="nav-links"><a class="cap" href="index.html#individuals">Individuals</a><a class="cap" href="index.html#companies">Companies</a><a class="cap" href="approach.html">Approach</a><a class="cap" href="writing-tools.html">Writing & Tools</a></nav>
     <a class="btn solid" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Let's talk</a>
+    <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
   </div>
 </div>
 
@@ -119,27 +136,35 @@ footer a:hover{opacity:1}
          fallback if the fetch fails. -->
     <div class="posts" id="cook-posts">
       <a class="post" data-cook="0" href="https://theaicookbook.substack.com/p/perseverance-pays-off" target="_blank" rel="noopener">
+        <img class="post-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!LTjU!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F31fbd4b2-941b-4f46-a635-7fe51228e40c_1024x572.png">
         <div class="kicker">Post 01</div><div class="title" data-cook-title>Perseverance Pays Off</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 16 · David Beath</div>
       </a>
       <a class="post" data-cook="1" href="https://theaicookbook.substack.com/p/small-but-mighty-teams" target="_blank" rel="noopener">
+        <img class="post-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!pFv9!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac40d88a-bbd8-4491-bdc6-f48ac983af0e_1024x572.png">
         <div class="kicker">Post 02</div><div class="title" data-cook-title>Small But Mighty Teams</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 11 · David Beath</div>
       </a>
       <a class="post" data-cook="2" href="https://theaicookbook.substack.com/p/put-authority-close-to-the-work" target="_blank" rel="noopener">
+        <img class="post-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!qZBO!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1e94b3dc-1176-4625-b3f1-dd5fde7aa18e_1024x572.png">
         <div class="kicker">Post 03</div><div class="title" data-cook-title>Put Authority Close to the Work</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 8 · David Beath</div>
       </a>
       <a class="post" data-cook="3" href="https://theaicookbook.substack.com/p/the-three-principles-of-adoption" target="_blank" rel="noopener">
+        <img class="post-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!FxTT!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F78dcf383-6296-4cdf-bc8f-2b39209902c1_1024x572.png">
         <div class="kicker">Post 04</div><div class="title" data-cook-title>The Three Principles of Adoption</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 4 · David Beath</div>
       </a>
       <a class="post" data-cook="4" href="https://theaicookbook.substack.com/p/start-with-a-real-problem" target="_blank" rel="noopener">
+        <img class="post-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!OD4f!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbc0a53f2-f275-4219-966e-fd13f9ebc3e2_1024x572.png">
         <div class="kicker">Post 05</div><div class="title" data-cook-title>Start With a Real Problem</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 1 · David Beath</div>
       </a>
       <a class="post" data-cook="5" href="https://theaicookbook.substack.com/p/the-five-percent" target="_blank" rel="noopener">
+        <img class="post-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!Eoqt!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F92c61e41-87cd-4fea-80a8-6a167c1f6b34_1024x559.png">
         <div class="kicker">Post 06</div><div class="title" data-cook-title>The Five Percent</div><div class="spacer"></div><div class="meta" data-cook-date>May 28 · David Beath</div>
       </a>
       <a class="post" data-cook="6" href="https://theaicookbook.substack.com/p/the-settling" target="_blank" rel="noopener">
+        <img class="post-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!A0RI!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F558a123c-a431-4142-ba6d-caef0fa94245_1024x559.png">
         <div class="kicker">Post 07</div><div class="title" data-cook-title>The Settling</div><div class="spacer"></div><div class="meta" data-cook-date>Apr 3 · David Beath</div>
       </a>
       <a class="post" data-cook="7" href="https://theaicookbook.substack.com/p/recipe-10-can-i-have-your-attention" target="_blank" rel="noopener">
+        <img class="post-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!NojT!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2e820363-75d7-401f-a808-06cdf919803b_1024x559.png">
         <div class="kicker">Post 08</div><div class="title" data-cook-title>Recipe #10, Can I Have Your Attention, Please?</div><div class="spacer"></div><div class="meta" data-cook-date>Mar 28 · David Beath</div>
       </a>
     </div>
@@ -224,11 +249,22 @@ footer a:hover{opacity:1}
         if(post.link) card.setAttribute('href', post.link);
         var title=card.querySelector('[data-cook-title]');
         if(title && post.title){ title.textContent=post.title; }
+        var cover=card.querySelector('[data-cook-cover]');
+        if(cover && post.image){ cover.src=post.image; }
         var meta=card.querySelector('[data-cook-date]');
         if(meta){ meta.textContent=(post.date ? post.date+' · ' : '')+(post.author||'David Beath'); }
       });
     })
     .catch(function(){ /* keep fallback cards */ });
+})();
+</script>
+<script>
+(function(){
+  /* Mobile nav: burger toggles the link panel; "Let's talk" stays a standalone button. */
+  var nav=document.querySelector('.nav'),b=document.querySelector('.nav-burger');
+  if(!nav||!b)return;
+  b.addEventListener('click',function(){var open=nav.classList.toggle('open');b.setAttribute('aria-expanded',open?'true':'false')});
+  Array.prototype.forEach.call(nav.querySelectorAll('.nav-links a'),function(a){a.addEventListener('click',function(){nav.classList.remove('open');b.setAttribute('aria-expanded','false')})});
 })();
 </script>
 </body></html>
