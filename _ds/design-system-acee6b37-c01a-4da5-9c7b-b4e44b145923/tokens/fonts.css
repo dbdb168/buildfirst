@@ -1,0 +1,6 @@
+/* Webfonts.
+   Display/body: Arimo — a metric-compatible, freely-hostable stand-in for
+   Helvetica Neue / Neue Haas Grotesk. Swap for licensed Helvetica Neue in
+   production if available.
+   Mono / numerals: JetBrains Mono. */
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');

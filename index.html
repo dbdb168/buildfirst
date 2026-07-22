@@ -1,532 +1,220 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<script>document.documentElement.classList.add('js');</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BuildFirst — GenAI Fluency for Leaders</title>
-<meta name="description" content="BuildFirst. Learn Fast. Repeat. Creating a generation of GenAI fluent leaders. AI adoption starts with personal exploration, not team rollouts.">
-
-<!-- Open Graph / LinkedIn -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="BuildFirst — GenAI Fluency for Leaders">
-<meta property="og:description" content="Creating a generation of GenAI fluent leaders. AI adoption starts with personal exploration, not team rollouts.">
-<meta property="og:url" content="https://buildfirst.io">
-<meta property="og:site_name" content="BuildFirst">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BuildFirst — GenAI Fluency for Leaders">
-<meta name="twitter:description" content="Creating a generation of GenAI fluent leaders. AI adoption starts with personal exploration, not team rollouts.">
-
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="apple-touch-icon" href="/favicon.png">
-
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MKWKYTLT70"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MKWKYTLT70');
-</script>
-
-<link rel="stylesheet" href="assets/buildfirst.css">
+<!-- @template name="Marketing Page" description="BuildFirst marketing site — full-bleed pastel hero into paper sections" -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BuildFirst — AI fluency built through use, not theory</title>
+<meta name="description" content="BuildFirst. Learn Fast. Repeat. Creating a generation of GenAI fluent leaders. Hands-on coaching for leaders. Practical workshops, sprints, and fractional AI leadership for companies.">
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="_ds/design-system-acee6b37-c01a-4da5-9c7b-b4e44b145923/styles.css">
 <style>
-  /* ===== Homepage-specific, on the BuildFirst system ===== */
-  .hero-home{padding:clamp(80px,11vw,148px) 0 clamp(64px,9vw,116px);}
-  .hero-home h1{max-width:17ch;}
-  .hero-home .hero-body{font-size:clamp(18px,1.9vw,21px);line-height:1.55;color:rgba(24,24,24,.72);max-width:52ch;margin-top:30px;}
+@keyframes bfSpin360{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--bf-font-body);color:var(--bf-text-strong);background:var(--bf-paper)}
+a{color:var(--bf-ink);text-decoration:none}
+a:hover{opacity:.72}
+.cap{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.slash{font-weight:400;color:var(--bf-text-faint);display:inline-block;margin-right:.1em;animation:bfSpin360 .8s cubic-bezier(.2,.7,.2,1) both}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:24px 52px;border-bottom:1px solid var(--bf-line);position:sticky;top:0;background:rgba(238,237,232,.85);backdrop-filter:blur(10px);z-index:20}
+.nav a.cap{color:var(--bf-text-muted)}
+.nav a.solid{color:var(--bf-on-ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border-radius:var(--bf-radius-pill);padding:11px 20px;cursor:pointer;border:0}
+.solid{background:var(--bf-ink);color:var(--bf-on-ink)}
+.solid:hover{opacity:.86}
+.ghost{background:transparent;color:var(--bf-ink);border:1px solid rgba(24,24,24,.32)}
+.ghost:hover{opacity:1;background:rgba(24,24,24,.05)}
 
-  /* spectrum */
-  .spec-lead{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,42px);line-height:1.0;letter-spacing:-.04em;max-width:18ch;}
-  .spec-sub{font-size:17px;line-height:1.55;color:var(--bf-text-muted);max-width:54ch;margin-top:18px;}
-  .spec-foot{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:34px;}
-  .spec-foot .note{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--bf-text-faint);}
+.hero{background:var(--bf-periwinkle);padding:96px 52px 104px}
+.hero h1{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(46px,7.2vw,100px);line-height:.92;letter-spacing:-.045em;margin:26px 0 0}
+.lead{font-size:19px;line-height:1.55;color:rgba(24,24,24,.72);max-width:660px;margin-top:30px}
 
-  /* briefing quote cards */
-  .qcard blockquote{font-family:var(--display);font-weight:500;font-size:18px;line-height:1.34;letter-spacing:-.02em;color:var(--bf-ink);}
-  .qcard .who{font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--bf-text-muted);margin-top:auto;padding-top:22px;text-transform:uppercase;letter-spacing:.06em;}
-  .qcard .who b{color:var(--bf-ink);font-weight:500;}
-  .brief-src{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--bf-text-faint);margin-top:36px;}
+.section{padding:84px 52px}
+.section.paper{background:var(--bf-paper)}
+.section.lilac{background:var(--bf-lilac)}
+.section.divider{border-top:1px solid var(--bf-line)}
+.sec-head{max-width:760px}
+.sec-title{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(34px,4.4vw,52px);line-height:.98;letter-spacing:-.035em;margin:14px 0 0}
+.sec-sub{font-size:18px;line-height:1.5;color:var(--bf-text-muted);margin-top:16px}
 
-  /* fluency statement (ink band) */
-  .fluency-stmt{font-family:var(--display);font-weight:600;font-size:clamp(28px,3.8vw,48px);line-height:1.04;letter-spacing:-.04em;max-width:24ch;color:var(--bf-on-ink);}
-  .fluency-stmt b{color:var(--bf-periwinkle);font-weight:600;}
+.grid{display:grid;gap:22px;margin-top:52px}
+.grid-3{grid-template-columns:repeat(3,1fr)}
 
-  /* what we do — engagement selector */
-  .picker{display:grid;grid-template-columns:minmax(264px,.8fr) 1.55fr;border:1px solid var(--bf-line);border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);background:var(--bf-white);}
-  .picker-rail{background:var(--bf-ink);padding:12px;display:flex;flex-direction:column;gap:2px;}
-  .prail-item{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:transparent;border:0;cursor:pointer;padding:21px 18px;border-radius:10px;color:rgba(243,242,238,.6);transition:background .2s var(--ease),color .2s var(--ease);}
-  .prail-item .pix{font-family:var(--mono);font-size:12px;color:rgba(243,242,238,.4);transition:color .2s var(--ease);}
-  .prail-item .pnm{font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.02em;flex:1;line-height:1.12;}
-  .prail-item .parrow{font-family:var(--mono);font-size:13px;opacity:0;transform:translateX(-6px);transition:opacity .2s var(--ease),transform .2s var(--ease);}
-  .prail-item:hover{color:var(--bf-on-ink);background:rgba(243,242,238,.07);}
-  .prail-item.active{background:var(--bf-periwinkle);color:var(--bf-ink);}
-  .prail-item.active .pix{color:var(--bf-ink);}
-  .prail-item.active .parrow{opacity:1;transform:none;color:var(--bf-ink);}
-  .picker-detail{position:relative;padding:clamp(34px,4.2vw,60px);display:flex;flex-direction:column;justify-content:center;min-height:430px;}
-  .pdetail{display:none;}
-  .pdetail.active{display:block;animation:pdfade .4s var(--ease);}
-  @keyframes pdfade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
-  .pdetail .pd-ix{font-family:var(--mono);font-weight:500;font-size:clamp(34px,4vw,52px);color:var(--bf-periwinkle);line-height:1;letter-spacing:-.02em;display:block;}
-  .pdetail h3{font-family:var(--display);font-weight:600;font-size:clamp(28px,3.6vw,46px);letter-spacing:-.04em;line-height:1.0;margin-top:14px;}
-  .pdetail p{font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:var(--bf-text-body);max-width:44ch;margin-top:22px;}
-  .pdetail .btn{margin-top:32px;}
-  @media(prefers-reduced-motion:reduce){.pdetail.active{animation:none;}}
-  /* mobile: accordion */
-  .picker.is-accordion{display:block;background:var(--bf-ink);}
-  .picker.is-accordion .picker-rail{display:block;padding:10px;}
-  .picker.is-accordion .picker-detail{display:none;}
-  .picker.is-accordion .prail-item{border-radius:10px;padding:18px 16px;}
-  .picker.is-accordion .prail-item.active{border-radius:10px 10px 0 0;}
-  .picker.is-accordion .prail-item .parrow{opacity:.5;transform:none;color:inherit;transition:transform .25s var(--ease),opacity .2s var(--ease);}
-  .picker.is-accordion .prail-item.active .parrow{opacity:1;transform:rotate(90deg);}
-  .picker.is-accordion .pdetail{background:var(--bf-white);color:var(--bf-ink);border-radius:0 0 10px 10px;padding:24px 18px 26px;margin-bottom:8px;}
-  .picker.is-accordion .pdetail.active{animation:none;}
-  .picker.is-accordion .pdetail .pd-ix{font-size:30px;}
-  .picker.is-accordion .pdetail h3{font-size:24px;margin-top:8px;}
-  .picker.is-accordion .pdetail p{font-size:16px;max-width:none;margin-top:16px;}
-  .picker.is-accordion .pdetail .btn{margin-top:24px;}
+.card{background:#fff;border:1px solid var(--bf-line);border-radius:var(--bf-radius-md);padding:28px 26px 26px;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card h3{font-family:var(--bf-font-display);font-weight:600;font-size:22px;line-height:1.08;letter-spacing:-.02em;margin:16px 0 0}
+.card p{font-size:15px;line-height:1.6;color:var(--bf-text-muted);margin:14px 0 0}
+.card .price{margin-top:20px;color:var(--bf-text-faint)}
+.card .btn{margin-top:22px;align-self:flex-start}
+.card .spacer{flex:1}
+.idx{font-family:var(--bf-font-mono);font-size:13px;color:var(--bf-text-faint)}
 
-  /* faqs */
-  .faq-item{border-top:0;}
-  .faq-item:last-child{border-bottom:0;}
-  .faq-q{width:100%;text-align:left;background:none;border:0;cursor:pointer;padding:26px 0;display:flex;justify-content:space-between;gap:28px;align-items:center;font-family:var(--display);font-weight:600;font-size:clamp(19px,2vw,25px);letter-spacing:-.03em;color:var(--bf-ink);transition:opacity .2s var(--ease);}
-  .faq-q:hover{opacity:.62;}
-  .ico{position:relative;width:16px;height:16px;flex:none;}
-  .ico::before,.ico::after{content:"";position:absolute;background:var(--bf-ink);left:50%;top:50%;transition:transform .3s var(--ease);}
-  .ico::before{width:16px;height:1.5px;transform:translate(-50%,-50%);}
-  .ico::after{width:1.5px;height:16px;transform:translate(-50%,-50%);}
-  .faq-item.open .ico::after{transform:translate(-50%,-50%) scaleY(0);}
-  .faq-a{overflow:hidden;max-height:0;opacity:0;transition:max-height .4s var(--ease), opacity .3s var(--ease);}
-  .faq-item.open .faq-a{max-height:360px;opacity:1;}
-  .faq-a p{padding:0 0 28px;max-width:68ch;color:var(--bf-text-muted);font-size:16px;line-height:1.6;}
+.approach-copy{font-size:20px;line-height:1.55;color:rgba(24,24,24,.72);max-width:720px;margin-top:26px}
+.approach-link{display:inline-block;margin-top:28px;font-family:var(--bf-font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 
-  /* about */
-  .about-lead{font-family:var(--display);font-weight:600;font-size:clamp(28px,3.8vw,52px);line-height:.98;letter-spacing:-.04em;max-width:18ch;margin-bottom:44px;}
-  .about-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2fr);gap:56px;}
-  @media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:32px;}}
-  .about-id .nm{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:-.03em;}
-  .about-id .role{font-size:14px;color:var(--bf-text-muted);margin-top:5px;}
-  .about-id .rule{width:36px;margin:20px 0;}
-  .about-id .tags{display:flex;flex-wrap:wrap;gap:8px;}
-  .about-prose p{font-size:18px;line-height:1.6;color:var(--bf-text-body);max-width:60ch;margin-bottom:22px;}
-  .about-prose p:last-child{margin-bottom:0;color:var(--bf-text-muted);}
-  .about-prose b{font-weight:500;color:var(--bf-ink);}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
+.res-item{background:#fff;border:1px solid var(--bf-line);border-top:3px solid var(--bf-sage);border-radius:var(--bf-radius-md);padding:26px}
+.res-item h4{font-family:var(--bf-font-display);font-weight:600;font-size:20px;letter-spacing:-.02em;margin:0}
+.res-item p{font-size:15px;line-height:1.55;color:var(--bf-text-muted);margin:12px 0 0}
+.res-note{font-size:14px;color:var(--bf-text-muted);margin-top:26px}
 
-  /* cookbook */
-  .cook-lead{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,42px);line-height:1.02;letter-spacing:-.04em;max-width:20ch;}
-  .cook-sub{font-size:17px;color:var(--bf-text-muted);max-width:52ch;margin-top:18px;line-height:1.55;}
-  .pcard{overflow:hidden;}
-  .pcard-cover{display:block;width:100%;aspect-ratio:16/10;border-radius:8px;overflow:hidden;margin-bottom:18px;background:var(--bf-canvas);object-fit:cover;}
-  .pcard-cover[data-empty]{background:var(--bf-canvas);}
-  .pcard .date{font-family:var(--mono);font-size:11px;color:var(--bf-text-muted);letter-spacing:.06em;text-transform:uppercase;}
-  .pcard h4{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.18;letter-spacing:-.03em;margin-top:12px;}
-  .pcard .read{font-family:var(--mono);font-size:11px;color:var(--bf-text-faint);margin-top:auto;padding-top:18px;letter-spacing:.04em;text-transform:uppercase;}
-  .cook-act{margin-top:44px;display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;}
-  .subscribe{display:flex;gap:10px;flex-wrap:wrap;}
-  .subscribe input{background:var(--bf-white);border:1px solid var(--bf-line-strong);border-radius:999px;padding:13px 18px;font-family:var(--body);font-size:15px;color:var(--bf-ink);width:280px;max-width:100%;}
-  .subscribe input::placeholder{color:var(--bf-text-faint);}
-  .subscribe input:focus{outline:2px solid var(--bf-ink);outline-offset:2px;border-color:var(--bf-ink);}
-  .sub-done{color:var(--bf-ink);font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-top:14px;display:none;}
-  .sub-done.show{display:block;}
+footer{background:var(--bf-ink);color:var(--bf-on-ink);padding:56px 52px}
+footer a{color:rgba(255,255,255,.72)}
+footer a:hover{opacity:1}
+.foot-row{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.foot-links{display:flex;gap:28px;flex-wrap:wrap}
+.foot-fine{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-top:36px}
 
-  /* spectrum 5-card layout: 3 top, 2 bottom */
-  .spectrum-cards{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:40px;}
-  .spectrum-cards>.card{grid-column:span 2;}
-  .spectrum-cards>.card:nth-child(4),
-  .spectrum-cards>.card:nth-child(5){grid-column:span 3;}
-  .spectrum-cards .card h3{min-height:2.05em;}
-  @media(max-width:820px){
-    .spectrum-cards{grid-template-columns:1fr;}
-    .spectrum-cards>.card,
-    .spectrum-cards>.card:nth-child(4),
-    .spectrum-cards>.card:nth-child(5){grid-column:auto;}
-  }
-
-  /* fluency framework + tools */
-  .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px;}
-  @media(max-width:820px){.tools-grid{grid-template-columns:1fr;}}
-  .tool-card{padding:30px 30px 32px;}
-  .tool-title{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.035em;}
-  .tool-card p{font-size:16px;line-height:1.58;color:var(--bf-text-body);margin-top:16px;}
-  .tool-card p a{color:var(--bf-ink);text-decoration:underline;text-underline-offset:2px;}
-  .tool-cta{margin-top:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
-  .tool-note{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--bf-text-faint);max-width:30ch;}
-
-  /* final CTA on a sage field */
-  .final-band{background:var(--bf-sage);border-top:0;--ticket-surface:var(--bf-sage);}
-  .final-band .rule.lead{background:var(--bf-ink);}
-  .final-band h2{max-width:15ch;}
-  .final-band p{color:rgba(24,24,24,.7);}
-</style>
-</head>
+@media(max-width:860px){
+  .nav{padding:18px 24px}
+  .hero{padding:64px 24px 72px}
+  .section{padding:60px 24px}
+  .grid-3{grid-template-columns:1fr}
+  .res-grid{grid-template-columns:1fr}
+}
+@media(max-width:980px) and (min-width:861px){
+  .res-grid{grid-template-columns:1fr 1fr}
+}
+</style></head>
 <body>
-
-<nav>
-  <div class="wrap nav-in">
-    <a class="mark" href="/"><b><span style="color:#18181866">/</span>build</b><span style="font-weight:400">first</span></a>
-    <div class="nav-links">
-      <a href="#spectrum">OUR APPROACH</a>
-      <a href="#how">What we do</a>
-      <a href="#tools">Built by</a>
-      <a href="#about">About</a>
-      <a href="#cookbook">The AI Cookbook</a>
-    </div>
-    <a class="btn btn-primary" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Let's Talk</a>
+<div class="nav">
+  <div style="font-weight:700;font-size:20px;letter-spacing:-.02em">BuildFirst</div>
+  <div style="display:flex;align-items:center;gap:30px">
+    <a class="cap" href="#individuals">Individuals</a><a class="cap" href="#companies">Companies</a><a class="cap" href="approach.html">Approach</a><a class="cap" href="writing-tools.html">Writing & Tools</a>
+    <a class="btn solid" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Let's talk</a>
   </div>
-</nav>
+</div>
 
-<header class="phero hero-periwinkle hero-home">
-  <div class="wrap">
-    <div class="eyebrow" data-reveal>GenAI fluency for leaders</div>
-    <div class="rule lead" data-reveal></div>
-    <h1 data-reveal>buildfirst. learn fast. repeat.</h1>
-    <p class="hero-body" data-reveal>You've got a business to run, people to lead, targets to hit.
-Now you've got to work out AI too.</p>
-    <div class="cta-row" data-reveal>
-      <a class="btn btn-primary btn-lg" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Let's have a conversation</a>
-    </div>
-  </div>
-</header>
-
-<section id="spectrum">
-  <div class="wrap">
-    <div class="sec-head" data-reveal><span class="sec-num">01</span><span class="sec-title">OUR APPROACH</span></div>
-    <div class="rule sec-rule" data-reveal></div>
-    <p class="spec-lead" data-reveal>recalibration.</p>
-    <p class="spec-sub" data-reveal>Successfully adopting AI that delivers real results starts with personally using and building with powerful AI tools. Our approach recalibrates the hard-earned instincts of our clients and their teams. They have seen the following outcomes.</p>
-    <div class="spectrum-cards">
-      <div class="card acc-sage" data-reveal><div class="idx">01</div><h3>Grounded<br>Leadership</h3><p>They can filter out hype and make better decisions about how to lead their teams to high value AI adoption. </p></div>
-      <div class="card acc-periwinkle" data-reveal><div class="idx">02</div><h3>Reimagined<br>Work</h3><p>The are reimagining how they and their teams get work done. They're confident they're ahead of others.</p></div>
-      <div class="card acc-lilac" data-reveal><div class="idx">03</div><h3>Solved Hard<br>Problems</h3><p>Our clients move the needle on their hardest and most elusive problems during our engagements.</p></div>
-      <div class="card acc-rose" data-reveal><div class="idx">04</div><h3>Deepened<br>Curiosity</h3><p>AI is rapidly evolving, our clients and their teams establish high-reward methods of learning about it, with it.</p></div>
-      <div class="card acc-periwinkle" data-reveal><div class="idx">05</div><h3>Balanced<br>Governance</h3><p>Improved AI fluency helps our clients make more informed and balanced governance decisions.</p></div>
-    </div>
+<section class="hero">
+  <div class="cap" style="color:rgba(24,24,24,.55)">GenAI fluency for leaders</div>
+  <h1><span class="slash">/</span>AI fluency built through<br>use, not theory.</h1>
+  <p class="lead">Hands-on coaching for leaders. Practical workshops, sprints, and fractional AI leadership for companies.</p>
+  <div style="display:flex;gap:10px;margin-top:40px;flex-wrap:wrap">
+    <a class="btn solid" style="padding:16px 30px;font-size:13px" href="#individuals">For Individuals</a>
+    <a class="btn ghost" style="padding:16px 30px;font-size:13px" href="#companies">For Companies</a>
   </div>
 </section>
 
-<section class="band-ink">
-  <div class="wrap">
-    <div class="sec-head" data-reveal><span class="sec-num">02</span><span class="sec-title">Fluency</span></div>
-    <div class="rule sec-rule" data-reveal></div>
-    <p class="fluency-stmt" data-reveal>fluency comes from building something yourself. working with it, watching it break, experimenting until you know what's real and what's noise.</p>
+<section class="section paper" id="individuals">
+  <div class="sec-head">
+    <div class="cap" style="color:var(--bf-text-faint)">For individuals</div>
+    <h2 class="sec-title"><span class="slash">/</span>AI Fluency for Individuals</h2>
+    <p class="sec-sub">Your starting point determines the right path.</p>
+  </div>
+  <div class="grid grid-3">
+    <article class="card" style="border-top:3px solid var(--bf-periwinkle)">
+      <div class="idx">01</div>
+      <h3>Senior Leaders Building Confidence</h3>
+      <p>You run an organization and know AI is reshaping your industry, but you haven't had the space to build genuine fluency. Sherpa is an 8-10 week 1:1 coaching engagement where you build useful AI workflows alongside an experienced practitioner. You'll leave with practical skills, a clearer strategic instinct for AI, and workflows you actually use.</p>
+      <div class="spacer"></div>
+      <div class="price cap">$4,000 · 8-10 weeks · Starts with a diagnostic call</div>
+      <a class="btn solid" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Book a Diagnostic Call</a>
+    </article>
+    <article class="card" style="border-top:3px solid var(--bf-lilac)">
+      <div class="idx">02</div>
+      <h3>Experienced Users Stretching Their Practice</h3>
+      <p>You already use AI but sense there's more. Stretch coaching moves you beyond prompts into agentic workflows, team-level patterns, and strategic application. We identify where your current practice plateaus and build the next layer together.</p>
+      <div class="spacer"></div>
+      <div class="price cap">Custom scope</div>
+      <a class="btn ghost" href="mailto:david@thisisluminary.co">Start a Conversation</a>
+    </article>
+    <article class="card" style="border-top:3px solid var(--bf-sage)">
+      <div class="idx">03</div>
+      <h3>Early-Career Professionals Learning Workplace AI</h3>
+      <p>You're entering the workforce and need AI skills that matter in real jobs, not just demos. Workplace AI foundations are hands-on sessions focused on actual tasks: research, writing, analysis, and collaboration with AI as a working partner.</p>
+      <div class="spacer"></div>
+      <a class="btn ghost" href="mailto:david@thisisluminary.co">Learn More</a>
+    </article>
   </div>
 </section>
 
-<section id="fluency-framework">
-  <div class="wrap">
-    <div class="sec-head" data-reveal><span class="sec-num">03</span><span class="sec-title">Fluency</span></div>
-    <div class="rule sec-rule" data-reveal></div>
-    <p class="sec-lead" data-reveal style="margin-bottom:44px;">we're grounded in Anthropic's fluency framework.</p>
-    <div class="cards auto">
-      <div class="card acc-sage" data-reveal><div class="idx">01</div><h3>Delegation</h3><p>Knowing what to hand to AI and what to keep. Choosing the right task for the model.</p></div>
-      <div class="card acc-periwinkle" data-reveal><div class="idx">02</div><h3>Description</h3><p>Briefing AI clearly. Giving it the context, examples and constraints to do the job well.</p></div>
-      <div class="card acc-lilac" data-reveal><div class="idx">03</div><h3>Discernment</h3><p>Judging the output. Spotting what's right, what's off, and what needs another pass.</p></div>
-      <div class="card acc-rose" data-reveal><div class="idx">04</div><h3>Diligence</h3><p>Checking the work and owning the result. Verifying before you ship.</p></div>
-    </div>
+<section class="section paper divider" id="companies">
+  <div class="sec-head">
+    <div class="cap" style="color:var(--bf-text-faint)">For companies</div>
+    <h2 class="sec-title"><span class="slash">/</span>AI Fluency for Companies</h2>
+    <p class="sec-sub">Practical capability building for teams and organizations.</p>
+  </div>
+  <div class="grid grid-3">
+    <article class="card" style="border-top:3px solid var(--bf-sage)">
+      <div class="idx">01</div>
+      <h3>Team Workshops</h3>
+      <p>Half-day or full-day sessions where your team builds real AI workflows together. No lectures. Everyone participates, builds something useful, and leaves with skills they can apply immediately. Best for teams that need shared fluency fast.</p>
+      <div class="spacer"></div>
+      <a class="btn ghost" href="mailto:david@thisisluminary.co">Explore Workshops</a>
+    </article>
+    <article class="card" style="border-top:3px solid var(--bf-periwinkle)">
+      <div class="idx">02</div>
+      <h3>Practical Sprints</h3>
+      <p>Focused 2-4 week engagements targeting a specific workflow or capability gap. We diagnose the problem, build and test solutions with your team, and hand off with your people owning the result. Best when you have a concrete challenge and want to learn by solving it.</p>
+      <div class="spacer"></div>
+      <a class="btn ghost" href="mailto:david@thisisluminary.co">Discuss a Sprint</a>
+    </article>
+    <article class="card" style="border-top:3px solid var(--bf-lilac)">
+      <div class="idx">03</div>
+      <h3>Advisory</h3>
+      <p>Ongoing strategic guidance for leaders navigating AI transformation. We help you make better decisions about tools, workflows, team structure, and investment. Best when you need a thinking partner who's also a builder.</p>
+      <div class="spacer"></div>
+      <a class="btn ghost" href="mailto:david@thisisluminary.co">Start a Conversation</a>
+    </article>
+    <article class="card" style="border-top:3px solid var(--bf-rose)">
+      <div class="idx">04</div>
+      <h3>Strategic Builds</h3>
+      <p>Custom AI tools, agents, and workflows that emerge from deep diagnostic work. Not a build-to-spec service. We start with the strategic question, then build what's needed to deliver the outcome. Every engagement includes the thinking that makes the tool useful, not just the tool itself.</p>
+      <div class="spacer"></div>
+      <a class="btn ghost" href="mailto:david@thisisluminary.co">Start a Conversation</a>
+    </article>
+    <article class="card" style="border-top:3px solid var(--bf-periwinkle)">
+      <div class="idx">05</div>
+      <h3>Fractional AI Leadership</h3>
+      <p>Embedded part-time AI leadership for organizations that need the function but aren't ready for a full-time hire. Strategy, execution, and team development under one roof. Best when AI is becoming central to your business and you need someone who can both think and build.</p>
+      <div class="spacer"></div>
+      <a class="btn ghost" href="mailto:david@thisisluminary.co">Learn More</a>
+    </article>
   </div>
 </section>
 
-<section id="how">
-  <div class="wrap">
-    <div class="sec-head" data-reveal><span class="sec-num">04</span><span class="sec-title">What we do</span></div>
-    <div class="rule sec-rule" data-reveal></div>
-    <p class="sec-lead" data-reveal style="margin-bottom:44px;">five paths to fluency, one principle: build it yourself.</p>
-    <div class="picker" data-reveal>
-      <div class="picker-rail" role="tablist" aria-label="Engagements">
-        <button class="prail-item active" role="tab" aria-selected="true" aria-controls="eng-0" id="tab-0" data-eng="0"><span class="pix">01</span><span class="pnm">BuildFirst Sherpa</span><span class="parrow">&rarr;</span></button>
-        <button class="prail-item" role="tab" aria-selected="false" aria-controls="eng-1" id="tab-1" data-eng="1"><span class="pix">02</span><span class="pnm">BuildFirst Workshops</span><span class="parrow">&rarr;</span></button>
-        <button class="prail-item" role="tab" aria-selected="false" aria-controls="eng-2" id="tab-2" data-eng="2"><span class="pix">03</span><span class="pnm">Sprints</span><span class="parrow">&rarr;</span></button>
-        <button class="prail-item" role="tab" aria-selected="false" aria-controls="eng-3" id="tab-3" data-eng="3"><span class="pix">04</span><span class="pnm">Product Development</span><span class="parrow">&rarr;</span></button>
-        <button class="prail-item" role="tab" aria-selected="false" aria-controls="eng-4" id="tab-4" data-eng="4"><span class="pix">05</span><span class="pnm">Fractional AI Leadership</span><span class="parrow">&rarr;</span></button>
-      </div>
-      <div class="picker-detail">
-        <article class="pdetail active" id="eng-0" role="tabpanel" aria-labelledby="tab-0">
-          <span class="pd-ix">01</span>
-          <h3>BuildFirst Sherpa</h3>
-          <p>One-to-one tailored AI coaching. Eight, 90 minute sessions over a flexible schedule. You build something real from the first session and start your journey to genuine AI fluency.</p>
-          <a class="btn btn-primary btn-lg" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Learn more yourself &rarr;</a>
-        </article>
-        <article class="pdetail" id="eng-1" role="tabpanel" aria-labelledby="tab-1">
-          <span class="pd-ix">02</span>
-          <h3>BuildFirst Workshops</h3>
-          <p>Hands-on and interactive AI workshops for teams. Everyone builds, they leave with working tools and a shared language.</p>
-          <a class="btn btn-primary btn-lg" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Explore for your team &rarr;</a>
-        </article>
-        <article class="pdetail" id="eng-2" role="tabpanel" aria-labelledby="tab-2">
-          <span class="pd-ix">03</span>
-          <h3>Sprints</h3>
-          <p>A 2-day sprint focused on building real agents and tools that deliver hard to reach results. </p>
-          <a class="btn btn-primary btn-lg" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Learn about sprints &rarr;</a>
-        </article>
-        <article class="pdetail" id="eng-3" role="tabpanel" aria-labelledby="tab-3">
-          <span class="pd-ix">04</span>
-          <h3>Product Development</h3>
-          <p>From agents to products for your internal teams or customers. We take you from idea to V1.0 in days and weeks.</p>
-          <a class="btn btn-primary btn-lg" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Build with us &rarr;</a>
-        </article>
-        <article class="pdetail" id="eng-4" role="tabpanel" aria-labelledby="tab-4">
-          <span class="pd-ix">05</span>
-          <h3>Fractional AI Leadership</h3>
-          <p>Longer term AI advisory and leadership from BuildFirst and our network of experts.</p>
-          <a class="btn btn-primary btn-lg" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Learn more &rarr;</a>
-        </article>
-      </div>
-    </div>
+<section class="section lilac">
+  <div class="sec-head">
+    <div class="cap" style="color:rgba(24,24,24,.55)">How we think</div>
+    <h2 class="sec-title"><span class="slash">/</span>How We Think</h2>
+    <p class="approach-copy">We believe AI fluency comes from building, not studying. Our methodology draws on the Anthropic fluency framework and years of hands-on prototyping with executives and teams. The goal isn't knowledge. It's recalibrated instinct: leaders and teams who can see where AI creates real value and act on it confidently.</p>
+    <a class="approach-link" href="approach.html">Read Our Approach →</a>
   </div>
 </section>
 
-<section id="tools">
-  <div class="wrap">
-    <div class="sec-head" data-reveal><span class="sec-num">05</span><span class="sec-title">By BuildFirst</span></div>
-    <div class="rule sec-rule" data-reveal></div>
-    <h2 class="cook-lead" data-reveal><span class="slash">/</span>skills, tools and frameworks that you can use today to improve your fluency.</h2>
-    <div class="tools-grid" data-reveal>
-      <div class="card acc-sage tool-card">
-        <h3 class="tool-title"><span class="slash">/</span>groundwork</h3>
-        <p>Groundwork is a thinking tool for leaders — a plugin that helps you work out where AI could actually be useful in your organisation, then decide which opportunities to start with. It shows you what you'd need to learn before you commit, drawing on Steve Blank's and Alex Osterwalder's lean experimentation methods to turn a long list into real decisions: what to build, what to test first, and — the part that matters most — where to put your investment.</p>
-        <div class="tool-cta">
-          <a class="btn btn-primary" href="https://github.com/dbdb168/groundwork" target="_blank" rel="noopener">Use it now</a>
-          <span class="tool-note">Link to GitHub and follow the installation instructions.</span>
-        </div>
-      </div>
-      <div class="card acc-periwinkle tool-card">
-        <h3 class="tool-title"><span class="slash">/</span>intelligenceOS</h3>
-        <p>Inspired by Jack Dorsey's <a href="https://block.xyz/inside/from-hierarchy-to-intelligence" target="_blank" rel="noopener">From Hierarchy to Intelligence</a>, I'm building a secure, agentic operating system for BuildFirst that automates or augments every part of what I do as its founder and solo operator. It self-improves with feedback from me and the world, drawing on pioneers in agentic coding and agent design. IntelligenceOS is a repo of the frameworks, folder structures and agents I've built to run BuildFirst — open source and compiled for you to customise for your own company or your clients.</p>
-        <form class="subscribe tool-cta" id="ios-form" novalidate>
-          <input type="email" id="ios-email" placeholder="you@company.com" aria-label="Email address">
-          <button class="btn btn-primary" type="submit">Join the waitlist</button>
-        </form>
-        <div class="sub-done" id="ios-done">You're on the waitlist.</div>
-      </div>
+<section class="section paper">
+  <div class="sec-head">
+    <div class="cap" style="color:var(--bf-text-faint)">Writing &amp; tools</div>
+    <h2 class="sec-title"><span class="slash">/</span>Writing &amp; Tools</h2>
+  </div>
+  <div class="res-grid">
+    <div class="res-item" style="border-top:3px solid var(--bf-lilac)">
+      <h4>AI Cookbook</h4>
+      <p>Practical AI recipes and personal insights from my own use of AI, published on Substack and updated regularly as new patterns emerge.</p>
+    </div>
+    <div class="res-item">
+      <h4>Groundwork</h4>
+      <p>A diagnostic tool for assessing your organization's AI readiness.</p>
+    </div>
+    <div class="res-item">
+      <h4>IntelligenceOS</h4>
+      <p>A framework for thinking about AI capabilities and limitations.</p>
     </div>
   </div>
-</section>
-
-<section id="about">
-  <div class="wrap">
-    <div class="sec-head" data-reveal><span class="sec-num">06</span><span class="sec-title">About</span></div>
-    <div class="rule sec-rule" data-reveal></div>
-    <h2 class="about-lead" data-reveal>built by someone who's been on both sides.</h2>
-    <div class="about-grid">
-      <div class="about-id" data-reveal>
-        <div class="nm">David Beath</div>
-        <div class="role">Strategist and product leader</div>
-        <div class="rule"></div>
-        <div class="tags"><span class="tag outline">IDEO</span><span class="tag outline">Capital One</span><span class="tag outline">DBS</span><span class="tag outline">3Pillar Global</span></div>
-      </div>
-      <div class="about-prose" data-reveal>
-        <p>David has more than 25 years of experience helping companies and people adopt new technologies. While he's genuinely excited about AI and its potential to transform every facet of our lives, he's an optimistic pragmatist — someone who understands the systems that need navigating as you adopt it inside enterprises, with your people and with your customers. It's hard. Ask him what he's learned.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="cookbook">
-  <div class="wrap">
-    <div class="sec-head" data-reveal><span class="sec-num">07</span><span class="sec-title">The AI Cookbook</span></div>
-    <div class="rule sec-rule" data-reveal></div>
-    <h2 class="cook-lead" data-reveal>lessons, stories, recipes and observations from working with AI everyday.</h2>
-    <p class="cook-sub" data-reveal>Notes from the practice. No hype — just what I'm building and learning.</p>
-    <!-- Cards are live from the AI Cookbook Substack via /api/cookbook.
-         The markup below is a real-post fallback for no-JS / feed-down. -->
-    <div class="cards c2" id="cook-cards" style="margin-top:48px;">
-      <a class="card acc-lilac pcard" data-cook="0" href="https://theaicookbook.substack.com/p/perseverance-pays-off" target="_blank" rel="noopener" data-reveal>
-        <img class="pcard-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!LTjU!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F31fbd4b2-941b-4f46-a635-7fe51228e40c_1024x572.png">
-        <span class="date" data-cook-date>Jun 16 · David Beath</span>
-        <h4 data-cook-title>Perseverance Pays Off</h4>
-        <span class="read">Read on Substack &rarr;</span>
-      </a>
-      <a class="card acc-rose pcard" data-cook="1" href="https://theaicookbook.substack.com/p/small-but-mighty-teams" target="_blank" rel="noopener" data-reveal>
-        <img class="pcard-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!pFv9!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac40d88a-bbd8-4491-bdc6-f48ac983af0e_1024x572.png">
-        <span class="date" data-cook-date>Jun 11 · David Beath</span>
-        <h4 data-cook-title>Small But Mighty Teams</h4>
-        <span class="read">Read on Substack &rarr;</span>
-      </a>
-      <a class="card acc-sage pcard" data-cook="2" href="https://theaicookbook.substack.com/p/put-authority-close-to-the-work" target="_blank" rel="noopener" data-reveal>
-        <img class="pcard-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!qZBO!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1e94b3dc-1176-4625-b3f1-dd5fde7aa18e_1024x572.png">
-        <span class="date" data-cook-date>Jun 8 · David Beath</span>
-        <h4 data-cook-title>Put Authority Close to the Work</h4>
-        <span class="read">Read on Substack &rarr;</span>
-      </a>
-      <a class="card acc-periwinkle pcard" data-cook="3" href="https://theaicookbook.substack.com/p/the-three-principles-of-adoption" target="_blank" rel="noopener" data-reveal>
-        <img class="pcard-cover" data-cook-cover alt="" loading="lazy" decoding="async" src="https://substackcdn.com/image/fetch/$s_!FxTT!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F78dcf383-6296-4cdf-bc8f-2b39209902c1_1024x572.png">
-        <span class="date" data-cook-date>Jun 4 · David Beath</span>
-        <h4 data-cook-title>The Three Principles of Adoption</h4>
-        <span class="read">Read on Substack &rarr;</span>
-      </a>
-    </div>
-    <div class="cook-act" data-reveal>
-      <a class="btn btn-primary" href="https://theaicookbook.substack.com/" target="_blank" rel="noopener">Read The AI Cookbook</a>
-      <div>
-        <form class="subscribe" id="sub-form" novalidate>
-          <input type="email" id="sub-email" placeholder="you@company.com" aria-label="Email address">
-          <button class="btn btn-primary" type="submit">Subscribe</button>
-        </form>
-        <div class="sub-done" id="sub-done">You're on the list.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="faqs">
-  <div class="wrap">
-    <div class="sec-head" data-reveal><span class="sec-num">08</span><span class="sec-title">Questions</span></div>
-    <div class="rule sec-rule" data-reveal></div>
-    <div class="faq" data-reveal>
-      <div class="faq-item open">
-        <button class="faq-q" aria-expanded="true">Who do we work with?<span class="ico"></span></button>
-        <div class="faq-a"><p>Leadership teams and individuals who recognize they need to make the time to use AI to learn about its potential and the impact it will have on their careers, their work and their lives.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Do I need to be technical?<span class="ico"></span></button>
-        <div class="faq-a"><p>No, far from it. While we work with technical teams, much of our work is with people who have never written a line of code or configured software.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">What AI models do we use?<span class="ico"></span></button>
-        <div class="faq-a"><p>We're model agnostic — from OpenAI, Anthropic, Google and other frontier models to open-source tools. We're comfortable working where you're most comfortable, or where you need to learn more. We use Anthropic to run BuildFirst, and we keep fresh by experimenting weekly with the latest capabilities.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="talk" class="final final-band">
-  <div class="wrap">
-    <div class="rule lead" data-reveal></div>
-    <h2 data-reveal><span class="slash">/</span>let's have a conversation.</h2>
-    <p data-reveal>Tell me what you're trying to do with AI, and you'll get an honest answer on whether this can help.</p>
-    <div class="cta-row" data-reveal style="margin-top:38px;">
-      <a class="btn btn-primary btn-lg" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Book a call</a>
-    </div>
-  </div>
+  <p class="res-note">All are free and open. Use them however helps.</p>
+  <a class="btn solid" style="margin-top:24px;padding:14px 26px;font-size:12px" href="writing-tools.html">Explore Writing & Tools →</a>
 </section>
 
 <footer>
-  <div class="wrap foot-in">
+  <div class="foot-row">
     <div>
-      <div class="foot-mark"><b>/buildfirst</b></div>
-      <div class="foot-tag">Creating a generation of GenAI-fluent leaders.</div>
+      <div style="font-weight:700;font-size:20px;letter-spacing:-.02em">BuildFirst</div>
+      <div class="cap" style="color:rgba(255,255,255,.5);margin-top:12px">GenAI fluency for leaders</div>
     </div>
     <div class="foot-links">
-      <a href="#spectrum">Our Approach</a><a href="#how">What We Do</a><a href="#about">About</a><a href="#tools">Tools</a><a href="#cookbook">The AI Cookbook</a><a href="mailto:david@thisisluminary.co">Email</a><a href="https://www.linkedin.com/in/davidbeath/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="cap" href="#individuals">Individuals</a>
+      <a class="cap" href="#companies">Companies</a>
+      <a class="cap" href="approach.html">Approach</a>
+      <a class="cap" href="writing-tools.html">Writing & Tools</a>
+      <a class="cap" href="mailto:david@thisisluminary.co">Email</a>
+      <a class="cap" href="https://www.linkedin.com/in/davidbeath/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </div>
+  <div class="foot-fine">© 2026 BuildFirst · Build first. Learn fast. Repeat.</div>
 </footer>
-
-<script src="assets/buildfirst.js"></script>
-<script>
-(function(){
-  document.querySelectorAll('.faq-q').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var item=btn.closest('.faq-item');
-      var open=item.classList.contains('open');
-      item.classList.toggle('open', !open);
-      btn.setAttribute('aria-expanded', String(!open));
-    });
-  });
-  var form=document.getElementById('sub-form');
-  if(form){
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var email=document.getElementById('sub-email');
-      var val=email.value.trim();
-      var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
-      if(!ok){ email.focus(); email.style.borderColor='var(--bf-ink)'; return; }
-      // Hand off to Substack to complete the subscription (email pre-filled).
-      window.open('https://theaicookbook.substack.com/subscribe?email='+encodeURIComponent(val), '_blank', 'noopener');
-      document.getElementById('sub-done').classList.add('show');
-      email.value=''; email.blur();
-    });
-  }
-  var iform=document.getElementById('ios-form');
-  if(iform){
-    iform.addEventListener('submit', function(e){
-      e.preventDefault();
-      var email=document.getElementById('ios-email');
-      var val=email.value.trim();
-      var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
-      if(!ok){ email.focus(); email.style.borderColor='var(--bf-ink)'; return; }
-      // Capture the signup — emails David via FormSubmit (same service the assessment uses).
-      fetch('https://formsubmit.co/ajax/david@thisisluminary.co', {
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body:JSON.stringify({
-          email: val,
-          _subject: 'IntelligenceOS waitlist signup',
-          source: 'buildfirst.io — IntelligenceOS waitlist'
-        })
-      }).catch(function(){ /* non-blocking: still confirm to the user */ });
-      document.getElementById('ios-done').classList.add('show');
-      email.value=''; email.blur();
-    });
-  }
-  /* engagement selector — master-detail on desktop, accordion on mobile */
-  var picker=document.querySelector('.picker');
-  if(picker){
-    var pRail=picker.querySelector('.picker-rail');
-    var pDetail=picker.querySelector('.picker-detail');
-    var pBtns=[].slice.call(pRail.querySelectorAll('.prail-item'));
-    var pPanels=[].slice.call(pDetail.querySelectorAll('.pdetail'));
-    var mq=window.matchMedia('(max-width:760px)');
-    var mode=null;
-    function selEng(i){
-      pBtns.forEach(function(b,k){var on=k===i;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});
-      pPanels.forEach(function(p,k){p.classList.toggle('active',k===i);});
-    }
-    function toAccordion(){
-      if(mode==='acc')return; mode='acc';
-      picker.classList.add('is-accordion');
-      pBtns.forEach(function(b,i){ b.insertAdjacentElement('afterend', pPanels[i]); });
-    }
-    function toMaster(){
-      if(mode==='master')return; mode='master';
-      picker.classList.remove('is-accordion');
-      pPanels.forEach(function(p){ pDetail.appendChild(p); });
-    }
-    function applyMode(){ mq.matches?toAccordion():toMaster(); }
-    pBtns.forEach(function(b,i){
-      b.addEventListener('click', function(){ selEng(i); });
-      b.addEventListener('keydown', function(e){
-        if(e.key==='ArrowDown'||e.key==='ArrowRight'){ e.preventDefault(); var n=(i+1)%pBtns.length; pBtns[n].focus(); selEng(n); }
-        if(e.key==='ArrowUp'||e.key==='ArrowLeft'){ e.preventDefault(); var n=(i-1+pBtns.length)%pBtns.length; pBtns[n].focus(); selEng(n); }
-      });
-    });
-    applyMode();
-    if(mq.addEventListener){ mq.addEventListener('change', applyMode); } else if(mq.addListener){ mq.addListener(applyMode); }
-  }
-
-  /* The AI Cookbook — hydrate cards from the live Substack feed.
-     Falls back silently to the baked-in cards if the feed is unreachable. */
-  var cookGrid=document.getElementById('cook-cards');
-  if(cookGrid && 'fetch' in window){
-    var cookCards=[].slice.call(cookGrid.querySelectorAll('[data-cook]'));
-    if(cookCards.length){
-      fetch('/api/cookbook?limit='+cookCards.length, {headers:{'accept':'application/json'}})
-        .then(function(r){ return r.ok ? r.json() : null; })
-        .then(function(data){
-          if(!data || !data.posts || !data.posts.length) return; // keep fallback
-          cookCards.forEach(function(card){
-            var i=parseInt(card.getAttribute('data-cook'), 10);
-            var post=data.posts[i];
-            if(!post){ card.style.display='none'; return; }
-            if(post.link) card.setAttribute('href', post.link);
-            var cover=card.querySelector('[data-cook-cover]');
-            if(cover){
-              if(post.image){ cover.setAttribute('src', post.image); cover.setAttribute('alt', post.title||''); cover.removeAttribute('data-empty'); }
-              else { cover.removeAttribute('src'); cover.setAttribute('data-empty',''); }
-            }
-            var date=card.querySelector('[data-cook-date]');
-            if(date){ date.textContent=(post.date ? post.date+' · ' : '')+(post.author||'David Beath'); }
-            var title=card.querySelector('[data-cook-title]');
-            if(title && post.title){ title.textContent=post.title; }
-          });
-        })
-        .catch(function(){ /* keep fallback cards */ });
-    }
-  }
-})();
-</script>
-</body>
-</html>
+</body></html>

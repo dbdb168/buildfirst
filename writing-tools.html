@@ -1,0 +1,210 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BuildFirst — writing & tools</title>
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="_ds/design-system-acee6b37-c01a-4da5-9c7b-b4e44b145923/styles.css">
+<style>
+@keyframes bfSpin360{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--bf-font-body);color:var(--bf-text-strong);background:var(--bf-paper)}
+a{color:var(--bf-ink);text-decoration:none}
+a:hover{opacity:.72}
+.cap{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.slash{font-weight:400;color:var(--bf-text-faint);display:inline-block;margin-right:.1em;animation:bfSpin360 .8s cubic-bezier(.2,.7,.2,1) both}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:24px 52px;border-bottom:1px solid var(--bf-line);position:sticky;top:0;background:rgba(238,237,232,.85);backdrop-filter:blur(10px);z-index:20}
+.nav a.cap{color:var(--bf-text-muted)}
+.nav a.solid{color:var(--bf-on-ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border-radius:var(--bf-radius-pill);padding:11px 20px;cursor:pointer;border:0}
+.solid{background:var(--bf-ink);color:var(--bf-on-ink)}
+.solid:hover{opacity:.86}
+.ghost{background:transparent;color:var(--bf-ink);border:1px solid rgba(24,24,24,.32)}
+.ghost:hover{opacity:1;background:rgba(24,24,24,.05)}
+.disabled{background:transparent;color:var(--bf-text-faint);border:1px dashed rgba(24,24,24,.28);cursor:default}
+.disabled:hover{opacity:1}
+
+.hero{background:var(--bf-lilac);padding:88px 52px 92px}
+.hero h1{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(42px,6vw,88px);line-height:.92;letter-spacing:-.045em;margin:24px 0 0}
+.lead{font-size:19px;line-height:1.55;color:rgba(24,24,24,.72);max-width:640px;margin-top:28px}
+
+.section{padding:80px 52px}
+.tag{display:inline-flex;align-items:center;font-family:var(--bf-font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bf-text-muted);border:1px solid var(--bf-line);border-radius:var(--bf-radius-pill);padding:5px 12px}
+
+.card{background:#fff;border:1px solid var(--bf-line);border-radius:var(--bf-radius-md);padding:28px 26px 26px;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card h3{font-family:var(--bf-font-display);font-weight:600;font-size:22px;line-height:1.08;letter-spacing:-.02em;margin:14px 0 0}
+.card p{font-size:15px;line-height:1.6;color:var(--bf-text-muted);margin:14px 0 0}
+.card .spacer{flex:1}
+.card .foot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px}
+
+/* Featured AI Cookbook */
+.featured{background:#fff;border:1px solid var(--bf-line);border-top:4px solid var(--bf-lilac);border-radius:var(--bf-radius-md);padding:40px 40px 36px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.featured-head{display:flex;align-items:flex-start;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.featured h2{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(30px,3.6vw,42px);line-height:.98;letter-spacing:-.03em;margin:12px 0 0}
+.featured .lead-copy{font-size:17px;line-height:1.55;color:var(--bf-text-muted);max-width:560px;margin:16px 0 0}
+.posts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
+.post{background:var(--bf-canvas,#f4f3ee);border:1px solid var(--bf-line);border-radius:10px;padding:16px;display:flex;flex-direction:column;min-height:150px}
+.post .kicker{font-family:var(--bf-font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bf-text-faint)}
+.post .title{font-family:var(--bf-font-display);font-weight:600;font-size:15px;line-height:1.15;letter-spacing:-.01em;margin-top:10px}
+.post .spacer{flex:1}
+.post .meta{font-family:var(--bf-font-mono);font-size:10px;letter-spacing:.06em;color:var(--bf-text-faint);margin-top:12px}
+
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px}
+
+.usage{background:var(--bf-paper);border-top:1px solid var(--bf-line)}
+.usage-inner{max-width:720px}
+.usage p{font-size:20px;line-height:1.55;color:rgba(24,24,24,.72);margin:22px 0 0}
+
+footer{background:var(--bf-ink);color:var(--bf-on-ink);padding:56px 52px}
+footer a{color:rgba(255,255,255,.72)}
+footer a:hover{opacity:1}
+.foot-row{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.foot-links{display:flex;gap:28px;flex-wrap:wrap}
+.foot-fine{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-top:36px}
+
+@media(max-width:980px){.posts{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr}}
+@media(max-width:860px){
+  .nav{padding:18px 24px}
+  .hero{padding:60px 24px 68px}
+  .section{padding:56px 24px}
+  .featured{padding:28px 24px}
+}
+</style></head>
+<body>
+<div class="nav">
+  <a href="index.html" style="font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--bf-ink)">BuildFirst</a>
+  <div style="display:flex;align-items:center;gap:30px">
+    <a class="cap" href="index.html#individuals">Individuals</a><a class="cap" href="index.html#companies">Companies</a><a class="cap" href="approach.html">Approach</a><a class="cap" href="writing-tools.html">Writing & Tools</a>
+    <a class="btn solid" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Let's talk</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="cap" style="color:rgba(24,24,24,.55)">Writing & tools</div>
+  <h1><span class="slash">/</span>Writing & Tools</h1>
+  <p class="lead">Practical resources for leaders and teams building AI fluency. No sign-up required.</p>
+</section>
+
+<section class="section">
+  <div class="featured">
+    <div class="featured-head">
+      <div>
+        <div class="cap" style="color:var(--bf-text-faint)">Featured · Substack</div>
+        <h2><span class="slash">/</span>AI Cookbook</h2>
+        <p class="lead-copy">A collection of practical AI recipes, personal insights from my own use of AI. Updated regularly as new patterns emerge.</p>
+      </div>
+      <a class="btn solid" style="padding:14px 26px;font-size:12px" href="https://theaicookbook.substack.com/" target="_blank" rel="noopener">Explore the Cookbook</a>
+    </div>
+    <!-- Cards hydrate from the live AI Cookbook Substack feed via /api/cookbook.
+         The baked-in content below is a real snapshot of the feed, kept as the
+         fallback if the fetch fails. -->
+    <div class="posts" id="cook-posts">
+      <a class="post" data-cook="0" href="https://theaicookbook.substack.com/p/perseverance-pays-off" target="_blank" rel="noopener">
+        <div class="kicker">Post 01</div><div class="title" data-cook-title>Perseverance Pays Off</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 16 · David Beath</div>
+      </a>
+      <a class="post" data-cook="1" href="https://theaicookbook.substack.com/p/small-but-mighty-teams" target="_blank" rel="noopener">
+        <div class="kicker">Post 02</div><div class="title" data-cook-title>Small But Mighty Teams</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 11 · David Beath</div>
+      </a>
+      <a class="post" data-cook="2" href="https://theaicookbook.substack.com/p/put-authority-close-to-the-work" target="_blank" rel="noopener">
+        <div class="kicker">Post 03</div><div class="title" data-cook-title>Put Authority Close to the Work</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 8 · David Beath</div>
+      </a>
+      <a class="post" data-cook="3" href="https://theaicookbook.substack.com/p/the-three-principles-of-adoption" target="_blank" rel="noopener">
+        <div class="kicker">Post 04</div><div class="title" data-cook-title>The Three Principles of Adoption</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 4 · David Beath</div>
+      </a>
+      <a class="post" data-cook="4" href="https://theaicookbook.substack.com/p/start-with-a-real-problem" target="_blank" rel="noopener">
+        <div class="kicker">Post 05</div><div class="title" data-cook-title>Start With a Real Problem</div><div class="spacer"></div><div class="meta" data-cook-date>Jun 1 · David Beath</div>
+      </a>
+      <a class="post" data-cook="5" href="https://theaicookbook.substack.com/p/the-five-percent" target="_blank" rel="noopener">
+        <div class="kicker">Post 06</div><div class="title" data-cook-title>The Five Percent</div><div class="spacer"></div><div class="meta" data-cook-date>May 28 · David Beath</div>
+      </a>
+      <a class="post" data-cook="6" href="https://theaicookbook.substack.com/p/the-settling" target="_blank" rel="noopener">
+        <div class="kicker">Post 07</div><div class="title" data-cook-title>The Settling</div><div class="spacer"></div><div class="meta" data-cook-date>Apr 3 · David Beath</div>
+      </a>
+      <a class="post" data-cook="7" href="https://theaicookbook.substack.com/p/recipe-10-can-i-have-your-attention" target="_blank" rel="noopener">
+        <div class="kicker">Post 08</div><div class="title" data-cook-title>Recipe #10, Can I Have Your Attention, Please?</div><div class="spacer"></div><div class="meta" data-cook-date>Mar 28 · David Beath</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <article class="card" style="border-top:3px solid var(--bf-sage)">
+      <span class="tag">Diagnostic Tool</span>
+      <h3>Groundwork</h3>
+      <p>Groundwork is a thinking tool for leaders — a plugin that helps you work out where AI could actually be useful in your organisation, then decide which opportunities to start with. It shows you what you'd need to learn before you commit, drawing on Steve Blank's and Alex Osterwalder's lean experimentation methods to turn a long list into real decisions: what to build, what to test first, and — the part that matters most — where to put your investment.</p>
+      <div class="spacer"></div>
+      <div class="foot">
+        <a class="btn ghost" href="https://github.com/dbdb168/groundwork" target="_blank" rel="noopener">View on Github</a>
+      </div>
+    </article>
+
+    <article class="card" style="border-top:3px solid var(--bf-periwinkle)">
+      <span class="tag">Operating System</span>
+      <h3>IntelligenceOS</h3>
+      <p>Inspired by Jack Dorsey's From Hierarchy to Intelligence, I'm building a secure, agentic operating system for BuildFirst that automates or augments every part of what I do as its founder and solo operator. It self-improves with feedback from me and the world, drawing on pioneers in agentic coding and agent design. IntelligenceOS is a repo of the frameworks, folder structures and agents I've built to run BuildFirst — open source and compiled for you to customise for your own company or your clients.</p>
+      <div class="spacer"></div>
+      <div class="foot">
+        <span class="btn disabled">Coming Soon</span>
+      </div>
+    </article>
+
+    <article class="card" style="border-top:3px solid var(--bf-rose)">
+      <span class="tag">Self-Assessment</span>
+      <h3>Fluency Self-Assessment</h3>
+      <p>A quick personal assessment to identify where you sit on the AI fluency spectrum and which BuildFirst path fits your current needs. Takes 5 minutes. Maps directly to our individual coaching tiers.</p>
+      <div class="spacer"></div>
+      <div class="foot">
+        <span class="btn disabled">Coming Soon</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section usage">
+  <div class="usage-inner">
+    <div class="cap" style="color:var(--bf-text-faint)">How to use this page</div>
+    <p>These resources are free and open. Use them however helps. If you find yourself wanting to go deeper, that's usually a sign that hands-on coaching or a workshop would accelerate things. We're here when you're ready.</p>
+    <a class="btn solid" style="margin-top:30px;padding:14px 26px;font-size:12px" href="mailto:david@thisisluminary.co">Start a Conversation</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-row">
+    <div>
+      <div style="font-weight:700;font-size:20px;letter-spacing:-.02em">BuildFirst</div>
+      <div class="cap" style="color:rgba(255,255,255,.5);margin-top:12px">GenAI fluency for leaders</div>
+    </div>
+    <div class="foot-links">
+      <a class="cap" href="index.html#individuals">Individuals</a>
+      <a class="cap" href="index.html#companies">Companies</a>
+      <a class="cap" href="approach.html">Approach</a>
+      <a class="cap" href="writing-tools.html">Writing & Tools</a>
+    </div>
+  </div>
+  <div class="foot-fine">© 2026 BuildFirst · Build first. Learn fast. Repeat.</div>
+</footer>
+
+<script>
+(function(){
+  /* The AI Cookbook — hydrate post cards from the live Substack feed via the
+     /api/cookbook proxy. Falls back silently to the baked-in cards if the
+     feed is unreachable. */
+  var grid=document.getElementById('cook-posts');
+  if(!grid || !('fetch' in window)) return;
+  var cards=[].slice.call(grid.querySelectorAll('[data-cook]'));
+  if(!cards.length) return;
+  fetch('/api/cookbook?limit=8', {headers:{'accept':'application/json'}})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){
+      if(!data || !data.posts || !data.posts.length) return; // keep fallback
+      cards.forEach(function(card){
+        var i=parseInt(card.getAttribute('data-cook'), 10);
+        var post=data.posts[i];
+        if(!post){ card.style.display='none'; return; }
+        if(post.link) card.setAttribute('href', post.link);
+        var title=card.querySelector('[data-cook-title]');
+        if(title && post.title){ title.textContent=post.title; }
+        var meta=card.querySelector('[data-cook-date]');
+        if(meta){ meta.textContent=(post.date ? post.date+' · ' : '')+(post.author||'David Beath'); }
+      });
+    })
+    .catch(function(){ /* keep fallback cards */ });
+})();
+</script>
+</body></html>

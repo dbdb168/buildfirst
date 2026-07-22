@@ -1,0 +1,187 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BuildFirst — how we think</title>
+<meta name="description" content="How BuildFirst thinks about AI fluency: recalibration over training, building over studying, and an engagement model that starts small and grows with your organization.">
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="_ds/design-system-acee6b37-c01a-4da5-9c7b-b4e44b145923/styles.css">
+<style>
+@keyframes bfSpin360{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--bf-font-body);color:var(--bf-text-strong);background:var(--bf-paper)}
+a{color:var(--bf-ink);text-decoration:none}
+a:hover{opacity:.72}
+.cap{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.slash{font-weight:400;color:var(--bf-text-faint);display:inline-block;margin-right:.1em;animation:bfSpin360 .8s cubic-bezier(.2,.7,.2,1) both}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:24px 52px;border-bottom:1px solid var(--bf-line);position:sticky;top:0;background:rgba(238,237,232,.85);backdrop-filter:blur(10px);z-index:20}
+.nav a.cap{color:var(--bf-text-muted)}
+.nav a.solid{color:var(--bf-on-ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border-radius:var(--bf-radius-pill);padding:11px 20px;cursor:pointer;border:0}
+.solid{background:var(--bf-ink);color:var(--bf-on-ink)}
+.solid:hover{opacity:.86}
+.ghost{background:transparent;color:var(--bf-ink);border:1px solid rgba(24,24,24,.32)}
+.ghost:hover{opacity:1;background:rgba(24,24,24,.05)}
+
+.hero{background:var(--bf-sage);padding:88px 52px 92px}
+.hero h1{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(42px,6vw,88px);line-height:.92;letter-spacing:-.045em;margin:24px 0 0}
+.lead{font-size:19px;line-height:1.55;color:rgba(24,24,24,.72);max-width:640px;margin-top:28px}
+
+.section{padding:80px 52px}
+.section.divider{border-top:1px solid var(--bf-line)}
+.section.lilac{background:var(--bf-lilac)}
+.sec-head{max-width:760px}
+.sec-title{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(32px,4.2vw,50px);line-height:.98;letter-spacing:-.035em;margin:14px 0 0}
+.big-copy{font-size:20px;line-height:1.55;color:rgba(24,24,24,.72);max-width:760px;margin-top:26px}
+.section-link{display:inline-block;margin-top:28px;font-family:var(--bf-font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:52px}
+.tile{background:#fff;border:1px solid var(--bf-line);border-radius:var(--bf-radius-md);padding:30px 28px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tile .idx{font-family:var(--bf-font-mono);font-size:13px;color:var(--bf-text-faint)}
+.tile h3{font-family:var(--bf-font-display);font-weight:600;font-size:23px;line-height:1.08;letter-spacing:-.02em;margin:14px 0 0}
+.tile p{font-size:15px;line-height:1.6;color:var(--bf-text-muted);margin:14px 0 0}
+
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:52px}
+.step .num{font-family:var(--bf-font-mono);font-size:34px;color:var(--bf-text-faint);letter-spacing:-.02em}
+.step .rule{height:1px;background:var(--bf-line);margin:14px 0 18px}
+.step h3{font-family:var(--bf-font-display);font-weight:600;font-size:22px;letter-spacing:-.02em;margin:0}
+.step p{font-size:15px;line-height:1.6;color:var(--bf-text-muted);margin:14px 0 0}
+
+.closing{background:var(--bf-ink);color:var(--bf-on-ink);padding:96px 52px}
+.closing .sec-title{color:var(--bf-on-ink)}
+.closing .big-copy{color:rgba(255,255,255,.72)}
+.closing .cap{color:rgba(255,255,255,.5)}
+.closing .sec-title .slash{color:rgba(255,255,255,.5)}
+
+footer{background:var(--bf-ink);color:var(--bf-on-ink);padding:56px 52px;border-top:1px solid rgba(255,255,255,.12)}
+footer a{color:rgba(255,255,255,.72)}
+footer a:hover{opacity:1}
+.foot-row{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.foot-links{display:flex;gap:28px;flex-wrap:wrap}
+.foot-fine{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-top:36px}
+
+@media(max-width:860px){
+  .nav{padding:18px 24px}
+  .hero{padding:60px 24px 68px}
+  .section,.closing{padding:56px 24px}
+  .tiles{grid-template-columns:1fr}
+  .cols{grid-template-columns:1fr}
+}
+</style></head>
+<body>
+<div class="nav">
+  <a href="index.html" style="font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--bf-ink)">BuildFirst</a>
+  <div style="display:flex;align-items:center;gap:30px">
+    <a class="cap" href="index.html#individuals">Individuals</a><a class="cap" href="index.html#companies">Companies</a><a class="cap" href="approach.html">Approach</a><a class="cap" href="writing-tools.html">Writing & Tools</a>
+    <a class="btn solid" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Let's talk</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="cap" style="color:rgba(24,24,24,.55)">How we think</div>
+  <h1><span class="slash">/</span>How We Think About AI Fluency</h1>
+  <p class="lead">Building capability through use, not studying theory.</p>
+</section>
+
+<section class="section">
+  <div class="sec-head">
+    <div class="cap" style="color:var(--bf-text-faint)">Philosophy</div>
+    <h2 class="sec-title"><span class="slash">/</span>Recalibration, Not Training</h2>
+    <p class="big-copy">Most AI training treats fluency as knowledge transfer: learn the concepts, pass the quiz, apply the framework. We've found that doesn't work for leaders who need to make decisions under uncertainty. Real fluency comes from recalibrated instinct — the ability to see where AI creates genuine value, act on it confidently, and adjust when the tool falls short. That instinct only develops through building, failing, and refining in context.</p>
+  </div>
+</section>
+
+<section class="section divider">
+  <div class="sec-head">
+    <div class="cap" style="color:var(--bf-text-faint)">Methodology</div>
+    <h2 class="sec-title"><span class="slash">/</span>Four Principles We Build On</h2>
+  </div>
+  <div class="tiles">
+    <div class="tile" style="border-top:3px solid var(--bf-sage)">
+      <div class="idx">01</div>
+      <h3>Build Before You Teach</h3>
+      <p>We start every engagement by building something useful together. Not a demo. Not a slide deck. A real workflow that solves an actual problem the leader or team faces today. The learning happens inside the building.</p>
+    </div>
+    <div class="tile" style="border-top:3px solid var(--bf-periwinkle)">
+      <div class="idx">02</div>
+      <h3>Diagnose First, Prescribe Second</h3>
+      <p>We don't assume we know what you need. Every engagement begins with understanding your specific workflows, constraints, and organizational context. The right AI application emerges from that diagnosis, not from a generic playbook.</p>
+    </div>
+    <div class="tile" style="border-top:3px solid var(--bf-lilac)">
+      <div class="idx">03</div>
+      <h3>Strategic Overlay on Every Build</h3>
+      <p>When we build custom tools, agents, or workflows, the strategic thinking isn't separate from the technical work. We come in at the strategic level first, then deliver working software that embodies the insight. The build is the deliverable, but the thinking is what makes it valuable.</p>
+    </div>
+    <div class="tile" style="border-top:3px solid var(--bf-rose)">
+      <div class="idx">04</div>
+      <h3>Fluency Is Personal Before It's Organizational</h3>
+      <p>Team fluency starts with individual confidence. Leaders who have built real AI workflows themselves make better decisions about team adoption, tool selection, and investment. That's why 1:1 coaching is often the front door to broader organizational work.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section lilac">
+  <div class="sec-head">
+    <div class="cap" style="color:rgba(24,24,24,.55)">Framework</div>
+    <h2 class="sec-title"><span class="slash">/</span>The Anthropic Fluency Framework</h2>
+    <p class="big-copy">Our methodology draws on the Anthropic fluency framework, which defines AI fluency across four dimensions: prompting, evaluating outputs, integrating AI into workflows, and understanding limitations. We adapt this framework for executives and teams who need practical capability, not academic mastery. The goal isn't to become an AI expert. It's to become a more effective leader in an AI-shaped world.</p>
+    <a class="section-link" href="https://www.anthropic.com" target="_blank" rel="noopener">Read the framework →</a>
+  </div>
+</section>
+
+<section class="section divider">
+  <div class="sec-head">
+    <div class="cap" style="color:var(--bf-text-faint)">Engagement model</div>
+    <h2 class="sec-title"><span class="slash">/</span>How Engagement Works</h2>
+  </div>
+  <div class="cols">
+    <div class="step">
+      <div class="num">01</div>
+      <div class="rule"></div>
+      <h3>Start Small</h3>
+      <p>A diagnostic call, a half-day workshop, or a focused sprint. Low commitment, high signal. You experience the approach before deciding on a longer engagement.</p>
+    </div>
+    <div class="step">
+      <div class="num">02</div>
+      <div class="rule"></div>
+      <h3>Build Together</h3>
+      <p>Coaching, sprints, or advisory where we work alongside you. The output is both capability and deliverables. You own the result.</p>
+    </div>
+    <div class="step">
+      <div class="num">03</div>
+      <div class="rule"></div>
+      <h3>Extend Across the Organization</h3>
+      <p>Team workshops, fractional leadership, or ongoing advisory. The patterns we develop together become repeatable systems your team can sustain independently.</p>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="sec-head">
+    <div class="cap">Ready when you are</div>
+    <h2 class="sec-title"><span class="slash">/</span>Ready to Build?</h2>
+    <p class="big-copy">If this resonates, the next step is a conversation. Tell us what you're working on, and we'll tell you honestly whether we can help.</p>
+    <a class="btn solid" style="margin-top:32px;padding:16px 30px;font-size:13px;background:var(--bf-paper);color:var(--bf-ink)" href="mailto:david@thisisluminary.co">Start a Conversation</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-row">
+    <div>
+      <div style="font-weight:700;font-size:20px;letter-spacing:-.02em">BuildFirst</div>
+      <div class="cap" style="color:rgba(255,255,255,.5);margin-top:12px">GenAI fluency for leaders</div>
+    </div>
+    <div class="foot-links">
+      <a class="cap" href="index.html#individuals">Individuals</a>
+      <a class="cap" href="index.html#companies">Companies</a>
+      <a class="cap" href="approach.html">Approach</a>
+      <a class="cap" href="writing-tools.html">Writing & Tools</a>
+    </div>
+  </div>
+  <div class="foot-fine">© 2026 BuildFirst · Build first. Learn fast. Repeat.</div>
+</footer>
+<template id="__bundler_thumbnail" data-bg-color="#c9d8c5">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#c9d8c5"/>
+    <text x="120" y="440" font-family="monospace" font-size="300" fill="#181818" font-weight="700">/</text>
+    <text x="300" y="440" font-family="Arial, sans-serif" font-size="200" fill="#181818" font-weight="700">bf</text>
+  </svg>
+</template>
+</body></html>

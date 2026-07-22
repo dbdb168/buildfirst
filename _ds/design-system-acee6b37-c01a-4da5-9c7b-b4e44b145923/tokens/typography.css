@@ -1,0 +1,34 @@
+:root {
+  /* ── Families ─────────────────────────────────────────────────── */
+  --bf-font-display: 'Arimo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --bf-font-body:    'Arimo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --bf-font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ── Display scale (lowercase, tight, slash-prefixed) ─────────── */
+  --bf-text-hero:    104px;  /* website hero            */
+  --bf-text-display:  56px;  /* foundation / big titles */
+  --bf-text-title:    46px;  /* section title           */
+  --bf-text-h2:       20px;  /* sub-section heading     */
+  --bf-text-lead:     19px;  /* lead paragraph          */
+  --bf-text-body:     15px;  /* body copy               */
+  --bf-text-small:    13px;
+  --bf-text-cap:      11px;  /* ALL-CAPS mono caption   */
+
+  /* ── Weights ──────────────────────────────────────────────────── */
+  --bf-weight-regular: 400;
+  --bf-weight-medium:  500;
+  --bf-weight-semibold:600;  /* display / headlines     */
+  --bf-weight-bold:    700;  /* wordmark only           */
+
+  /* ── Tracking ─────────────────────────────────────────────────── */
+  --bf-tracking-hero:    -0.045em;
+  --bf-tracking-display: -0.038em;
+  --bf-tracking-tight:   -0.02em;
+  --bf-tracking-normal:   0;
+  --bf-tracking-cap:      0.12em;   /* caps micro-captions */
+
+  /* ── Line heights ─────────────────────────────────────────────── */
+  --bf-leading-display: 0.92;
+  --bf-leading-tight:   0.96;
+  --bf-leading-body:    1.55;
+}

@@ -1,0 +1,48 @@
+:root {
+  /* ── Pastel fields — one flat field per context ───────────────── */
+  --bf-sage:        #A9C6A0;  /* growth, delivery, "go" / on-track   */
+  --bf-periwinkle:  #B6C3DC;  /* primary brand field, finance, agents */
+  --bf-lilac:       #C7BFE0;  /* content, data, reflective surfaces   */
+  --bf-rose:        #E7C2CC;  /* attention, things that need you      */
+
+  /* Pastel tints (same hue, paler — used for nested fields/zones) */
+  --bf-sage-soft:   #C3D8BB;
+  --bf-sage-pale:   #E9EBE4;
+
+  /* ── Neutrals ─────────────────────────────────────────────────── */
+  --bf-ink:         #181818;  /* near-black — chrome, type, buttons   */
+  --bf-paper:       #F3F2EE;  /* warm off-white — docs, slides, cards */
+  --bf-canvas:      #EEEDE8;  /* app background, one step cooler      */
+  --bf-white:       #FFFFFF;
+
+  /* ── Semantic surfaces ────────────────────────────────────────── */
+  --bf-surface-page:   var(--bf-canvas);
+  --bf-surface-paper:  var(--bf-paper);
+  --bf-surface-card:   var(--bf-white);
+
+  /* ── Text on light ────────────────────────────────────────────── */
+  --bf-text-strong: #181818;
+  --bf-text-body:   rgba(24,24,24,0.82);
+  --bf-text-muted:  rgba(24,24,24,0.55);
+  --bf-text-faint:  rgba(24,24,24,0.40);
+
+  /* ── Lines & hairlines ────────────────────────────────────────── */
+  --bf-line:        rgba(24,24,24,0.10);
+  --bf-line-strong: rgba(24,24,24,0.16);
+
+  /* ── On ink (dark sidebar / divider slides) ───────────────────── */
+  --bf-on-ink:        #F3F2EE;
+  --bf-on-ink-muted:  rgba(243,242,238,0.55);
+  --bf-on-ink-faint:  rgba(243,242,238,0.35);
+
+  /* ── Status (used sparingly; severity prefers ink + outline) ──── */
+  --bf-critical:    #181818;            /* solid ink tag             */
+  --bf-warn-bg:     #FDF3E2;
+  --bf-warn-fg:     #9A6700;
+
+  /* ── Spectrum accents (Asking → Agency), for ordered rails ────── */
+  --bf-spectrum-1:  var(--bf-sage);       /* Asking       */
+  --bf-spectrum-2:  var(--bf-periwinkle); /* Automation   */
+  --bf-spectrum-3:  var(--bf-lilac);      /* Augmentation */
+  --bf-spectrum-4:  var(--bf-rose);       /* Agency       */
+}
