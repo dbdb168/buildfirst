@@ -1,7 +1,8 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BuildFirst — AI fluency built through use, not theory</title>
 <meta name="description" content="BuildFirst. Learn Fast. Repeat. Creating a generation of GenAI fluent leaders. Hands-on coaching for leaders. Practical workshops, sprints, and fractional AI leadership for companies.">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="canonical" href="https://buildfirst.io/">
 <!-- Open Graph / LinkedIn -->
@@ -23,6 +24,10 @@
   gtag('config', 'G-MKWKYTLT70');
 </script>
 <link rel="stylesheet" href="_ds/design-system-acee6b37-c01a-4da5-9c7b-b4e44b145923/styles.css">
+<!-- Archivo carries the light (300) display weight the hero and bio headings use; Arimo stops at 400. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300&display=swap">
 <style>
 @keyframes bfSpin360{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 *{box-sizing:border-box}
@@ -56,10 +61,11 @@ a:hover{opacity:.72}
 .ghost:hover{opacity:1;background:rgba(24,24,24,.05)}
 
 .hero{background:var(--bf-periwinkle);padding:96px max(52px, calc((100% - 1240px) / 2)) 104px}
-.hero h1{font-family:var(--bf-font-display);font-weight:600;font-size:clamp(46px,7.2vw,100px);line-height:.92;letter-spacing:-.045em;margin:26px 0 0}
-.lead{font-size:19px;line-height:1.55;color:rgba(24,24,24,.72);max-width:660px;margin-top:30px}
+.hero h1{font-family:'Helvetica Neue','HelveticaNeue-Light',Archivo,var(--bf-font-display);font-weight:300;font-size:clamp(52px,7.4vw,104px);line-height:.94;letter-spacing:-.035em;margin:28px 0 0;max-width:16em;text-wrap:balance}
+.lead{font-size:19px;line-height:1.55;color:rgba(24,24,24,.7);max-width:600px;margin-top:34px}
 
 .section{padding:84px max(52px, calc((100% - 1240px) / 2))}
+.section[id]{scroll-margin-top:84px}
 .section.paper{background:var(--bf-paper)}
 .section.lilac{background:var(--bf-lilac)}
 .section.divider{border-top:1px solid var(--bf-line)}
@@ -84,8 +90,18 @@ a:hover{opacity:.72}
 .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
 .res-item{background:#fff;border:1px solid var(--bf-line);border-top:3px solid var(--bf-sage);border-radius:var(--bf-radius-md);padding:26px}
 .res-item h4{font-family:var(--bf-font-display);font-weight:600;font-size:20px;letter-spacing:-.02em;margin:0}
+.res-item h4 a{text-decoration:underline;text-decoration-color:var(--bf-text-faint);text-underline-offset:3px}
 .res-item p{font-size:15px;line-height:1.55;color:var(--bf-text-muted);margin:12px 0 0}
 .res-note{font-size:14px;color:var(--bf-text-muted);margin-top:26px}
+
+/* About / bio */
+.bio{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,2.2fr);gap:56px;align-items:start}
+.bio-name{font-family:var(--bf-font-display);font-weight:600;font-size:42px;line-height:.96;letter-spacing:-.04em;margin:16px 0 0}
+.bio-facts{margin-top:24px;padding-top:20px;border-top:3px solid var(--bf-sage);font-family:var(--bf-font-mono);font-size:12px;line-height:1.9;color:var(--bf-text-muted)}
+.bio-body{max-width:660px}
+.bio-lede{font-size:23px;line-height:1.45;letter-spacing:-.015em;color:var(--bf-text-strong);margin:0}
+.bio-copy{display:flex;flex-direction:column;gap:22px;margin-top:32px;font-size:17px;line-height:1.62;color:rgba(24,24,24,.72);text-wrap:pretty}
+.bio-copy p{margin:0}
 
 footer{background:var(--bf-ink);color:var(--bf-on-ink);padding:56px max(52px, calc((100% - 1240px) / 2))}
 footer a{color:rgba(255,255,255,.72)}
@@ -100,6 +116,10 @@ footer a:hover{opacity:1}
   .section{padding:60px 24px}
   .grid-3{grid-template-columns:1fr}
   .res-grid{grid-template-columns:1fr}
+  .bio{grid-template-columns:1fr;gap:36px}
+  .bio-name{font-size:34px}
+  /* Below the desktop measure the authored breaks fight the natural wrap. */
+  .hero-br{display:none}
 }
 @media(max-width:980px) and (min-width:861px){
   .res-grid{grid-template-columns:1fr 1fr}
@@ -109,7 +129,7 @@ footer a:hover{opacity:1}
 <div class="nav">
   <a href="index.html" style="font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--bf-ink)">BuildFirst</a>
   <div class="nav-right">
-    <nav class="nav-links" id="nav-links"><a class="cap" href="#individuals">Individuals</a><a class="cap" href="#companies">Companies</a><a class="cap" href="approach.html">Approach</a><a class="cap" href="writing-tools.html">Writing & Tools</a></nav>
+    <nav class="nav-links" id="nav-links"><a class="cap" href="#individuals">Individuals</a><a class="cap" href="#companies">Companies</a><a class="cap" href="approach.html">Approach</a><a class="cap" href="#about">About</a><a class="cap" href="writing-tools.html">Writing & Tools</a></nav>
     <a class="btn solid" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Let's talk</a>
     <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
   </div>
@@ -117,9 +137,9 @@ footer a:hover{opacity:1}
 
 <section class="hero">
   <div class="cap" style="color:rgba(24,24,24,.55)">GenAI fluency for leaders</div>
-  <h1><span class="slash">/</span>AI fluency built through<br>use, not theory.</h1>
+  <h1>AI fluency<br class="hero-br"> built through use,<br class="hero-br"> not theory.</h1>
   <p class="lead">Hands-on coaching for leaders. Practical workshops, sprints, and fractional AI leadership for companies.</p>
-  <div style="display:flex;gap:10px;margin-top:40px;flex-wrap:wrap">
+  <div style="display:flex;gap:10px;margin-top:44px;flex-wrap:wrap">
     <a class="btn solid" style="padding:16px 30px;font-size:13px" href="#individuals">For Individuals</a>
     <a class="btn ghost" style="padding:16px 30px;font-size:13px" href="#companies">For Companies</a>
   </div>
@@ -212,22 +232,46 @@ footer a:hover{opacity:1}
   </div>
 </section>
 
-<section class="section paper">
+<section class="section paper" id="about">
+  <div class="bio">
+    <div>
+      <div class="cap" style="color:var(--bf-text-faint)">About</div>
+      <h2 class="bio-name"><span class="slash">/</span>david beath</h2>
+      <div class="bio-facts">
+        <div>RICHMOND, VIRGINIA</div>
+        <div>15 YRS INNOVATION</div>
+        <div>IDEO · CAPITAL ONE · DBS</div>
+      </div>
+    </div>
+    <div class="bio-body">
+      <p class="bio-lede">I help leaders and teams build AI fluency through use, not theory.</p>
+      <div class="bio-copy">
+        <p>BuildFirst is a hands-on AI adoption practice for CEOs, senior teams, and organizations navigating real transformation. I work alongside leaders to build useful AI workflows that solve actual problems, then help extend that fluency across teams and functions. The output is both capability and deliverables: practical skills, working tools, and strategic clarity.</p>
+        <p>Half my work is coaching and workshops. Half is building custom AI tools, agents, and workflows that emerge from deep diagnostic work. Both sides share the same philosophy: fluency comes from building, failing, and refining in context, not from studying frameworks.</p>
+        <p>Before BuildFirst, I spent 15 years leading innovation and digital transformation at IDEO, Capital One, DBS Bank, and Jumeirah. At IDEO, I built client portfolios across Asia and the Middle East spanning healthcare, financial services, and government. At Capital One, I consolidated 4,000 fragmented workflows into 200 for 3,000+ associates. At DBS, I ran the hackathon program for 5,000 associates during the bank’s digital transformation. At lastminute.com, I was employee 22 at a startup that scaled to 3,000 people and IPO’d within two years.</p>
+        <p>That experience taught me what actually moves organizations: not strategy decks or training programs, but leaders who can see where technology creates genuine value and act on it confidently. BuildFirst exists to build that instinct.</p>
+        <p>I’m based in Richmond, Virginia. When I’m not coaching or building, I’m usually chasing my kids or testing a new prompt chain at 6am.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section paper divider">
   <div class="sec-head">
     <div class="cap" style="color:var(--bf-text-faint)">Writing &amp; tools</div>
     <h2 class="sec-title"><span class="slash">/</span>Writing &amp; Tools</h2>
   </div>
   <div class="res-grid">
     <div class="res-item" style="border-top:3px solid var(--bf-lilac)">
-      <h4>AI Cookbook</h4>
+      <h4><a href="writing-tools.html#cookbook">AI Cookbook</a></h4>
       <p>Practical AI recipes and personal insights from my own use of AI, published on Substack and updated regularly as new patterns emerge.</p>
     </div>
     <div class="res-item">
-      <h4>Groundwork</h4>
+      <h4><a href="writing-tools.html#groundwork">Groundwork</a></h4>
       <p>A diagnostic tool for assessing your organization's AI readiness.</p>
     </div>
     <div class="res-item">
-      <h4>IntelligenceOS</h4>
+      <h4><a href="writing-tools.html#intelligenceos">IntelligenceOS</a></h4>
       <p>A framework for thinking about AI capabilities and limitations.</p>
     </div>
   </div>
@@ -245,6 +289,7 @@ footer a:hover{opacity:1}
       <a class="cap" href="#individuals">Individuals</a>
       <a class="cap" href="#companies">Companies</a>
       <a class="cap" href="approach.html">Approach</a>
+      <a class="cap" href="#about">About</a>
       <a class="cap" href="writing-tools.html">Writing & Tools</a>
       <a class="cap" href="mailto:david@thisisluminary.co">Email</a>
       <a class="cap" href="https://www.linkedin.com/in/dbeath/" target="_blank" rel="noopener">LinkedIn</a>

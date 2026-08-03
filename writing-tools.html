@@ -1,7 +1,8 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BuildFirst — writing & tools</title>
 <meta name="description" content="Free resources for building AI fluency: The AI Cookbook on Substack, the Groundwork diagnostic tool, and IntelligenceOS. Open and practical, no sign-up required.">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="canonical" href="https://buildfirst.io/writing-tools.html">
 <!-- Open Graph / LinkedIn -->
@@ -32,6 +33,7 @@ a:hover{opacity:.72}
 .cap{font-family:var(--bf-font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
 .slash{font-weight:400;color:var(--bf-text-faint);display:inline-block;margin-right:.1em;animation:bfSpin360 .8s cubic-bezier(.2,.7,.2,1) both}
 @media(prefers-reduced-motion:reduce){.slash{animation:none}}
+#cookbook,#groundwork,#intelligenceos{scroll-margin-top:100px}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:24px max(52px, calc((100% - 1240px) / 2));border-bottom:1px solid var(--bf-line);position:sticky;top:0;background:rgba(238,237,232,.85);backdrop-filter:blur(10px);z-index:20}
 .nav a.cap{color:var(--bf-text-muted)}
 .nav a.solid{color:var(--bf-on-ink)}
@@ -109,7 +111,7 @@ footer a:hover{opacity:1}
 <div class="nav">
   <a href="index.html" style="font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--bf-ink)">BuildFirst</a>
   <div class="nav-right">
-    <nav class="nav-links" id="nav-links"><a class="cap" href="index.html#individuals">Individuals</a><a class="cap" href="index.html#companies">Companies</a><a class="cap" href="approach.html">Approach</a><a class="cap" href="writing-tools.html">Writing & Tools</a></nav>
+    <nav class="nav-links" id="nav-links"><a class="cap" href="index.html#individuals">Individuals</a><a class="cap" href="index.html#companies">Companies</a><a class="cap" href="approach.html">Approach</a><a class="cap" href="index.html#about">About</a><a class="cap" href="writing-tools.html">Writing & Tools</a></nav>
     <a class="btn solid" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Let's talk</a>
     <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
   </div>
@@ -122,7 +124,7 @@ footer a:hover{opacity:1}
 </section>
 
 <section class="section">
-  <div class="featured">
+  <div class="featured" id="cookbook">
     <div class="featured-head">
       <div>
         <div class="cap" style="color:var(--bf-text-faint)">Featured · Substack</div>
@@ -173,7 +175,7 @@ footer a:hover{opacity:1}
   <div class="grid-3">
     <article class="card" style="border-top:3px solid var(--bf-sage)">
       <span class="tag">Diagnostic Tool</span>
-      <h3>Groundwork</h3>
+      <h3 id="groundwork">Groundwork</h3>
       <p>Groundwork is a thinking tool for leaders — a plugin that helps you work out where AI could actually be useful in your organisation, then decide which opportunities to start with. It shows you what you'd need to learn before you commit, drawing on Steve Blank's and Alex Osterwalder's lean experimentation methods to turn a long list into real decisions: what to build, what to test first, and — the part that matters most — where to put your investment.</p>
       <div class="spacer"></div>
       <div class="foot">
@@ -183,7 +185,7 @@ footer a:hover{opacity:1}
 
     <article class="card" style="border-top:3px solid var(--bf-periwinkle)">
       <span class="tag">Operating System</span>
-      <h3>IntelligenceOS</h3>
+      <h3 id="intelligenceos">IntelligenceOS</h3>
       <p>Inspired by Jack Dorsey's From Hierarchy to Intelligence, I'm building a secure, agentic operating system for BuildFirst that automates or augments every part of what I do as its founder and solo operator. It self-improves with feedback from me and the world, drawing on pioneers in agentic coding and agent design. IntelligenceOS is a repo of the frameworks, folder structures and agents I've built to run BuildFirst — open source and compiled for you to customise for your own company or your clients.</p>
       <div class="spacer"></div>
       <div class="foot">
@@ -221,6 +223,7 @@ footer a:hover{opacity:1}
       <a class="cap" href="index.html#individuals">Individuals</a>
       <a class="cap" href="index.html#companies">Companies</a>
       <a class="cap" href="approach.html">Approach</a>
+      <a class="cap" href="index.html#about">About</a>
       <a class="cap" href="writing-tools.html">Writing & Tools</a>
       <a class="cap" href="mailto:david@thisisluminary.co">Email</a>
       <a class="cap" href="https://www.linkedin.com/in/dbeath/" target="_blank" rel="noopener">LinkedIn</a>
