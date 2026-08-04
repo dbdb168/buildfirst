@@ -98,8 +98,12 @@ a:hover{opacity:.72}
 .bio{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,2.2fr);gap:56px;align-items:start}
 .bio-name{font-family:var(--bf-font-display);font-weight:600;font-size:42px;line-height:.96;letter-spacing:-.04em;margin:16px 0 0}
 .bio-facts{margin-top:24px;padding-top:20px;border-top:3px solid var(--bf-sage);font-family:var(--bf-font-mono);font-size:12px;line-height:1.9;color:var(--bf-text-muted)}
-.bio-body{max-width:660px}
-.bio-lede{font-size:23px;line-height:1.45;letter-spacing:-.015em;color:var(--bf-text-strong);margin:0}
+/* The left column opens with the About eyebrow, so the body needs the same
+   drop to start level with "/david beath": eyebrow line box + the heading's
+   16px top margin. Pin the eyebrow's line-height so that sum stays exact. */
+.bio .cap{display:block;line-height:13px}
+.bio-body{max-width:660px;margin-top:29px}
+.bio-lede{font-size:17px;line-height:1.62;color:var(--bf-text-strong);margin:0}
 .bio-copy{display:flex;flex-direction:column;gap:22px;margin-top:32px;font-size:17px;line-height:1.62;color:rgba(24,24,24,.72);text-wrap:pretty}
 .bio-copy p{margin:0}
 
@@ -118,6 +122,8 @@ footer a:hover{opacity:1}
   .res-grid{grid-template-columns:1fr}
   .bio{grid-template-columns:1fr;gap:36px}
   .bio-name{font-size:34px}
+  /* Single column — nothing to align against, so drop the offset. */
+  .bio-body{margin-top:0}
   /* Below the desktop measure the authored breaks fight the natural wrap. */
   .hero-br{display:none}
 }
@@ -239,7 +245,7 @@ footer a:hover{opacity:1}
       <h2 class="bio-name"><span class="slash">/</span>david beath</h2>
       <div class="bio-facts">
         <div>RICHMOND, VIRGINIA</div>
-        <div>15 YRS INNOVATION</div>
+        <div>25 YRS INNOVATION</div>
         <div>IDEO · CAPITAL ONE · DBS</div>
       </div>
     </div>
@@ -268,11 +274,11 @@ footer a:hover{opacity:1}
     </div>
     <div class="res-item">
       <h4><a href="writing-tools.html#groundwork">Groundwork</a></h4>
-      <p>A diagnostic tool for assessing your organization's AI readiness.</p>
+      <p>A skill that helps leaders work out which experiments to run to drive AI adoption — and what they need to learn before committing.</p>
     </div>
     <div class="res-item">
       <h4><a href="writing-tools.html#intelligenceos">IntelligenceOS</a></h4>
-      <p>A framework for thinking about AI capabilities and limitations.</p>
+      <p>A plugin for anyone who wants to build agents around their organization's intelligence. Currently designed for individuals.</p>
     </div>
   </div>
   <p class="res-note">All are free and open. Use them however helps.</p>
