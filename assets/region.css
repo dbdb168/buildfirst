@@ -1,0 +1,57 @@
+/* BuildFirst — the region drawing (assets/region.js draws into an <svg class="rg">).
+   Faces take their colour from a role; most roles are dot screens (patterns defined in the page's <defs>).
+   Every polygon is dilated by a round-joined stroke of its own paint, which fillets the corners. */
+svg.rg{display:block;overflow:visible}
+svg.rg polygon{stroke-linejoin:round;paint-order:stroke;stroke-width:.8}
+svg.rg line{stroke:#181818;stroke-width:.4;stroke-linecap:round;stroke-linejoin:round;fill:none}
+svg.rg circle,svg.rg ellipse{stroke:none}
+
+/* the slabs */
+.rg-ground .f-shadow{fill:#181818;opacity:.14;filter:url(#rg-blur);stroke:none}
+.f-plate{fill:#F3F2EE;stroke:#F3F2EE;stroke-width:3.2}
+.f-slab{fill:url(#rg-ink3);stroke:url(#rg-ink3);stroke-width:1.4}
+.rg-city.is-current .f-plate{fill:#FFFFFF;stroke:#FFFFFF}
+.rg-home .f-slab{fill:url(#rg-rose);stroke:url(#rg-rose)}
+.f-beyond{fill:#181818;opacity:.08} .f-beyond-core{fill:#181818;opacity:.32}
+
+/* ground inside a slab */
+.f-water{fill:url(#rg-peri);stroke:url(#rg-peri)}
+.f-beach{fill:url(#rg-sand);stroke:url(#rg-sand)}
+.f-park{fill:url(#rg-sage);stroke:url(#rg-sage)}
+.f-hill{fill:#EDEBE6;stroke:#EDEBE6} .f-hillside{fill:url(#rg-ink2);stroke:url(#rg-ink2)}
+.f-island{fill:#F3F2EE;stroke:#F3F2EE}
+.f-rock{fill:#181818;opacity:.45}
+.f-stage{fill:#FAF9F6;stroke:#FAF9F6}
+.f-table{fill:#FFFFFF;stroke:#FFFFFF;stroke-width:.5}
+
+/* solids */
+.f-roof{fill:#FFFFFF;stroke:#FFFFFF}
+.f-east{fill:url(#rg-ink1);stroke:url(#rg-ink1)}
+.f-south{fill:url(#rg-ink2);stroke:url(#rg-ink2)}
+.f-dome{fill:#FFFFFF}
+.f-foliage{fill:url(#rg-sage)}
+.f-hull{fill:#181818;opacity:.72;stroke:#181818;stroke-width:.4}
+.t-peri{fill:url(#rg-peri);stroke:url(#rg-peri)} .t-peri.f-roof{fill:#C9D3E6;stroke:#C9D3E6}
+.t-glass{fill:url(#rg-peri);stroke:url(#rg-peri)} .t-glass.f-roof{fill:#C9D3E6;stroke:#C9D3E6}
+.t-sage{fill:url(#rg-sage);stroke:url(#rg-sage)} .t-sage.f-roof{fill:#C3D8BB;stroke:#C3D8BB}
+.t-lilac{fill:url(#rg-lilac);stroke:url(#rg-lilac)} .t-lilac.f-roof{fill:#D9D3EA;stroke:#D9D3EA}
+.t-rose{fill:url(#rg-rose);stroke:url(#rg-rose)} .t-rose.f-roof{fill:#F0D6DD;stroke:#F0D6DD}
+
+/* people */
+.f-person{fill:#181818}
+.ln-person{stroke:#181818;stroke-width:.42}
+
+/* lines that stay */
+.ln-trunk{stroke-width:.38;opacity:.6}
+.ln-route{stroke-width:.75;stroke-dasharray:2 2.4;opacity:.6}
+.ln-bridge{stroke-width:1.1}
+.ln-pier{stroke-width:.35;opacity:.5}
+.ln-cable{stroke-width:.3;opacity:.55}
+.ln-rail{stroke-width:.5;stroke-dasharray:1 1.2;opacity:.6}
+
+/* the traveller */
+.rg-traveller .f-shadow{fill:#181818;opacity:.18;filter:url(#rg-blur)}
+.f-traveller{fill:#E7C2CC;stroke:#181818;stroke-width:.6}
+.f-traveller-core{fill:#181818}
+
+@media (prefers-reduced-motion: reduce){ svg.rg *{transition:none} }
