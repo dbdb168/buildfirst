@@ -69,10 +69,11 @@ footer .cap{color:rgba(255,255,255,.5)}
 /* ---- the drawing ---- */
 .terrain polygon,.terrain ellipse,.terrain circle{stroke:var(--ink);stroke-width:.55;stroke-linejoin:round}
 .terrain .no{stroke:none}
-.terrain .f-paper{fill:var(--paper)} .terrain .f-white{fill:var(--g1)} .terrain .f-ink{fill:var(--ink)} .terrain .f-shade{fill:var(--g3)} .terrain .f-none{fill:none}
+.terrain .f-paper{fill:var(--paper)} .terrain .f-white{fill:var(--g1)} .terrain .f-ink{fill:var(--ink)} .terrain .f-shade{fill:var(--g3)} .terrain .f-shade2{fill:var(--g4)} .terrain .f-stripe{fill:url(#stripe)} .terrain .f-none{fill:none}
 .terrain .f-half{fill:url(#half)} .terrain .f-half2{fill:url(#half2)}
 .terrain line{stroke-linecap:round;stroke-linejoin:round;fill:none}
-.terrain .s-ink{stroke:var(--ink)} .terrain .s-paper{stroke:var(--paper)} .terrain .s-white{stroke:#fff} .terrain .s-half{stroke:url(#half)} .terrain .s-half2{stroke:url(#half2)} .terrain .s-shade{stroke:var(--g3)}
+.terrain .s-ink{stroke:var(--ink)} .terrain .s-paper{stroke:var(--paper)} .terrain .s-white{stroke:#fff} .terrain .s-half{stroke:url(#half)} .terrain .s-half2{stroke:url(#half2)} .terrain .s-stripe{stroke:url(#stripe)} .terrain .s-shade{stroke:var(--g3)} .terrain .s-shade2{stroke:var(--g4)}
+.terrain .halo{fill:var(--paper);stroke:var(--paper);stroke-linejoin:round}
 .terrain .ln{stroke:var(--ink);stroke-width:.5;fill:none;stroke-linecap:round}
 .terrain .shadow{opacity:.55}
 .terrain .steam{stroke:var(--ink);stroke-width:.45;fill:none;opacity:.5;animation:steam 2.6s ease-in-out infinite} .terrain .steam.s2{animation-delay:-1.3s}
@@ -80,8 +81,8 @@ footer .cap{color:rgba(255,255,255,.5)}
 .terrain .place{transition:opacity .8s ease}
 .terrain .place.ahead{opacity:.38}
 .terrain [data-hover]{cursor:pointer}
-.terrain [data-hover].hot .f-half,.terrain [data-hover].hot .f-white{fill:var(--g4)} .terrain [data-hover].hot .s-half,.terrain [data-hover].hot .s-half2{stroke:var(--ink)} .terrain [data-hover].hot .f-half2{fill:var(--ink)}
-.terrain .fig.hot .f-half,.terrain .arm.hot .f-half{fill:var(--ink)}
+.terrain [data-hover].hot .f-white,.terrain [data-hover].hot .f-paper:not(.fig *):not(.arm *){fill:var(--g4)} .terrain [data-hover].hot .f-shade{fill:var(--g4)}
+.terrain .fig.hot .s-half,.terrain .fig.hot .s-half2,.terrain .fig.hot .s-stripe,.terrain .arm.hot .s-half,.terrain .arm.hot .s-half2,.terrain .arm.hot .s-stripe{stroke:var(--ink)} .terrain .fig.hot .f-half,.terrain .fig.hot .f-half2,.terrain .fig.hot .f-stripe{fill:var(--ink)}
 @media (prefers-reduced-motion: reduce){ .terrain .steam{animation:none;opacity:.3} .stage{transition:none} }
 .terrain .trail-clear{stroke:var(--paper);stroke-width:13;stroke-linecap:round;stroke-linejoin:round;fill:none}
 .terrain .trail-ahead{stroke:var(--ink);stroke-width:.7;opacity:.22;stroke-dasharray:1.2 3.2;fill:none}

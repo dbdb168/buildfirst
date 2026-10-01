@@ -21,8 +21,9 @@ const SCENES = [
     hov(you, 'you', 'You', 'A leader with a real problem and a laptop. Most journeys start exactly like this: a table, a conversation, and the first build before the first slide.');
     hov([table, laptop], 'table', 'Where it starts', 'A table, two chairs, a mug and a laptop. The first build happens here, on something you actually need.');
     const lamp = S.lamp(1.0, -1.0, 2.5); hov(lamp, 'lamp', '6am', 'The porch light is on at six. That is when the new prompt chain gets tested, before the kids are up.');
-    const bikes = [S.bike(1.6, -2.3, -Math.PI / 2), S.bike(2.2, -2.2, -Math.PI / 2)]; hov(bikes, 'bikes', 'The kids', 'Two bikes against the fence. The reason the day starts early.');
+    const bikes = [S.bike(1.4, -2.45, .15), S.bike(1.9, -1.75, .1)]; hov(bikes, 'bikes', 'The kids', 'Two bikes against the fence. The reason the day starts early.');
     S.tree(3.1, -1.6, 2.6, 1.15); S.tree(-4.2, 1.4, 2.2, .95); S.plant(.9, .4, .8);
+    const dog = S.dog(1.8, .35, Math.PI * .6, 0); hov(dog, 'dog', 'The dog', 'Comes to every call. Has opinions about prompt chains.');
   } },
   // 1 · start small: a signpost, a decision, low commitment
   { door: [-2.6, 2.5], build(S) {
@@ -43,10 +44,10 @@ const SCENES = [
     const table = S.table(-1.1, -.9, 2.3, .9, .74); S.stool(-.3, -1.35, .46);
     const leader = S.fig({ at: [-.3, -1.35, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair: 'tied', coat: 'ink', pants: 'paper', hands: { L: 'type', R: 'type' }, anim: 'type' });
     const laptop = S.laptop(-.3, -.6, .74, -Math.PI / 2);
-    const david = S.fig({ at: [.7, -1.45, 0], face: Math.PI / 2 + .35, hair: 'short', coat: 'half', lean: .2, hands: { L: 'hip', R: { abs: [-.05, -.62, 1.05] } }, anim: 'point' });
+    const david = S.fig({ at: [1.15, -1.55, 0], face: Math.PI / 2 + .5, hair: 'short', coat: 'half', lean: .16, hands: { L: 'hip', R: { abs: [.1, -.7, 1.05] } }, anim: 'point' });
     hov([leader, laptop], 'sherpa', 'Sherpa', 'Eight to ten weeks, one to one. A leader builds a workflow that solves a real problem, and keeps it. Starts with a diagnostic call.');
     hov(david, 'coach', 'Alongside', 'That is usually David. Pointing at the thing you just built, and at the next thing.');
-    const books = S.books(.75, -.35, .74, 4, .2); hov(books, 'stretch', 'Stretch', 'For experienced users: the stack on the table is where prompts become agentic workflows and team-level patterns.');
+    const books = S.books(.85, -.3, .74, 4, .2); hov(books, 'stretch', 'Stretch', 'For experienced users: the stack on the table is where prompts become agentic workflows and team-level patterns.');
     const bag = S.bag(-1.7, .7, Q); hov(bag, 'foundations', 'Workplace AI foundations', 'The bag by the table belongs to someone early in their career, learning AI on real tasks, not demos.');
     S.mug(-.85, -.4, .74); S.chair(-1.6, -.45, 0, {});
     S.tree(2.4, -1.8, 2.8, 1.25); S.plant(-2.9, 1.3, .8);
@@ -55,17 +56,17 @@ const SCENES = [
   { door: [-3.4, 3.0], build(S) {
     S.pad([[-4.5, -3], [4.5, -3], [4.5, 3], [-4.5, 3]], 'white');
     S.wall(-4.5, -3.05, 4.5, -2.9, 2.4, { south: 'paper' });
-    const board = S.board(-3.9, -2.9, .9, 3.2, 1.1, 'x', { notes: [[.66, .6, 'half2'], [.78, .6, 'ink'], [.9, .6, 'half2'], [.66, .36, 'ink'], [.78, .36, 'half2']] });
-    const fac = S.fig({ at: [-2.3, -2.2, 0], face: -Math.PI / 2, hair: 'cap', coat: 'half2', hands: { L: 'hip', R: 'write' }, anim: 'write' });
+    const board = S.board(-3.9, -2.9, .9, 3.2, 1.1, 'x', { lines: [[.3, .84, .45], [.3, .74, .3], [.3, .64, .5]], diagram: [.36, .38], circle: [.66, .3], notes: [[.82, .78, 'shade2', .1], [.9, .78, 'ink', -.08], [.82, .64, 'ink', .05], [.9, .64, 'shade2', .12], [.86, .5, 'shade2', -.1]] });
+    const fac = S.fig({ at: [-4.3, -2.4, 0], face: -Math.PI / 2, hair: 'cap', coat: 'half2', hands: { L: 'hip', R: 'write' }, anim: 'write' });
     hov([board, fac], 'board', 'Diagnose first', 'Diagnose first, prescribe second. The right application emerges from your workflows and constraints, not a playbook.');
-    const table = S.table(-3.4, -1.0, 3.8, 1.0, .74); const team = [table];
-    [[-2.7, 'short', 'half'], [-1.6, 'bun', 'ink'], [-.5, 'curly', 'paper']].forEach(([x, hair, coat], i) => { team.push(S.fig({ at: [x, -1.45, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair, coat, pants: i === 1 ? 'paper' : 'ink', hands: i === 2 ? { L: 'lap', R: 'raise' } : { L: 'type', R: 'type' }, anim: i === 2 ? 'raise' : 'type', phase: i })); S.laptop(x, -.75, .74, -Math.PI / 2); S.stool(x, -1.45, .46); });
-    [[-2.2, 'long', 'half'], [-1.1, 'short', 'ink'], [0, 'tied', 'half2']].forEach(([x, hair, coat], i) => { S.chair(x, .45, -Math.PI / 2); team.push(S.fig({ at: [x, .45, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair, coat, pants: i === 1 ? 'half2' : 'ink', hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 3 })); S.laptop(x, -.28, .74, Math.PI / 2); });
-    S.mug(-3.1, -.5, .74); S.mug(.2, -.6, .74, false);
+    const table = S.table(-3.1, -1.0, 3.8, 1.0, .74); const team = [table];
+    [[-2.4, 'short', 'half'], [-1.3, 'bun', 'ink'], [-.2, 'curly', 'paper']].forEach(([x, hair, coat], i) => { team.push(S.fig({ at: [x, -1.45, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair, coat, pants: i === 1 ? 'paper' : 'ink', hands: i === 2 ? { L: 'lap', R: 'raise' } : { L: 'type', R: 'type' }, anim: i === 2 ? 'raise' : 'type', phase: i })); S.laptop(x, -.75, .74, -Math.PI / 2); S.stool(x, -1.45, .46); });
+    [[-1.9, 'long', 'stripe'], [-.8, 'short', 'ink'], [.3, 'tied', 'half2']].forEach(([x, hair, coat], i) => { S.chair(x, .45, -Math.PI / 2); team.push(S.fig({ at: [x, .45, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair, coat, pants: i === 1 ? 'half2' : 'ink', hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 3 })); S.laptop(x, -.28, .74, Math.PI / 2); });
+    S.mug(-2.8, -.5, .74); S.mug(.5, -.6, .74, false);
     hov(team, 'workshops', 'Team workshops', 'A long table, a half day or a full day. No lectures: everyone builds something useful and applies it on Monday.');
     const bench = S.table(1.6, .3, 1.7, .8, .9); S.monitor(2.6, .5, .9, Math.PI / 2, .5, .32); S.slab([1.95, .7], 0, .14, .1, .9, 1.08, { top: 'half2', east: 'paper', south: 'half' });
     const b1 = S.fig({ at: [2.0, 1.5, 0], face: -Math.PI / 2, hair: 'short', coat: 'paper', lean: .22, hands: { L: { abs: [1.85, 1.0, .95] }, R: { abs: [2.1, 1.0, .95] } } });
-    const b2 = S.fig({ at: [2.9, 1.5, 0], face: -Math.PI / 2 - .4, hair: 'curly', coat: 'half', hands: { L: 'cross', R: 'point' }, anim: 'point' });
+    const b2 = S.fig({ at: [3.5, 1.6, 0], face: -Math.PI / 2 - .5, hair: 'curly', coat: 'half', hands: { L: 'cross', R: 'point' }, anim: 'point' });
     hov([bench, b1, b2], 'sprints', 'Practical sprints', 'The bench: two to four weeks on one workflow or capability gap, built and tested with your team, then handed off with your people owning it.');
     S.plant(3.9, -2.3, 1.0); S.plant(-4.0, 2.2, .7);
   } },
@@ -74,16 +75,16 @@ const SCENES = [
     S.pad([[-3.5, -2.5], [3.5, -2.5], [3.5, 2.5], [-3.5, 2.5]], 'white');
     S.wall(-3.5, -2.55, 3.5, -2.4, 2.4, { south: 'paper' }); S.wall(-3.62, -2.55, -3.5, 1.6, 2.4, { east: 'paper' });
     const peg = S.pegboard(-3.49, -1.9, 1.0, 2.1, 1.0, 'y'); hov(peg, 'ios', 'IntelligenceOS', 'The pegboard: an agentic operating system for running a company, every tool in its place. Open source, for you to customise.');
-    S.window(.5, -2.4, 1.05, 1.2, .85, 'x'); S.box(.35, -2.4, 1.85, -2.15, .85, .92, { top: 'white', east: 'paper', south: 'half' }, -1.5);
+    S.window(.5, -2.4, 1.05, 1.2, .85, 'x', { weather: 'rain' }); S.box(.35, -2.4, 1.85, -2.15, .85, .92, { top: 'white', east: 'paper', south: 'half' }, -1.5);
     const seeds = S.seedlings(.6, -2.3, .92, 4, 'x'); hov(seeds, 'groundwork', 'Groundwork', 'On the sill: seedlings. Groundwork works out which experiments to run, what to learn before you commit, and where the investment goes.');
-    S.counter(-3.0, -2.2, 3.0, .7, .9); for (const [x, y] of [[-2.2, -1.9], [-1.6, -1.9], [-2.2, -1.6]]) disc(S.floor, [x, y, .905], .09, 'ink');
-    const pot = S.pot(-1.6, -1.85, .9, .15); hov(pot, 'cookbook', 'AI Cookbook', 'The stove. Every recipe was cooked here first, on a real problem, then written down on Substack.');
-    const cook = S.fig({ at: [-1.6, -1.0, 0], face: -Math.PI / 2, hair: 'bun', coat: 'paper', pants: 'ink', lean: .1, hands: { L: { abs: [-2.1, -1.7, .95] }, R: 'hold' }, anim: 'stir' });
+    S.stove(-3.0, -2.2, 3.0, .7, .9); const kettle = S.kettle(-2.35, -1.75, .9, -Math.PI / 2); hov(kettle, 'cookbook', 'The kettle', 'Always on. Most recipes start with a question and a cup of tea.');
+    const pot = S.pot(-1.3, -1.78, .9, .15); hov(pot, 'cookbook', 'AI Cookbook', 'The stove. Every recipe was cooked here first, on a real problem, then written down on Substack.');
+    const cook = S.fig({ at: [-1.3, -.95, 0], face: -Math.PI / 2, hair: 'bun', coat: 'paper', pants: 'ink', lean: .1, hands: { L: { abs: [-1.8, -1.6, .95] }, R: 'hold' }, anim: 'stir' });
     hov(cook, 'cookbook', 'Cooking', 'Recipes are written from real use, then shared.');
-    const table = S.table(-.5, -.4, 1.5, .8, .74); S.chair(.25, -.85, Math.PI / 2);
-    const reader = S.fig({ at: [.25, -.85, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair: 'short', coat: 'half', hands: { L: 'type', R: 'type' }, anim: 'type' });
-    S.laptop(.25, -.1, .74, -Math.PI / 2);
-    const card = S.slab([.7, .25], Q, .1, .14, .74, .755, { top: 'white', east: 'paper', south: 'half' }); hov(card, 'assess', 'The self-assessment', 'Ten questions, ten minutes: where you sit on the spectrum, and which path fits. It is a mirror, not a grade.');
+    const table = S.table(-.3, -.4, 1.5, .8, .74); S.chair(.45, -.85, Math.PI / 2);
+    const reader = S.fig({ at: [.45, -.85, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair: 'short', coat: 'half', hands: { L: 'type', R: 'type' }, anim: 'type' });
+    S.laptop(.45, -.1, .74, -Math.PI / 2);
+    const card = S.slab([.9, .25], Q, .1, .14, .74, .755, { top: 'white', east: 'paper', south: 'half' }); hov(card, 'assess', 'The self-assessment', 'Ten questions, ten minutes: where you sit on the spectrum, and which path fits. It is a mirror, not a grade.');
     hov([table, reader], 'cookbook', 'Between sessions', 'Reading a recipe, trying it on your own work.');
     S.shelf(1.9, -2.15, 1.3, .35, 1.9, 3); S.plant(2.9, 1.6, .9);
   } },
@@ -94,23 +95,23 @@ const SCENES = [
     const plat = S.platform(-5, -3.4, -2.2, -1.6, 1.6); S.rail(-5, -1.6, -2.2, -1.6, .95, 1.6); S.rail(-2.2, -3.4, -2.2, -1.6, .95, 1.6);
     S.stairs(-.4, -2.55, Math.PI, 7, 1.0, .225, .26); S.flag(-4.7, -3.2, 2.6, 1.6);
     const look = S.fig({ at: [-3.7, -2.5, 1.6], face: Q, hair: 'short', coat: 'half', hands: { L: 'hip', R: 'point' }, anim: 'point' });
-    const frac = S.fig({ at: [-2.9, -2.2, 1.6], face: Q + .3, hair: 'long', coat: 'ink', pants: 'paper', hands: { L: 'cross', R: 'cross' }, anim: 'nod' });
+    const frac = S.fig({ at: [-2.65, -3.0, 1.6], face: Q + .2, hair: 'long', coat: 'ink', pants: 'paper', hands: { L: 'cross', R: 'cross' }, anim: 'nod' });
     hov([plat, look], 'advisory', 'The lookout', 'Advisory is the view from here: the whole organization, which experiments are working, and where the next build goes.');
     hov(frac, 'fractional', 'Fractional AI leadership', 'Part-time, embedded. Strategy, execution and team development under one roof, before the full-time hire.');
     const table = S.table(-1.2, -1.3, 2.6, 1.0, .74); const crew = [table];
     [[-.7, 'curly', 'ink', 'paper'], [.6, 'bun', 'half', 'ink']].forEach(([x, hair, coat, pants], i) => { S.stool(x, -1.75, .46); crew.push(S.fig({ at: [x, -1.75, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair, coat, pants, hands: { L: 'type', R: 'type' }, anim: 'type', phase: i })); S.laptop(x, -1.05, .74, -Math.PI / 2); });
-    [[-.2, 'short', 'half2'], [1.0, 'cap', 'paper']].forEach(([x, hair, coat], i) => { S.chair(x, .15, -Math.PI / 2); crew.push(S.fig({ at: [x, .15, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair, coat, hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 2 })); S.laptop(x, -.58, .74, Math.PI / 2); });
+    [[-.2, 'short', 'half2'], [1.0, 'cap', 'stripe']].forEach(([x, hair, coat], i) => { S.chair(x, .15, -Math.PI / 2); crew.push(S.fig({ at: [x, .15, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair, coat, hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 2 })); S.laptop(x, -.58, .74, Math.PI / 2); });
     hov(crew, 'builds', 'Strategic builds', 'Custom tools, agents and workflows, built from the strategic question down. The build is the deliverable; the thinking is what makes it valuable.');
-    const easel = S.easel(3.2, -2.0, Q, 1.4, 1.3, { notes: [[.12, .72, 'half2'], [.3, .72, 'ink'], [.48, .72, 'half2'], [.66, .72, 'ink'], [.12, .45, 'ink'], [.3, .45, 'half2'], [.66, .45, 'half2']], lines: [[.1, .25, .5], [.1, .15, .7]] });
+    const easel = S.easel(3.2, -2.0, Q, 1.4, 1.3, { notes: [[.14, .74, 'shade2', .1], [.3, .74, 'ink', -.06], [.46, .74, 'shade2', .08], [.62, .74, 'ink', -.1], [.14, .5, 'ink', -.05], [.3, .5, 'shade2', .12], [.62, .5, 'shade2', .04]], lines: [[.1, .28, .5], [.1, .18, .7]], diagram: [.55, .12] });
     const a1 = S.fig({ at: [2.5, -.9, 0], face: Q + Math.PI, hair: 'tied', coat: 'half', hands: { L: 'hip', R: 'write' }, anim: 'write' });
-    const a2 = S.fig({ at: [3.5, -.5, 0], face: Q + Math.PI + .3, hair: 'short', coat: 'ink', pants: 'paper', hands: { L: 'chin', R: 'cross' }, anim: 'nod' });
+    const a2 = S.fig({ at: [3.95, -1.0, 0], face: Q + Math.PI + .4, hair: 'short', coat: 'ink', pants: 'paper', hands: { L: 'chin', R: 'cross' }, anim: 'nod' });
     hov([easel, a1, a2], 'advisory', 'Advisory', 'A thinking partner who is also a builder, for the decisions about tools, workflows, team structure and investment.');
-    const desk = S.table(1.9, 1.2, 1.5, .8, .74); S.monitor(2.45, 1.4, .74, Math.PI / 2, .6, .36); S.monitor(3.05, 1.4, .74, Math.PI / 2 + .3, .5, .32); S.chair(2.6, 2.3, -Math.PI / 2);
-    const dev = S.fig({ at: [2.6, 2.3, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair: 'curly', coat: 'half2', hands: { L: 'type', R: 'type' }, anim: 'type', phase: 5 });
+    const desk = S.table(1.9, .15, 1.5, .8, .74); S.monitor(2.45, .35, .74, Math.PI / 2, .6, .36); S.monitor(3.05, .35, .74, Math.PI / 2 + .3, .5, .32); S.chair(2.6, 1.25, -Math.PI / 2);
+    const dev = S.fig({ at: [2.6, 1.25, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair: 'curly', coat: 'half2', hands: { L: 'type', R: 'type' }, anim: 'type', phase: 5 });
     hov([desk, dev], 'builds', 'The build', 'Not build-to-spec. We start with the strategic question, then build what delivers the outcome.');
-    const w1 = S.fig({ at: [-3.8, 2.6, 0], face: 0, pose: 'walk', hair: 'short', coat: 'paper', hands: { L: 'carry' }, bias: 40, phase: 1 });
-    const w2 = S.fig({ at: [-1.2, 2.9, 0], face: 0, pose: 'walk', hair: 'bun', coat: 'half', pants: 'paper', hands: { R: 'strap' }, bias: 40, phase: 2.5 });
-    S.movers = [{ F: w1, dir: [1, 0, 0], len: 7.5, speed: .55 }, { F: w2, dir: [1, 0, 0], len: 6.0, speed: .5 }];
+    const w1 = S.fig({ at: [-4.6, 3.05, 0], face: 0, pose: 'walk', hair: 'short', coat: 'paper', hands: { L: 'carry' }, bias: 40, phase: 1 });
+    const w2 = S.fig({ at: [-4.6, 3.05, 0], face: 0, pose: 'walk', hair: 'bun', coat: 'half', pants: 'paper', hands: { R: 'strap' }, bias: 40, phase: 2.5 });
+    S.movers = [{ F: w1, dir: [1, 0, 0], len: 9.0, speed: .5, lag: 0 }, { F: w2, dir: [1, 0, 0], len: 9.0, speed: .5, lag: 4.6 }];
     hov([w1, w2], 'systems', 'Repeatable systems', 'The patterns we build together become systems your team sustains without us. That is the point of the climb.');
     S.plant(4.3, -2.9, 1.0); S.plant(-4.3, 2.6, .8);
   } },

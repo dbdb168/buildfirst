@@ -31,6 +31,7 @@ function build() {
   svg.setAttribute('viewBox', `0 0 ${W} ${HH}`); svg.setAttribute('preserveAspectRatio', 'xMidYMin meet');
   const defs = el('defs', {}, svg);
   for (const [id, sp, r] of [['half', 1.05, .30], ['half2', .85, .33]]) { const p = el('pattern', { id, width: sp, height: sp, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs); el('circle', { cx: sp / 2, cy: sp / 2, r, fill: '#181818' }, p); }
+  { const p = el('pattern', { id: 'stripe', width: 1.6, height: 1.6, patternUnits: 'userSpaceOnUse' }, defs); el('rect', { x: 0, y: 0, width: 1.6, height: .55, fill: '#181818' }, p); }
   const spacings = [17, 14.5, 12.5, 10.5, 9, 7.6, 6.4];
   spacings.forEach((sp, i) => { const p = el('pattern', { id: 'pb' + i, width: sp, height: sp, patternUnits: 'userSpaceOnUse' }, defs); el('circle', { cx: sp / 2, cy: sp / 2, r: L.narrow ? .95 : .75, fill: '#181818', opacity: .34 }, p); });
   const dense = el('pattern', { id: 'pdense', width: 3.6, height: 3.6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(30)' }, defs); el('circle', { cx: 1.8, cy: 1.8, r: .7, fill: '#181818', opacity: .3 }, dense);
@@ -105,7 +106,7 @@ const t0 = performance.now(); let visible = [], lastVis = 0;
 function life(now) {
   const t = (now - t0) / 1000;
   if (now - lastVis > 400) { lastVis = now; visible = placeGs.map((g, i) => { if (!arrived[i]) return false; const r = g.getBoundingClientRect(); return r.bottom > -100 && r.top < innerHeight + 100; }); }
-  if (!reduce) sceneObjs.forEach((sc, i) => { if (!visible[i]) return; for (const F of sc.life) F.update(t); for (const m of sc.movers || []) { const off = (t * m.speed) % m.len; const [dx, dy] = P([m.dir[0] * off, m.dir[1] * off, 0]); for (const d of m.F.all) d.g.setAttribute('transform', `translate(${dx} ${dy})`); } });
+  if (!reduce) sceneObjs.forEach((sc, i) => { if (!visible[i]) return; for (const F of sc.life) F.update(t); for (const m of sc.movers || []) { const off = ((t - (m.lag || 0)) * m.speed % m.len + m.len) % m.len; const [dx, dy] = P([m.dir[0] * off, m.dir[1] * off, 0]); const op = clamp(Math.min(off, m.len - off) / .6, 0, 1); for (const d of m.F.all) { d.g.setAttribute('transform', `translate(${dx} ${dy})`); d.g.style.opacity = op; } } });
   requestAnimationFrame(life);
 }
 // ---------- hover: the drawing and the copy light each other ----------
