@@ -10,7 +10,8 @@ arrives, and the stop comes alive: people type, point, write, walk.
 - `page.js` — layout, the stippled ground, the path, scroll-driven drawing and arrival, hover, and the life loop.
 - `part1.html` / `part2.html` — styles and the copy.
 - `components.js` / `components-shell.html` — the component sheet: every pose, facing, hair and coat; every prop; the seven stops together.
-- `build.py` — assembles `journey.html` and `journey-components.html` at the repo root (served on previews; `noindex`).
+- `contrast-tests.html` — a test board: seven ways to separate people from props, on the team room.
+- `build.py` — assembles `journey.html`, `journey-components.html` and `journey-contrast.html` at the repo root (served on previews; `noindex`).
 
 Inspired by moldandyeast's Falllinie (two inks, halftone, a rider that is a rig) and Chris Busse's dotscene
 (author in tiles, project once, let paint order do the hiding).

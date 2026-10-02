@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<title>Contrast tests</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{ --paper:#F3F2EE; --ink:#181818; --body:rgba(24,24,24,.82); --muted:rgba(24,24,24,.56); --faint:rgba(24,24,24,.36); --line:rgba(24,24,24,.12); --g1:#FFFFFF; --g2:#F3F2EE; --g3:#E7E5DE; --g4:#D8D5CC; --g5:#BFBBB0; --grey:#8F8E88; --accent:#B5452F;
+  --display:'Arimo','Helvetica Neue',Helvetica,Arial,sans-serif; --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace; }
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--display);color:var(--ink);background:var(--paper);font-size:15px;line-height:1.5}
+.cap{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+main{padding:28px max(24px, calc((100% - 1400px) / 2)) 80px}
+h1{font-weight:300;font-size:clamp(30px,3.6vw,48px);letter-spacing:-.035em;line-height:1.02;margin:12px 0 10px}
+p.lead{max-width:680px;color:var(--body);margin:0 0 20px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(560px, 1fr));gap:30px 40px;align-items:start}
+figure{margin:0;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:10px}
+figure svg{display:block;height:auto;max-width:100%;overflow:visible}
+figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-align:center;line-height:1.7}
+figcaption small{display:block;font-family:var(--display);font-size:13px;letter-spacing:0;text-transform:none;color:var(--muted);max-width:520px}
+svg.defs{position:absolute;width:0;height:0}
+/* ---- the drawing ---- */
+__DRAWING__
+/* ---- the variants ---- */
+.varB polygon:not(.fig *):not(.arm *),.varB ellipse:not(.fig *):not(.arm *),.varB circle:not(.fig *):not(.arm *){stroke:var(--grey)}
+.varB .ln:not(.fig *):not(.arm *),.varB .s-ink:not(.fig *):not(.arm *){stroke:var(--grey)}
+.varB .f-ink:not(.fig *):not(.arm *){fill:var(--grey)}
+.varB .shadow{opacity:.55}
+.varD .fig .s-half,.varD .arm .s-half{stroke:url(#halfA)} .varD .fig .s-half2,.varD .arm .s-half2{stroke:url(#half2A)} .varD .fig .s-stripe,.varD .arm .s-stripe{stroke:url(#stripeA)}
+.varD .fig .f-half{fill:url(#halfA)} .varD .fig .f-half2{fill:url(#half2A)} .varD .fig .f-stripe{fill:url(#stripeA)}
+.varD .shadow{fill:url(#halfA)}
+.varE polygon:not(.fig *):not(.arm *):not(.shadow){fill:var(--paper)} .varE ellipse:not(.fig *):not(.arm *):not(.shadow){fill:var(--paper)} .varE circle:not(.fig *):not(.arm *){fill:var(--paper)}
+.varE .f-ink:not(.fig *):not(.arm *){fill:var(--ink)}
+.varE .floor polygon{fill:var(--paper)}
+.varG .fig .shadow{opacity:.95}
+.varG .shadow{opacity:.95}
+</style>
+<svg class="defs terrain" aria-hidden="true"><defs>
+  <pattern id="half" width="1.05" height="1.05" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".525" cy=".525" r=".30" fill="#181818"/></pattern>
+  <pattern id="half2" width=".85" height=".85" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".425" cy=".425" r=".33" fill="#181818"/></pattern>
+  <pattern id="stripe" width="1.6" height="1.6" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="1.6" height=".55" fill="#181818"/></pattern>
+  <pattern id="halfA" width="1.05" height="1.05" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".525" cy=".525" r=".34" fill="#B5452F"/></pattern>
+  <pattern id="half2A" width=".85" height=".85" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".425" cy=".425" r=".36" fill="#B5452F"/></pattern>
+  <pattern id="stripeA" width="1.6" height="1.6" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="1.6" height=".6" fill="#B5452F"/></pattern>
+</defs></svg>
+<main>
+  <span class="cap">Contrast between prop and person · halo off everywhere</span>
+  <h1>Seven ways to make the people come forward.</h1>
+  <p class="lead">The same room each time. The base is the current drawing with the halo removed. Each variant changes one thing, and the last two combine the ones that work.</p>
+  <div class="grid" id="grid"></div>
+</main>
+<script>
+(() => {
+'use strict';
+__KIT__
+__SCENES__
+const LIFE = [];
+function tile(label, note, cls, knobs, px = 1.55, pad = 14) {
+  const fig = document.createElement('figure'); if (cls) fig.className = cls; const svg = el('svg', { class: 'terrain' }, fig); document.getElementById('grid').appendChild(fig);
+  const saved = Object.assign({}, KN); Object.assign(KN, knobs || {});
+  const root = el('g', {}, svg); const S = scene(root); seed = 14; SCENES[3].build(S); S.done();
+  Object.assign(KN, saved);
+  const b = root.getBBox(); const x0 = b.x - pad, y0 = b.y - pad, w = b.width + 2 * pad, h = b.height + 2 * pad;
+  svg.setAttribute('viewBox', `${r2(x0)} ${r2(y0)} ${r2(w)} ${r2(h)}`); svg.style.width = r2(w * px) + 'px';
+  const cap = document.createElement('figcaption'); cap.textContent = label; const sm = document.createElement('small'); sm.textContent = note; cap.appendChild(sm); fig.appendChild(cap);
+  LIFE.push(...S.life);
+}
+tile('0 · Base, no halo', 'What you liked. People in ink and halftone, props in paper greys, everything outlined at the same weight.', '', { halo: 0 });
+tile('A · Heavier line on people', 'People outlined at twice the weight of the props. The oldest trick in drawing: the foreground gets the heavier contour.', '', { halo: 0, figOL: .07 });
+tile('B · Props in a second, lighter ink', 'Props drawn in a warm grey ink, people in the key ink. The two-ink print logic from Falllinie, with the world as the spot ink.', 'varB', { halo: 0 });
+tile('C · A hairline cut', 'The halo kept, but a third of the width. A woodcut gap rather than a sticker edge.', '', { halo: .02 });
+tile('D · One accent, worn by people', 'The halftone that only people wear becomes the one colour on the page. Props stay monochrome.', 'varD', { halo: 0 });
+tile('E · Props as line drawings', 'Props lose their fills entirely and become hairline wireframes; people are the only solid things.', 'varE', { halo: 0 });
+tile('F · B plus A', 'Lighter ink on props and a heavier contour on people together.', 'varB', { halo: 0, figOL: .06 });
+tile('G · F plus a firmer shadow', 'As F, with the halftone puddle under each person darkened so every figure is anchored to the floor.', 'varB varG', { halo: 0, figOL: .06 });
+const t0 = performance.now(); (function life(now) { const t = (now - t0) / 1000; for (const F of LIFE) F.update(t); requestAnimationFrame(life); })(t0);
+})();
+</script>
+</html>

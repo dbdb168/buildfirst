@@ -81,8 +81,9 @@ footer{padding:28px max(24px, calc((100% - 1320px) / 2));border-top:1px solid va
     <p class="lead">Everything on the journey page is drawn live by one kit: a true-cube isometric world in metres, ink outlines, paper, and a 45° halftone that only people wear. People are jointed bodies solved from where their hands need to be; props are flat paper greys with real structure. Hover any tile to isolate it; the slider resizes everything.</p>
     <h2>People</h2>
     <h3>Poses · what a body is doing</h3><div class="grid" id="poses"></div>
+    <h3>Builds · two bodies, trousers or a skirt on either</h3><div class="grid" id="builds"></div>
     <h3>Facings · the same pointing figure from eight directions</h3><div class="grid" id="facings"></div>
-    <h3>Hair · seven silhouettes, no faces</h3><div class="grid" id="hair"></div>
+    <h3>Hair · eight silhouettes, no faces</h3><div class="grid" id="hair"></div>
     <h3>Coats and trousers · five tones, three legs</h3><div class="grid" id="coats"></div>
   </section>
   <section id="props">
@@ -128,10 +129,10 @@ function poly(g, cells, tone = 'paper', extra = {}) {
   return el('polygon', { points: p, class: 'f-' + tone, ...extra }, g);
 }
 // a capsule: a line with round caps, outlined in the opposite tone. Returns the lines so a figure can move them.
-function capsule(g, a, b, w, tone = 'paper', halo = 0) {
+function capsule(g, a, b, w, tone = 'paper', halo = 0, ol = OL) {
   const [x1, y1] = P(a), [x2, y2] = P(b), lines = [];
   if (halo) lines.push(el('line', { x1, y1, x2, y2, class: 's-paper halo', style: `stroke-width:${r2((w + 2 * halo) * T)}` }, g));
-  lines.push(el('line', { x1, y1, x2, y2, class: 's-' + OUT[tone], style: `stroke-width:${r2((w + 2 * OL) * T)}` }, g));
+  lines.push(el('line', { x1, y1, x2, y2, class: 's-' + OUT[tone], style: `stroke-width:${r2((w + 2 * ol) * T)}` }, g));
   if (PAT(tone)) lines.push(el('line', { x1, y1, x2, y2, class: 's-paper', style: `stroke-width:${r2(w * T)}` }, g));
   lines.push(el('line', { x1, y1, x2, y2, class: 's-' + tone, style: `stroke-width:${r2(w * T)}` }, g));
   return lines;
@@ -214,25 +215,27 @@ function ik(S, Tg, a, b, pole) {
   const E = V.add(S, V.add(V.mul(dn, a * cosA), V.mul(pn, a * sinA)));
   return { E, H: V.add(S, V.mul(dn, L)) };
 }
-const HALO = .06;
+const KN = { halo: .06, figOL: OL, figScale: 1 };
 function figure(o) {
-  const at = o.at, phi = o.face || 0, { f, r, up } = frame(phi), coat = o.coat || 'half', pants = o.pants || 'ink', hair = o.hair || 'short', ph = o.phase || 0;
+  const HALO = o.halo ?? KN.halo, FOL = o.ol ?? KN.figOL; const at = o.at, phi = o.face || 0, { f, r, up } = frame(phi), coat = o.coat || 'half', pants = o.pants || 'ink', hair = o.hair || 'short', ph = o.phase || 0;
   const sit = o.pose === 'sit', walk = o.pose === 'walk';
+  const B = o.build === 'b' ? { sh: .16, hip: .175, hipZ: .88, torso: .43, head: .29 } : { sh: .19, hip: .15, hipZ: .92, torso: .46, head: .30 };
+  const skirtTone = o.skirt === true ? pants : (o.skirt || null);
   const hands = Object.assign({ L: 'hang', R: 'hang' }, o.hands || {});
   const body = drawable(null, 0, 'fig'), arms = [drawable(null, 0, 'arm'), drawable(null, 0, 'arm')];
   const J = {};
   function solve(t) {
     const breathe = .006 * Math.sin(t * 1.6 + ph);
     const wph = t * 6.2 + ph; const bob = walk ? .018 * Math.abs(Math.cos(wph)) : 0;
-    const hipZ = (sit ? (o.seat || .45) + .03 : .92) + bob;
+    const hipZ = (sit ? (o.seat || .45) + .03 : B.hipZ) + bob;
     const lean = (o.lean || 0) + (sit ? .06 : 0);
     J.pelvis = V.madd(at, up, hipZ);
-    J.chest = V.add(J.pelvis, V.add(V.mul(up, .46 * Math.cos(lean) + breathe), V.mul(f, .46 * Math.sin(lean))));
+    J.chest = V.add(J.pelvis, V.add(V.mul(up, B.torso * Math.cos(lean) + breathe), V.mul(f, B.torso * Math.sin(lean))));
     let nodz = 0, nodf = 0; if (o.anim === 'nod') { nodz = -.018 * (.5 + .5 * Math.sin(t * 1.3 + ph)); nodf = .02 * (.5 + .5 * Math.sin(t * 1.3 + ph)); }
-    J.head = V.add(J.chest, V.add(V.mul(up, .30 * Math.cos(lean) + nodz), V.mul(f, .30 * Math.sin(lean) + .03 + nodf)));
+    J.head = V.add(J.chest, V.add(V.mul(up, B.head * Math.cos(lean) + nodz), V.mul(f, B.head * Math.sin(lean) + .03 + nodf)));
     J.neck = V.lerp(J.chest, J.head, .35);
-    J.sh = [V.madd(V.madd(J.chest, r, -.19), up, -.02), V.madd(V.madd(J.chest, r, .19), up, -.02)];
-    J.hip = [V.madd(J.pelvis, r, -.15), V.madd(J.pelvis, r, .15)];
+    J.sh = [V.madd(V.madd(J.chest, r, -B.sh), up, -.02), V.madd(V.madd(J.chest, r, B.sh), up, -.02)];
+    J.hip = [V.madd(J.pelvis, r, -B.hip), V.madd(J.pelvis, r, B.hip)];
     // legs
     J.knee = []; J.ankle = []; J.toe = [];
     for (let i = 0; i < 2; i++) {
@@ -242,6 +245,8 @@ function figure(o) {
       else { foot = V.madd(V.madd([at[0], at[1], at[2]], f, .03 + (o.stance ? o.stance[i] : 0)), r, side * .15); pole = V.madd(J.hip[i], f, 1); }
       const { E, H } = ik(J.hip[i], V.madd(foot, up, .05), .45, .44, pole); J.knee[i] = E; J.ankle[i] = H; J.toe[i] = V.madd(H, f, .22);
     }
+    // a skirt: hips to just above the knees standing, over the lap when seated
+    if (skirtTone) { const hl = V.madd(V.madd(J.pelvis, r, -B.hip - .03), up, .04), hr = V.madd(V.madd(J.pelvis, r, B.hip + .03), up, .04); J.skirt = sit ? [hl, hr, V.madd(V.madd(J.knee[1], r, .11), up, .03), V.madd(V.madd(J.knee[0], r, -.11), up, .03)] : [hl, hr, V.madd(V.madd(V.madd(J.pelvis, r, B.hip + .13), up, -.5), f, .03), V.madd(V.madd(V.madd(J.pelvis, r, -B.hip - .13), up, -.5), f, .03)]; }
     // arms
     J.elbow = []; J.hand = [];
     for (let i = 0; i < 2; i++) {
@@ -266,23 +271,25 @@ function figure(o) {
   const depth = p => p[0] + p[1];
   const legOrder = depth(J.hip[0]) <= depth(J.hip[1]) ? [0, 1] : [1, 0], armOrder = depth(J.sh[0]) <= depth(J.sh[1]) ? [0, 1] : [1, 0];
   const E = {}; const g = body.g;
-  E.leg = []; for (const i of legOrder) E.leg[i] = { thigh: capsule(g, J.hip[i], J.knee[i], .14, pants, HALO), shin: capsule(g, J.knee[i], J.ankle[i], .12, pants, HALO), foot: capsule(g, J.ankle[i], J.toe[i], .09, 'ink', HALO) };
-  E.torsoA = capsule(g, J.pelvis, J.chest, .30, coat, HALO);
+  E.leg = []; for (const i of legOrder) E.leg[i] = { thigh: capsule(g, J.hip[i], J.knee[i], .14, pants, HALO, FOL), shin: capsule(g, J.knee[i], J.ankle[i], .12, pants, HALO, FOL), foot: capsule(g, J.ankle[i], J.toe[i], .09, 'ink', HALO, FOL) };
+  E.skirt = null; if (skirtTone) { if (HALO) el('polygon', { points: pts(J.skirt.map(P)), class: 'halo', style: `stroke-width:${r2(2 * HALO * T)}` }, g); E.skirt = poly(g, J.skirt, skirtTone, { 'stroke-linejoin': 'round', style: `stroke-width:${r2(FOL * 2 * T * .8)}` }); E.skirtU = PAT(skirtTone) ? E.skirt.previousSibling : null; if (E.skirtU) E.skirtU.setAttribute('style', `stroke-width:${r2(FOL * 2 * T * .8)}`); }
+  E.torsoA = capsule(g, J.pelvis, J.chest, .30, coat, HALO, FOL);
   E.torsoH = el('polygon', { points: pts([J.sh[0], J.sh[1], J.hip[1], J.hip[0]].map(P)), class: 'halo', style: `stroke-width:${r2(2 * HALO * T)}` }, g);
-  E.torso = poly(g, [J.sh[0], J.sh[1], J.hip[1], J.hip[0]], coat, { 'stroke-linejoin': 'round' }); E.torsoU = PAT(coat) ? E.torso.previousSibling : null;
-  E.upper = []; for (const i of armOrder) E.upper[i] = capsule(g, J.sh[i], J.elbow[i], .11, coat, HALO);
-  E.neck = capsule(g, J.chest, J.neck, .09, 'paper', HALO);
+  E.torso = poly(g, [J.sh[0], J.sh[1], J.hip[1], J.hip[0]], coat, { 'stroke-linejoin': 'round', style: `stroke-width:${r2(FOL * 2 * T * .8)}` }); E.torsoU = PAT(coat) ? E.torso.previousSibling : null; if (E.torsoU) E.torsoU.setAttribute('style', `stroke-width:${r2(FOL * 2 * T * .8)}`);
+  E.upper = []; for (const i of armOrder) E.upper[i] = capsule(g, J.sh[i], J.elbow[i], .11, coat, HALO, FOL);
+  E.neck = capsule(g, J.chest, J.neck, .09, 'paper', HALO, FOL);
   const back = V.mul(f, -.03);
   E.hair = null; E.hair2 = null;
-  if (hair !== 'bald') E.hair = ball(g, V.add(V.madd(J.head, up, .03), back), hair === 'curly' ? .155 : .135, 'ink', HALO);
+  if (hair !== 'bald') E.hair = ball(g, V.add(V.madd(J.head, up, .03), back), hair === 'curly' ? .155 : (hair === 'bob' ? .145 : .135), 'ink', HALO);
   if (hair === 'bun') E.hair2 = ball(g, V.add(V.madd(J.head, up, .06), V.mul(f, -.12)), .055, 'ink');
   if (hair === 'tied') E.hair2 = capsule(g, V.add(V.madd(J.head, up, -.02), V.mul(f, -.12)), V.add(V.madd(J.head, up, -.26), V.mul(f, -.14)), .06, 'ink');
-  E.head = ball(g, J.head, .135, 'paper', hair === 'bald' ? HALO : 0);
+  if (hair === 'bob') E.hair2 = [capsule(g, V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, -.12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, -.13)), .07, 'ink'), capsule(g, V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, .12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, .13)), .07, 'ink')];
+  E.head = ball(g, J.head, .135, 'paper', hair === 'bald' ? HALO : 0); (Array.isArray(E.head) ? E.head[E.head.length - 1] : E.head).setAttribute('style', `stroke-width:${r2(FOL * 2 * T * .8)}`);
   if (hair === 'cap') E.visor = capsule(g, V.add(V.madd(J.head, up, .06), V.mul(f, .10)), V.add(V.madd(J.head, up, .055), V.mul(f, .22)), .05, 'ink');
   if (hair === 'long') E.hair2 = capsule(g, V.add(V.madd(J.head, up, -.02), back), V.add(V.madd(J.chest, up, .12), V.mul(f, -.08)), .16, 'ink');
   if (hair === 'long') { g.insertBefore(E.hair2[0], E.torsoA[0]); g.insertBefore(E.hair2[1], E.torsoA[0]); }
   E.fore = []; E.hand = [];
-  for (let i = 0; i < 2; i++) { const ag = arms[i].g; E.fore[i] = capsule(ag, J.elbow[i], J.hand[i], .10, coat, HALO); E.hand[i] = ball(ag, J.hand[i], .05, 'paper', HALO); }
+  for (let i = 0; i < 2; i++) { const ag = arms[i].g; E.fore[i] = capsule(ag, J.elbow[i], J.hand[i], .10, coat, HALO, FOL); E.hand[i] = ball(ag, J.hand[i], .05, 'paper', HALO, FOL); }
   function bboxes() {
     body.bb = bbOf([J.pelvis, J.chest, J.head, ...J.hip, ...J.knee, ...J.ankle, ...J.toe, ...J.sh], .16); body.key = depth(J.pelvis) + (o.bias || 0);
     for (let i = 0; i < 2; i++) { arms[i].bb = bbOf([J.elbow[i], J.hand[i]], .07); const dh = depth(J.hand[i]) - depth(J.pelvis); arms[i].key = depth(J.pelvis) + (o.bias || 0) + (dh > -.02 ? .011 : -.011); }
@@ -292,11 +299,13 @@ function figure(o) {
     solve(t);
     for (let i = 0; i < 2; i++) { moveCapsule(E.leg[i].thigh, J.hip[i], J.knee[i]); moveCapsule(E.leg[i].shin, J.knee[i], J.ankle[i]); moveCapsule(E.leg[i].foot, J.ankle[i], J.toe[i]); moveCapsule(E.upper[i], J.sh[i], J.elbow[i]); moveCapsule(E.fore[i], J.elbow[i], J.hand[i]); moveBall(E.hand[i], J.hand[i]); }
     moveCapsule(E.torsoA, J.pelvis, J.chest); const tp = pts([J.sh[0], J.sh[1], J.hip[1], J.hip[0]].map(P)); E.torso.setAttribute('points', tp); E.torsoH.setAttribute('points', tp); if (E.torsoU) E.torsoU.setAttribute('points', tp);
+    if (E.skirt) { const sp = pts(J.skirt.map(P)); E.skirt.setAttribute('points', sp); if (E.skirtU) E.skirtU.setAttribute('points', sp); }
     moveCapsule(E.neck, J.chest, J.neck); moveBall(E.head, J.head); if (E.hair) moveBall(E.hair, V.add(V.madd(J.head, up, .03), back));
     if (E.visor) moveCapsule(E.visor, V.add(V.madd(J.head, up, .06), V.mul(f, .10)), V.add(V.madd(J.head, up, .055), V.mul(f, .22)));
     if (E.hair2 && hair === 'bun') moveBall(E.hair2, V.add(V.madd(J.head, up, .06), V.mul(f, -.12)));
     if (E.hair2 && hair === 'tied') moveCapsule(E.hair2, V.add(V.madd(J.head, up, -.02), V.mul(f, -.12)), V.add(V.madd(J.head, up, -.26), V.mul(f, -.14)));
     if (E.hair2 && hair === 'long') moveCapsule(E.hair2, V.add(V.madd(J.head, up, -.02), back), V.add(V.madd(J.chest, up, .12), V.mul(f, -.08)));
+    if (E.hair2 && hair === 'bob') { moveCapsule(E.hair2[0], V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, -.12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, -.13))); moveCapsule(E.hair2[1], V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, .12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, .13))); }
   }
   return { body, arms, update, J, o, all: [body, ...arms] };
 }
@@ -375,7 +384,7 @@ function scene(g) {
   S.easel = (x, y, phi, w = 1.2, h = 1.5, t = {}) => { const { f, r } = frame(phi), up = [0, 0, 1]; const top = 1.9; const b0 = V.madd([x, y, 0], r, -w / 2), b1 = V.madd([x, y, 0], r, w / 2); const bb = bbOf([b0, b1, V.madd([x, y, 0], f, -.5)], .1); bb[4] = 0; bb[5] = top + .05; const d = drawable(bb, x + y); const g2 = d.g; const dir = V.norm(V.sub(b1, b0)); for (const b of [b0, b1]) capsule(g2, V.madd(b, f, .08), V.madd(V.madd(b, f, -.02), up, top), .045, 'ink'); capsule(g2, V.madd([x, y, 0], f, -.55), V.madd([x, y, 0], up, top - .05), .045, 'ink'); const z0 = top - h; const L = (s, u) => V.madd(V.madd(b0, dir, s * w), up, z0 + u * h); poly(g2, [L(0, 0), L(1, 0), L(1, 1), L(0, 1)], 'white'); poly(g2, [L(.86, 0), L(1, 0), L(1, .12)], 'shade'); poly(g2, [L(.4, .97), L(.6, .97), L(.6, 1.03), L(.4, 1.03)], 'ink'); (t.lines || []).forEach(([s, u, e]) => ln(g2, L(s, u), L(s + e, u), .45)); (t.notes || []).forEach(([s, u, tone, rot = 0]) => { const c = L(s, u); const uu = V.add(V.mul(dir, .06 * Math.cos(rot)), V.mul(up, .06 * Math.sin(rot))), vv = V.add(V.mul(dir, -.06 * Math.sin(rot)), V.mul(up, .06 * Math.cos(rot))); poly(g2, [V.sub(V.sub(c, uu), vv), V.sub(V.add(c, uu), vv), V.add(V.add(c, uu), vv), V.add(V.sub(c, uu), vv)], tone || 'shade2'); }); if (t.diagram) { const [ds, du] = t.diagram; const bx = (s, u) => poly(g2, [L(s, u), L(s + .16, u), L(s + .16, u + .14), L(s, u + .14)], 'paper'); bx(ds, du); bx(ds + .3, du); ln(g2, L(ds + .165, du + .07), L(ds + .295, du + .07), .45); } return add(d); };
   S.platform = (x0, y0, x1, y1, z, t = {}) => { const d = S.box(x0, y0, x1, y1, z - .12, z, { top: 'white', east: 'paper', south: 'shade' }); const posts = drawable([x0, x1, y0, y1, 0, z], (x0 + x1 + y0 + y1) / 2 - .5); for (const [px, py] of [[x0 + .1, y0 + .1], [x1 - .1, y0 + .1], [x0 + .1, y1 - .1], [x1 - .1, y1 - .1]]) capsule(posts.g, [px, py, 0], [px, py, z - .12], .08, 'paper'); add(posts); return d; };
   S.dog = (x, y, phi, z = 0) => { // a dog, sitting: haunches on the ground, front legs straight, head up, ears down, tail curled
-    const { f, r } = frame(phi), up = [0, 0, 1]; const d = drawable([x - .45, x + .45, y - .45, y + .45, z, z + .75], x + y, 'fig'); const g2 = d.g; const at = [x, y, z]; disc(g2, [x, y, z + .002], .34, 'half', 'no shadow');
+    const { f, r } = frame(phi), up = [0, 0, 1], HALO = KN.halo; const d = drawable([x - .45, x + .45, y - .45, y + .45, z, z + .75], x + y, 'fig'); const g2 = d.g; const at = [x, y, z]; disc(g2, [x, y, z + .002], .34, 'half', 'no shadow');
     const B = V.madd(V.madd(at, f, -.12), up, .2), C = V.madd(V.madd(at, f, .2), up, .38);
     capsule(g2, V.madd(V.madd(B, f, -.1), up, -.06), V.madd(V.madd(B, f, -.3), up, .14), .05, 'ink', HALO);
     for (const s of [-1, 1]) capsule(g2, V.madd(V.madd(B, r, s * .1), up, -.1), V.madd(V.madd(V.madd(B, r, s * .11), f, .22), up, -.17), .07, 'ink', HALO);
@@ -411,7 +420,7 @@ const SCENES = [
     const laptop = S.laptop(-1.75, -1.72, .74, Math.PI); S.mug(-1.25, -1.95, .74); S.slab([-1.2, -1.5], 0, .11, .15, .74, .76, { top: 'white', east: 'paper', south: 'half' });
     const david = S.fig({ at: [-2.75, -1.72, .25], face: 0, pose: 'sit', seat: .46, hair: 'short', coat: 'half', pants: 'ink', hands: { L: 'lap', R: { abs: [-1.9, -1.78, 1.2] } }, anim: 'point' });
     david.o.hands.R = 'point'; david.update(0);
-    const you = S.fig({ at: [-.55, -1.72, .25], face: Math.PI, pose: 'sit', seat: .46, hair: 'tied', coat: 'ink', pants: 'paper', hands: { L: 'talk', R: 'talk' }, anim: 'talk' });
+    const you = S.fig({ at: [-.55, -1.72, .25], face: Math.PI, pose: 'sit', seat: .46, build: 'b', hair: 'tied', coat: 'ink', pants: 'paper', skirt: 'half2', hands: { L: 'talk', R: 'talk' }, anim: 'talk' });
     hov(david, 'guide', 'Your guide', 'David Beath. Twenty-five years leading innovation at IDEO, Capital One and DBS; founded BuildFirst in Richmond, Virginia, and works from this porch when he is not in your building.');
     hov(you, 'you', 'You', 'A leader with a real problem and a laptop. Most journeys start exactly like this: a table, a conversation, and the first build before the first slide.');
     hov([table, laptop], 'table', 'Where it starts', 'A table, two chairs, a mug and a laptop. The first build happens here, on something you actually need.');
@@ -429,7 +438,7 @@ const SCENES = [
     const david = S.fig({ at: [1.5, .6, 0], face: Math.PI * .85, hair: 'short', coat: 'half', hands: { L: 'hip', R: { abs: [1.2, -.6, 2.5] } } });
     hov(you, 'halfday', 'Reading the signs', 'You, with a laptop bag and a question. Which first step is worth a half day?');
     hov(david, 'sprint1', 'Honest advice', 'David points at the arm that fits. Sometimes that is a call and nothing more; we tell you honestly whether we can help.');
-    const bench = S.bench(-2.0, 1.4, Q, 1.6); const builder = S.fig({ at: [-2.0, 1.4, 0], face: Q, pose: 'sit', seat: .47, hair: 'bun', coat: 'paper', hands: { L: 'lap', R: 'lap' }, anim: 'type' });
+    const bench = S.bench(-2.0, 1.4, Q, 1.6); const builder = S.fig({ at: [-2.0, 1.4, 0], face: Q, pose: 'sit', seat: .47, build: 'b', hair: 'bun', coat: 'paper', hands: { L: 'lap', R: 'lap' }, anim: 'type' });
     S.laptop(-1.65, 1.75, .52, Q + Math.PI); hov([bench, builder], 'sprint1', 'A focused sprint', 'Someone who picked the sprint, already building on the bench.');
     S.tree(2.8, -1.9, 2.5, 1.1); S.bag(-1.2, .5, -Q);
   } },
@@ -437,7 +446,7 @@ const SCENES = [
   { door: [-2.6, 2.5], build(S) {
     S.pad([[-3.5, -2.5], [3.5, -2.5], [3.5, 2.5], [-3.5, 2.5]], 'white'); S.shade(1.6, -.9, 1.3);
     const table = S.table(-1.1, -.9, 2.3, .9, .74); S.stool(-.3, -1.35, .46);
-    const leader = S.fig({ at: [-.3, -1.35, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair: 'tied', coat: 'ink', pants: 'paper', hands: { L: 'type', R: 'type' }, anim: 'type' });
+    const leader = S.fig({ at: [-.3, -1.35, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build: 'b', hair: 'bob', coat: 'ink', pants: 'paper', skirt: 'ink', hands: { L: 'type', R: 'type' }, anim: 'type' });
     const laptop = S.laptop(-.3, -.6, .74, -Math.PI / 2);
     const david = S.fig({ at: [1.15, -1.55, 0], face: Math.PI / 2 + .5, hair: 'short', coat: 'half', lean: .16, hands: { L: 'hip', R: { abs: [.1, -.7, 1.05] } }, anim: 'point' });
     hov([leader, laptop], 'sherpa', 'Sherpa', 'Eight to ten weeks, one to one. A leader builds a workflow that solves a real problem, and keeps it. Starts with a diagnostic call.');
@@ -455,12 +464,12 @@ const SCENES = [
     const fac = S.fig({ at: [-4.3, -2.4, 0], face: -Math.PI / 2, hair: 'cap', coat: 'half2', hands: { L: 'hip', R: 'write' }, anim: 'write' });
     hov([board, fac], 'board', 'Diagnose first', 'Diagnose first, prescribe second. The right application emerges from your workflows and constraints, not a playbook.');
     const table = S.table(-3.1, -1.0, 3.8, 1.0, .74); const team = [table];
-    [[-2.4, 'short', 'half'], [-1.3, 'bun', 'ink'], [-.2, 'curly', 'paper']].forEach(([x, hair, coat], i) => { team.push(S.fig({ at: [x, -1.45, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair, coat, pants: i === 1 ? 'paper' : 'ink', hands: i === 2 ? { L: 'lap', R: 'raise' } : { L: 'type', R: 'type' }, anim: i === 2 ? 'raise' : 'type', phase: i })); S.laptop(x, -.75, .74, -Math.PI / 2); S.stool(x, -1.45, .46); });
-    [[-1.9, 'long', 'stripe'], [-.8, 'short', 'ink'], [.3, 'tied', 'half2']].forEach(([x, hair, coat], i) => { S.chair(x, .45, -Math.PI / 2); team.push(S.fig({ at: [x, .45, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair, coat, pants: i === 1 ? 'half2' : 'ink', hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 3 })); S.laptop(x, -.28, .74, Math.PI / 2); });
+    [[-2.4, 'short', 'half'], [-1.3, 'bun', 'ink'], [-.2, 'curly', 'paper']].forEach(([x, hair, coat], i) => { team.push(S.fig({ at: [x, -1.45, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build: i === 1 ? 'b' : 'a', skirt: i === 1 ? 'half2' : null, hair, coat, pants: i === 1 ? 'paper' : 'ink', hands: i === 2 ? { L: 'lap', R: 'raise' } : { L: 'type', R: 'type' }, anim: i === 2 ? 'raise' : 'type', phase: i })); S.laptop(x, -.75, .74, -Math.PI / 2); S.stool(x, -1.45, .46); });
+    [[-1.9, 'long', 'stripe'], [-.8, 'short', 'ink'], [.3, 'tied', 'half2']].forEach(([x, hair, coat], i) => { S.chair(x, .45, -Math.PI / 2); team.push(S.fig({ at: [x, .45, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, build: i === 1 ? 'a' : 'b', skirt: i === 0 ? 'ink' : null, hair, coat, pants: i === 1 ? 'half2' : 'ink', hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 3 })); S.laptop(x, -.28, .74, Math.PI / 2); });
     S.mug(-2.8, -.5, .74); S.mug(.5, -.6, .74, false);
     hov(team, 'workshops', 'Team workshops', 'A long table, a half day or a full day. No lectures: everyone builds something useful and applies it on Monday.');
     const bench = S.table(1.6, .3, 1.7, .8, .9); S.monitor(2.6, .5, .9, Math.PI / 2, .5, .32); S.slab([1.95, .7], 0, .14, .1, .9, 1.08, { top: 'half2', east: 'paper', south: 'half' });
-    const b1 = S.fig({ at: [2.0, 1.5, 0], face: -Math.PI / 2, hair: 'short', coat: 'paper', lean: .22, hands: { L: { abs: [1.85, 1.0, .95] }, R: { abs: [2.1, 1.0, .95] } } });
+    const b1 = S.fig({ at: [2.0, 1.5, 0], face: -Math.PI / 2, build: 'b', hair: 'bob', coat: 'paper', lean: .22, hands: { L: { abs: [1.85, 1.0, .95] }, R: { abs: [2.1, 1.0, .95] } } });
     const b2 = S.fig({ at: [3.5, 1.6, 0], face: -Math.PI / 2 - .5, hair: 'curly', coat: 'half', hands: { L: 'cross', R: 'point' }, anim: 'point' });
     hov([bench, b1, b2], 'sprints', 'Practical sprints', 'The bench: two to four weeks on one workflow or capability gap, built and tested with your team, then handed off with your people owning it.');
     S.plant(3.9, -2.3, 1.0); S.plant(-4.0, 2.2, .7);
@@ -474,7 +483,7 @@ const SCENES = [
     const seeds = S.seedlings(.6, -2.3, .92, 4, 'x'); hov(seeds, 'groundwork', 'Groundwork', 'On the sill: seedlings. Groundwork works out which experiments to run, what to learn before you commit, and where the investment goes.');
     S.stove(-3.0, -2.2, 3.0, .7, .9); const kettle = S.kettle(-2.35, -1.75, .9, -Math.PI / 2); hov(kettle, 'cookbook', 'The kettle', 'Always on. Most recipes start with a question and a cup of tea.');
     const pot = S.pot(-1.3, -1.78, .9, .15); hov(pot, 'cookbook', 'AI Cookbook', 'The stove. Every recipe was cooked here first, on a real problem, then written down on Substack.');
-    const cook = S.fig({ at: [-1.3, -.95, 0], face: -Math.PI / 2, hair: 'bun', coat: 'paper', pants: 'ink', lean: .1, hands: { L: { abs: [-1.8, -1.6, .95] }, R: 'hold' }, anim: 'stir' });
+    const cook = S.fig({ at: [-1.3, -.95, 0], face: -Math.PI / 2, build: 'b', hair: 'bun', coat: 'paper', pants: 'ink', lean: .1, hands: { L: { abs: [-1.8, -1.6, .95] }, R: 'hold' }, anim: 'stir' });
     hov(cook, 'cookbook', 'Cooking', 'Recipes are written from real use, then shared.');
     const table = S.table(-.3, -.4, 1.5, .8, .74); S.chair(.45, -.85, Math.PI / 2);
     const reader = S.fig({ at: [.45, -.85, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair: 'short', coat: 'half', hands: { L: 'type', R: 'type' }, anim: 'type' });
@@ -490,22 +499,22 @@ const SCENES = [
     const plat = S.platform(-5, -3.4, -2.2, -1.6, 1.6); S.rail(-5, -1.6, -2.2, -1.6, .95, 1.6); S.rail(-2.2, -3.4, -2.2, -1.6, .95, 1.6);
     S.stairs(-.4, -2.55, Math.PI, 7, 1.0, .225, .26); S.flag(-4.7, -3.2, 2.6, 1.6);
     const look = S.fig({ at: [-3.7, -2.5, 1.6], face: Q, hair: 'short', coat: 'half', hands: { L: 'hip', R: 'point' }, anim: 'point' });
-    const frac = S.fig({ at: [-2.65, -3.0, 1.6], face: Q + .2, hair: 'long', coat: 'ink', pants: 'paper', hands: { L: 'cross', R: 'cross' }, anim: 'nod' });
+    const frac = S.fig({ at: [-2.65, -3.0, 1.6], face: Q + .2, build: 'b', hair: 'long', coat: 'ink', pants: 'paper', skirt: 'half2', hands: { L: 'cross', R: 'cross' }, anim: 'nod' });
     hov([plat, look], 'advisory', 'The lookout', 'Advisory is the view from here: the whole organization, which experiments are working, and where the next build goes.');
     hov(frac, 'fractional', 'Fractional AI leadership', 'Part-time, embedded. Strategy, execution and team development under one roof, before the full-time hire.');
     const table = S.table(-1.2, -1.3, 2.6, 1.0, .74); const crew = [table];
-    [[-.7, 'curly', 'ink', 'paper'], [.6, 'bun', 'half', 'ink']].forEach(([x, hair, coat, pants], i) => { S.stool(x, -1.75, .46); crew.push(S.fig({ at: [x, -1.75, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair, coat, pants, hands: { L: 'type', R: 'type' }, anim: 'type', phase: i })); S.laptop(x, -1.05, .74, -Math.PI / 2); });
+    [[-.7, 'curly', 'ink', 'paper'], [.6, 'bun', 'half', 'ink']].forEach(([x, hair, coat, pants], i) => { S.stool(x, -1.75, .46); crew.push(S.fig({ at: [x, -1.75, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build: i ? 'b' : 'a', skirt: i ? 'ink' : null, hair, coat, pants, hands: { L: 'type', R: 'type' }, anim: 'type', phase: i })); S.laptop(x, -1.05, .74, -Math.PI / 2); });
     [[-.2, 'short', 'half2'], [1.0, 'cap', 'stripe']].forEach(([x, hair, coat], i) => { S.chair(x, .15, -Math.PI / 2); crew.push(S.fig({ at: [x, .15, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair, coat, hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 2 })); S.laptop(x, -.58, .74, Math.PI / 2); });
     hov(crew, 'builds', 'Strategic builds', 'Custom tools, agents and workflows, built from the strategic question down. The build is the deliverable; the thinking is what makes it valuable.');
     const easel = S.easel(3.2, -2.0, Q, 1.4, 1.3, { notes: [[.14, .74, 'shade2', .1], [.3, .74, 'ink', -.06], [.46, .74, 'shade2', .08], [.62, .74, 'ink', -.1], [.14, .5, 'ink', -.05], [.3, .5, 'shade2', .12], [.62, .5, 'shade2', .04]], lines: [[.1, .28, .5], [.1, .18, .7]], diagram: [.55, .12] });
-    const a1 = S.fig({ at: [2.5, -.9, 0], face: Q + Math.PI, hair: 'tied', coat: 'half', hands: { L: 'hip', R: 'write' }, anim: 'write' });
+    const a1 = S.fig({ at: [2.5, -.9, 0], face: Q + Math.PI, build: 'b', hair: 'tied', coat: 'half', skirt: 'ink', hands: { L: 'hip', R: 'write' }, anim: 'write' });
     const a2 = S.fig({ at: [3.95, -1.0, 0], face: Q + Math.PI + .4, hair: 'short', coat: 'ink', pants: 'paper', hands: { L: 'chin', R: 'cross' }, anim: 'nod' });
     hov([easel, a1, a2], 'advisory', 'Advisory', 'A thinking partner who is also a builder, for the decisions about tools, workflows, team structure and investment.');
     const desk = S.table(1.9, .15, 1.5, .8, .74); S.monitor(2.45, .35, .74, Math.PI / 2, .6, .36); S.monitor(3.05, .35, .74, Math.PI / 2 + .3, .5, .32); S.chair(2.6, 1.25, -Math.PI / 2);
     const dev = S.fig({ at: [2.6, 1.25, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair: 'curly', coat: 'half2', hands: { L: 'type', R: 'type' }, anim: 'type', phase: 5 });
     hov([desk, dev], 'builds', 'The build', 'Not build-to-spec. We start with the strategic question, then build what delivers the outcome.');
     const w1 = S.fig({ at: [-4.6, 3.05, 0], face: 0, pose: 'walk', hair: 'short', coat: 'paper', hands: { L: 'carry' }, bias: 40, phase: 1 });
-    const w2 = S.fig({ at: [-4.6, 3.05, 0], face: 0, pose: 'walk', hair: 'bun', coat: 'half', pants: 'paper', hands: { R: 'strap' }, bias: 40, phase: 2.5 });
+    const w2 = S.fig({ at: [-4.6, 3.05, 0], face: 0, pose: 'walk', build: 'b', hair: 'bob', coat: 'half', pants: 'paper', skirt: 'half2', hands: { R: 'strap' }, bias: 40, phase: 2.5 });
     S.movers = [{ F: w1, dir: [1, 0, 0], len: 9.0, speed: .5, lag: 0 }, { F: w2, dir: [1, 0, 0], len: 9.0, speed: .5, lag: 4.6 }];
     hov([w1, w2], 'systems', 'Repeatable systems', 'The patterns we build together become systems your team sustains without us. That is the point of the climb.');
     S.plant(4.3, -2.9, 1.0); S.plant(-4.3, 2.6, .8);
@@ -551,10 +560,18 @@ tile(grid('poses'), 'Seated, with a mug', S => { S.stool(0, 0, .46); person(S, {
 tile(grid('poses'), 'Leaning on a bench', S => { const { f } = frame(F); S.table(f[0] * .75 - .6, f[1] * .75 - .4, 1.2, .8, .9); person(S, { lean: .22, hands: { L: { abs: [f[0] * .62 - .18, f[1] * .62 + .05, .95] }, R: { abs: [f[0] * .62 + .14, f[1] * .62 - .14, .95] } }, coat: 'paper' }); });
 tile(grid('poses'), 'Stirring', S => { const { f } = frame(F); S.stove(f[0] * .9 - .65, f[1] * .9 - .35, 1.3, .7, .9); S.pot(f[0] * .78, f[1] * .78 + .05, .9, .15); person(S, { lean: .1, hands: { L: { abs: [f[0] * .7 - .45, f[1] * .7 + .1, .95] }, R: 'hold' }, anim: 'stir', hair: 'bun', coat: 'paper' }); });
 tile(grid('poses'), 'A dog, sitting', S => S.dog(0, 0, F));
+// ---- people: two builds, trousers or a skirt
+tile(grid('builds'), 'Build A', S => person(S, { build: 'a', hair: 'short' }));
+tile(grid('builds'), 'Build B', S => person(S, { build: 'b', hair: 'bob' }));
+tile(grid('builds'), 'Build B, skirt', S => person(S, { build: 'b', hair: 'tied', skirt: true, hands: { R: 'point' }, anim: 'point' }));
+tile(grid('builds'), 'Build B, dress', S => person(S, { build: 'b', hair: 'bun', coat: 'half2', skirt: 'half2', hands: { L: 'talk', R: 'talk' }, anim: 'talk' }));
+tile(grid('builds'), 'Build A, skirt', S => person(S, { build: 'a', hair: 'curly', coat: 'ink', skirt: 'half2', pants: 'paper' }));
+tile(grid('builds'), 'Seated, skirt', S => { S.stool(0, 0, .46); person(S, { build: 'b', pose: 'sit', seat: .46, hair: 'long', coat: 'stripe', skirt: 'ink', hands: { L: 'type', R: 'type' }, anim: 'type' }); });
+tile(grid('builds'), 'Walking, skirt', S => person(S, { build: 'b', pose: 'walk', hair: 'bob', coat: 'paper', skirt: 'half2', hands: { L: 'strap' } }));
 // ---- people: facings
 for (let i = 0; i < 8; i++) tile(grid('facings'), `${i * 45}°`, S => person(S, { face: i * Math.PI / 4, hands: { R: 'point' } }));
 // ---- people: hair and coats
-['short', 'curly', 'bun', 'cap', 'bald', 'long', 'tied'].forEach(h => tile(grid('hair'), h, S => person(S, { hair: h })));
+['short', 'curly', 'bun', 'cap', 'bald', 'long', 'tied', 'bob'].forEach(h => tile(grid('hair'), h, S => person(S, { hair: h, build: ['bun', 'long', 'tied', 'bob'].includes(h) ? 'b' : 'a' })));
 ['ink', 'half', 'half2', 'stripe', 'paper'].forEach(c => tile(grid('coats'), `coat: ${c}`, S => person(S, { coat: c, hair: 'curly' })));
 ['ink', 'paper', 'half2'].forEach(p => tile(grid('coats'), `trousers: ${p}`, S => person(S, { pants: p, coat: 'half', hair: 'tied' })));
 // ---- props

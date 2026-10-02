@@ -13,3 +13,7 @@ drawing = head[head.index('/* ---- the drawing ---- */'):head.index('</style>')]
 sheet = rd('components-shell.html').replace('__DRAWING__', drawing).replace('__KIT__', rd('kit.js')).replace('__SCENES__', rd('scenes.js')).replace('__COMPONENTS__', rd('components.js'))
 open(os.path.join(R, 'journey-components.html'), 'w', encoding='utf-8').write(sheet)
 print('wrote journey-components.html', len(sheet))
+# the contrast test board: seven ways to separate people from props, on one room
+board = rd('contrast-tests.html').replace('__DRAWING__', drawing).replace('__KIT__', rd('kit.js')).replace('__SCENES__', rd('scenes.js'))
+open(os.path.join(R, 'journey-contrast.html'), 'w', encoding='utf-8').write(board)
+print('wrote journey-contrast.html', len(board))

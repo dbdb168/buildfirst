@@ -29,10 +29,18 @@ tile(grid('poses'), 'Seated, with a mug', S => { S.stool(0, 0, .46); person(S, {
 tile(grid('poses'), 'Leaning on a bench', S => { const { f } = frame(F); S.table(f[0] * .75 - .6, f[1] * .75 - .4, 1.2, .8, .9); person(S, { lean: .22, hands: { L: { abs: [f[0] * .62 - .18, f[1] * .62 + .05, .95] }, R: { abs: [f[0] * .62 + .14, f[1] * .62 - .14, .95] } }, coat: 'paper' }); });
 tile(grid('poses'), 'Stirring', S => { const { f } = frame(F); S.stove(f[0] * .9 - .65, f[1] * .9 - .35, 1.3, .7, .9); S.pot(f[0] * .78, f[1] * .78 + .05, .9, .15); person(S, { lean: .1, hands: { L: { abs: [f[0] * .7 - .45, f[1] * .7 + .1, .95] }, R: 'hold' }, anim: 'stir', hair: 'bun', coat: 'paper' }); });
 tile(grid('poses'), 'A dog, sitting', S => S.dog(0, 0, F));
+// ---- people: two builds, trousers or a skirt
+tile(grid('builds'), 'Build A', S => person(S, { build: 'a', hair: 'short' }));
+tile(grid('builds'), 'Build B', S => person(S, { build: 'b', hair: 'bob' }));
+tile(grid('builds'), 'Build B, skirt', S => person(S, { build: 'b', hair: 'tied', skirt: true, hands: { R: 'point' }, anim: 'point' }));
+tile(grid('builds'), 'Build B, dress', S => person(S, { build: 'b', hair: 'bun', coat: 'half2', skirt: 'half2', hands: { L: 'talk', R: 'talk' }, anim: 'talk' }));
+tile(grid('builds'), 'Build A, skirt', S => person(S, { build: 'a', hair: 'curly', coat: 'ink', skirt: 'half2', pants: 'paper' }));
+tile(grid('builds'), 'Seated, skirt', S => { S.stool(0, 0, .46); person(S, { build: 'b', pose: 'sit', seat: .46, hair: 'long', coat: 'stripe', skirt: 'ink', hands: { L: 'type', R: 'type' }, anim: 'type' }); });
+tile(grid('builds'), 'Walking, skirt', S => person(S, { build: 'b', pose: 'walk', hair: 'bob', coat: 'paper', skirt: 'half2', hands: { L: 'strap' } }));
 // ---- people: facings
 for (let i = 0; i < 8; i++) tile(grid('facings'), `${i * 45}°`, S => person(S, { face: i * Math.PI / 4, hands: { R: 'point' } }));
 // ---- people: hair and coats
-['short', 'curly', 'bun', 'cap', 'bald', 'long', 'tied'].forEach(h => tile(grid('hair'), h, S => person(S, { hair: h })));
+['short', 'curly', 'bun', 'cap', 'bald', 'long', 'tied', 'bob'].forEach(h => tile(grid('hair'), h, S => person(S, { hair: h, build: ['bun', 'long', 'tied', 'bob'].includes(h) ? 'b' : 'a' })));
 ['ink', 'half', 'half2', 'stripe', 'paper'].forEach(c => tile(grid('coats'), `coat: ${c}`, S => person(S, { coat: c, hair: 'curly' })));
 ['ink', 'paper', 'half2'].forEach(p => tile(grid('coats'), `trousers: ${p}`, S => person(S, { pants: p, coat: 'half', hair: 'tied' })));
 // ---- props
