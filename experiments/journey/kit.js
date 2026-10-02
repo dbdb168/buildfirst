@@ -28,14 +28,14 @@ function poly(g, cells, tone = 'paper', extra = {}) {
 // a capsule: a line with round caps, outlined in the opposite tone. Returns the lines so a figure can move them.
 function capsule(g, a, b, w, tone = 'paper', halo = 0) {
   const [x1, y1] = P(a), [x2, y2] = P(b), lines = [];
-  if (halo) lines.push(el('line', { x1, y1, x2, y2, class: 's-paper', style: `stroke-width:${r2((w + 2 * halo) * T)}` }, g));
+  if (halo) lines.push(el('line', { x1, y1, x2, y2, class: 's-paper halo', style: `stroke-width:${r2((w + 2 * halo) * T)}` }, g));
   lines.push(el('line', { x1, y1, x2, y2, class: 's-' + OUT[tone], style: `stroke-width:${r2((w + 2 * OL) * T)}` }, g));
   if (PAT(tone)) lines.push(el('line', { x1, y1, x2, y2, class: 's-paper', style: `stroke-width:${r2(w * T)}` }, g));
   lines.push(el('line', { x1, y1, x2, y2, class: 's-' + tone, style: `stroke-width:${r2(w * T)}` }, g));
   return lines;
 }
 const moveCapsule = (lines, a, b) => { const [x1, y1] = P(a), [x2, y2] = P(b); for (const l of lines) { l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2); } };
-function ball(g, p, r, tone = 'paper', halo = 0) { const [cx, cy] = P(p); const out = []; if (halo) out.push(el('circle', { cx, cy, r: r2((r + halo) * T), class: 'f-paper no' }, g)); if (PAT(tone)) { out.push(el('circle', { cx, cy, r: r2(r * T), class: 'f-paper' }, g)); out.push(el('circle', { cx, cy, r: r2(r * T), class: 'f-' + tone + ' no' }, g)); } else out.push(el('circle', { cx, cy, r: r2(r * T), class: 'f-' + tone }, g)); return halo ? out : out[out.length - 1]; }
+function ball(g, p, r, tone = 'paper', halo = 0) { const [cx, cy] = P(p); const out = []; if (halo) out.push(el('circle', { cx, cy, r: r2((r + halo) * T), class: 'f-paper no halo' }, g)); if (PAT(tone)) { out.push(el('circle', { cx, cy, r: r2(r * T), class: 'f-paper' }, g)); out.push(el('circle', { cx, cy, r: r2(r * T), class: 'f-' + tone + ' no' }, g)); } else out.push(el('circle', { cx, cy, r: r2(r * T), class: 'f-' + tone }, g)); return halo ? out : out[out.length - 1]; }
 const moveBall = (c, p) => { const [cx, cy] = P(p); for (const e of (Array.isArray(c) ? c : [c])) { e.setAttribute('cx', cx); e.setAttribute('cy', cy); } };
 // a flat disc on the ground (or at height z): a circle of radius r in the plane projects to an ellipse
 function disc(g, [x, y, z], r, tone = 'half', cls = '') { const [cx, cy] = P([x, y, z]); return el('ellipse', { cx, cy, rx: r2(r * T * 1.414), ry: r2(r * T * .707), class: 'f-' + tone + ' ' + cls }, g); }

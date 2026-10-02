@@ -53,6 +53,7 @@ for (let i = 0; i < 8; i++) tile(grid('facings'), `${i * 45}°`, S => person(S, 
 // ---- size and motion
 function resize() { for (const f of TILES) { const k = +document.getElementById('size').value; f.querySelector('svg').style.width = r2(f.dataset.w * f.dataset.px * k) + 'px'; } }
 document.getElementById('size').addEventListener('input', resize);
+document.getElementById('halo').addEventListener('change', e => document.body.classList.toggle('nohalo', !e.target.checked));
 const t0 = performance.now();
 (function life(now) {
   const t = (now - t0) / 1000; const on = document.getElementById('motion').checked && !reduce;
