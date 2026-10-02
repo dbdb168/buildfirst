@@ -75,7 +75,8 @@ function tile(label, note, cls, knobs, px = 1.55, pad = 14, build = S => SCENES[
   const saved = Object.assign({}, KN); Object.assign(KN, knobs || {});
   const root = el('g', {}, svg); const S = scene(root); seed = 14; build(S); S.done();
   Object.assign(KN, saved);
-  const b = root.getBBox(); const x0 = b.x - pad, y0 = b.y - pad, w = b.width + 2 * pad, h = b.height + 2 * pad;
+  let b = S.extent(2); try { const m = root.getBBox(); if (m.width > 1 && m.height > 1) b = { x: Math.min(b.x, m.x), y: Math.min(b.y, m.y), width: Math.max(b.x + b.width, m.x + m.width) - Math.min(b.x, m.x), height: Math.max(b.y + b.height, m.y + m.height) - Math.min(b.y, m.y) }; } catch (e) {}
+  const x0 = b.x - pad, y0 = b.y - pad, w = b.width + 2 * pad, h = b.height + 2 * pad;
   svg.setAttribute('viewBox', `${r2(x0)} ${r2(y0)} ${r2(w)} ${r2(h)}`); svg.style.width = r2(w * px) + 'px';
   const cap = document.createElement('figcaption'); cap.textContent = label; const sm = document.createElement('small'); sm.textContent = note; cap.appendChild(sm); fig.appendChild(cap);
   LIFE.push(...S.life);

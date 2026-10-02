@@ -291,12 +291,14 @@ function figure(o) {
 
 // ---------- a scene: a floor layer that never sorts, a list of things that do, and the figures that move ----------
 function scene(g) {
-  const floor = el('g', { class: 'floor' }, g), items = [], life = [];
+  const floor = el('g', { class: 'floor' }, g), items = [], life = [], floorPts = [];
   const add = d => { items.push(d); return d; };
-  const S = { g, floor, items, life, add };
-  S.shadow = (x, y, r = .30, tone = 'half') => disc(floor, [x, y, 0], r, tone, 'no shadow');
-  S.pad = (cells, tone = 'paper') => poly(floor, cells, tone);
-  S.shade = (x, y, r) => disc(floor, [x, y, 0], r, 'half', 'no shade');
+  const S = { g, floor, items, life, add, floorPts };
+  S.shadow = (x, y, r = .30, tone = 'half') => { floorPts.push([x - r, y - r, 0], [x + r, y + r, 0], [x - r, y + r, 0], [x + r, y - r, 0]); return disc(floor, [x, y, 0], r, tone, 'no shadow'); };
+  S.pad = (cells, tone = 'paper') => { for (const c of cells) floorPts.push([c[0], c[1], c[2] || 0]); return poly(floor, cells, tone); };
+  S.shade = (x, y, r) => { floorPts.push([x - r, y - r, 0], [x + r, y + r, 0], [x - r, y + r, 0], [x + r, y - r, 0]); return disc(floor, [x, y, 0], r, 'half', 'no shade'); };
+  // the screen extent of everything drawn, from geometry alone: safe to call before the page is visible
+  S.extent = (pad = 0) => { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; const take = ([sx, sy]) => { x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy); }; for (const d of items) { const b = screenBox(d.bb); take([b[0], b[2]]); take([b[1], b[3]]); } for (const p of floorPts) take(P(p)); if (x0 > x1) { x0 = -10; x1 = 10; y0 = -10; y1 = 10; } return { x: x0 - pad, y: y0 - pad, width: x1 - x0 + 2 * pad, height: y1 - y0 + 2 * pad }; };
   S.fig = o => { const F = figure(o); F.all.forEach(add); life.push(F); S.shadow(o.at[0], o.at[1], o.pose === 'sit' ? .26 : .30); return F; };
   S.box = (x0, y0, x1, y1, z0, z1, t = {}, key) => { const d = drawable([x0, x1, y0, y1, z0, z1], key ?? (x0 + x1 + y0 + y1) / 2); box(d.g, x0, y0, x1, y1, z0, z1, t); return add(d); };
   S.slab = (c, phi, hf, hr, z0, z1, t = {}) => { const q = quad(c, phi, hf, hr, z0); const bb = bbOf(q); bb[4] = z0; bb[5] = z1; const d = drawable(bb, c[0] + c[1]); slab(d.g, c, phi, hf, hr, z0, z1, t); return add(d); };
@@ -529,7 +531,8 @@ function tile(label, note, cls, knobs, px = 1.55, pad = 14, build = S => SCENES[
   const saved = Object.assign({}, KN); Object.assign(KN, knobs || {});
   const root = el('g', {}, svg); const S = scene(root); seed = 14; build(S); S.done();
   Object.assign(KN, saved);
-  const b = root.getBBox(); const x0 = b.x - pad, y0 = b.y - pad, w = b.width + 2 * pad, h = b.height + 2 * pad;
+  let b = S.extent(2); try { const m = root.getBBox(); if (m.width > 1 && m.height > 1) b = { x: Math.min(b.x, m.x), y: Math.min(b.y, m.y), width: Math.max(b.x + b.width, m.x + m.width) - Math.min(b.x, m.x), height: Math.max(b.y + b.height, m.y + m.height) - Math.min(b.y, m.y) }; } catch (e) {}
+  const x0 = b.x - pad, y0 = b.y - pad, w = b.width + 2 * pad, h = b.height + 2 * pad;
   svg.setAttribute('viewBox', `${r2(x0)} ${r2(y0)} ${r2(w)} ${r2(h)}`); svg.style.width = r2(w * px) + 'px';
   const cap = document.createElement('figcaption'); cap.textContent = label; const sm = document.createElement('small'); sm.textContent = note; cap.appendChild(sm); fig.appendChild(cap);
   LIFE.push(...S.life);
