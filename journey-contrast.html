@@ -73,8 +73,8 @@ svg.defs{position:absolute;width:0;height:0}
 </defs></svg>
 <main>
   <span class="cap">Contrast between prop and person · halo off everywhere</span>
-  <h1>Seven ways to make the people come forward.</h1>
-  <p class="lead">The same room each time. The base is the current drawing with the halo removed. Each variant changes one thing, and the last two combine the ones that work.</p>
+  <h1>Air first, then seven ways to make the people come forward.</h1>
+  <p class="lead">First the room with more space in it, at the same scale and at page scale. Then the same dense room each time: the base is the current drawing with the halo removed, each variant changes one thing, and the last two combine the ones that work.</p>
   <div class="grid" id="grid"></div>
 </main>
 <script>
@@ -509,16 +509,35 @@ const SCENES = [
 ];
 
 const LIFE = [];
-function tile(label, note, cls, knobs, px = 1.55, pad = 14) {
+// the team room with air in it: a 12 by 8 metre floor, a 5.6 metre table, 1.6 metres between seats, the bench and the board a stride away
+function spacious(S) {
+  S.pad([[-6, -4], [6, -4], [6, 4], [-6, 4]], 'white');
+  S.wall(-6, -4.05, 6, -3.9, 2.4, { south: 'paper' });
+  S.board(-5.2, -3.9, .9, 4.2, 1.1, 'x', { lines: [[.3, .84, .45], [.3, .74, .3], [.3, .64, .5]], diagram: [.36, .38], circle: [.66, .3], notes: [[.82, .78, 'shade2', .1], [.9, .78, 'ink', -.08], [.82, .64, 'ink', .05], [.9, .64, 'shade2', .12], [.86, .5, 'shade2', -.1]] });
+  S.fig({ at: [-5.5, -3.35, 0], face: -Math.PI / 2, hair: 'cap', coat: 'half2', hands: { L: 'hip', R: 'write' }, anim: 'write' });
+  S.table(-4.6, -1.3, 5.6, 1.4, .74);
+  [[-3.8, 'short', 'half', 'a', null], [-2.2, 'bun', 'ink', 'b', 'half2'], [-.6, 'curly', 'paper', 'a', null]].forEach(([x, hair, coat, build, skirt], i) => { S.stool(x, -1.95, .46); S.fig({ at: [x, -1.95, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build, skirt, hair, coat, pants: i === 1 ? 'paper' : 'ink', hands: i === 2 ? { L: 'lap', R: 'raise' } : { L: 'type', R: 'type' }, anim: i === 2 ? 'raise' : 'type', phase: i }); S.laptop(x, -1.05, .74, -Math.PI / 2); });
+  [[-3.0, 'long', 'stripe', 'b', 'ink'], [-1.4, 'short', 'ink', 'a', null], [.2, 'tied', 'half2', 'b', null]].forEach(([x, hair, coat, build, skirt], i) => { S.chair(x, .75, -Math.PI / 2); S.fig({ at: [x, .75, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, build, skirt, hair, coat, pants: i === 1 ? 'half2' : 'ink', hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 3 }); S.laptop(x, -.15, .74, Math.PI / 2); });
+  S.mug(-4.2, -.5, .74); S.mug(.6, -.9, .74, false); S.mug(-1.9, -.6, .74, false);
+  S.table(3.0, 1.2, 1.8, .8, .9); S.monitor(4.1, 1.4, .9, Math.PI / 2, .5, .32); S.slab([3.4, 1.6], 0, .14, .1, .9, 1.08, { top: 'shade2', east: 'paper', south: 'shade' });
+  S.fig({ at: [3.3, 2.5, 0], face: -Math.PI / 2, build: 'b', hair: 'bob', coat: 'paper', lean: .22, hands: { L: { abs: [3.15, 2.0, .95] }, R: { abs: [3.4, 2.0, .95] } } });
+  S.fig({ at: [4.7, 2.6, 0], face: -Math.PI / 2 - .5, hair: 'curly', coat: 'half', hands: { L: 'cross', R: 'point' }, anim: 'point' });
+  S.plant(5.3, -3.3, 1.0); S.plant(-5.4, 3.2, .7); S.plant(5.3, 3.3, .9);
+}
+function tile(label, note, cls, knobs, px = 1.55, pad = 14, build = S => SCENES[3].build(S)) {
   const fig = document.createElement('figure'); if (cls) fig.className = cls; const svg = el('svg', { class: 'terrain' }, fig); document.getElementById('grid').appendChild(fig);
   const saved = Object.assign({}, KN); Object.assign(KN, knobs || {});
-  const root = el('g', {}, svg); const S = scene(root); seed = 14; SCENES[3].build(S); S.done();
+  const root = el('g', {}, svg); const S = scene(root); seed = 14; build(S); S.done();
   Object.assign(KN, saved);
   const b = root.getBBox(); const x0 = b.x - pad, y0 = b.y - pad, w = b.width + 2 * pad, h = b.height + 2 * pad;
   svg.setAttribute('viewBox', `${r2(x0)} ${r2(y0)} ${r2(w)} ${r2(h)}`); svg.style.width = r2(w * px) + 'px';
   const cap = document.createElement('figcaption'); cap.textContent = label; const sm = document.createElement('small'); sm.textContent = note; cap.appendChild(sm); fig.appendChild(cap);
   LIFE.push(...S.life);
 }
+tile('D0 · The room as it is', 'A 9 by 6 metre floor, a 3.8 metre table, 1.1 metres between seats, the bench a step from the table. Halo off.', '', { halo: 0 }, 1.2);
+tile('D1 · The same room with air in it', 'A 12 by 8 metre floor, a 5.6 metre table, 1.6 metres between seats, the near row staggered against the far row, the bench and the board a stride away. Same seven people. Drawn at the same scale per metre as D0.', '', { halo: 0 }, 1.2, 14, spacious);
+tile('D2 · The spacious room at page scale', 'What D1 costs: to fit the page column it has to be drawn smaller, so each person loses about a third of their size.', '', { halo: 0 }, .85, 14, spacious);
+tile('D3 · The spacious room with F applied', 'Air plus the lighter ink on props and the heavier contour on people.', 'varB', { halo: 0, figOL: .06 }, 1.2, 14, spacious);
 tile('0 · Base, no halo', 'What you liked. People in ink and halftone, props in paper greys, everything outlined at the same weight.', '', { halo: 0 });
 tile('A · Heavier line on people', 'People outlined at twice the weight of the props. The oldest trick in drawing: the foreground gets the heavier contour.', '', { halo: 0, figOL: .07 });
 tile('B · Props in a second, lighter ink', 'Props drawn in a warm grey ink, people in the key ink. The two-ink print logic from Falllinie, with the world as the spot ink.', 'varB', { halo: 0 });
