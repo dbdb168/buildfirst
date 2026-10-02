@@ -45,7 +45,7 @@ __DRAWING__
 </defs></svg>
 <main>
   <span class="cap">Contrast between prop and person · halo off everywhere</span>
-  <h1>Air first, then seven ways to make the people come forward.</h1>
+  <h1>Air first, then size, then seven ways to make the people come forward.</h1>
   <p class="lead">First the room with more space in it, at the same scale and at page scale. Then the same dense room each time: the base is the current drawing with the halo removed, each variant changes one thing, and the last two combine the ones that work.</p>
   <div class="grid" id="grid"></div>
 </main>
@@ -85,6 +85,19 @@ tile('D0 · The room as it is', 'A 9 by 6 metre floor, a 3.8 metre table, 1.1 me
 tile('D1 · The same room with air in it', 'A 12 by 8 metre floor, a 5.6 metre table, 1.6 metres between seats, the near row staggered against the far row, the bench and the board a stride away. Same seven people. Drawn at the same scale per metre as D0.', '', { halo: 0 }, 1.2, 14, spacious);
 tile('D2 · The spacious room at page scale', 'What D1 costs: to fit the page column it has to be drawn smaller, so each person loses about a third of their size.', '', { halo: 0 }, .85, 14, spacious);
 tile('D3 · The spacious room with F applied', 'Air plus the lighter ink on props and the heavier contour on people.', 'varB', { halo: 0, figOL: .06 }, 1.2, 14, spacious);
+// a close-up: four at a shorter table, the board behind, the bench gone; small enough to sit beside the copy at a size where the people read
+function closeup(S) {
+  S.pad([[-4, -2.6], [4, -2.6], [4, 2.6], [-4, 2.6]], 'white');
+  S.wall(-4, -2.65, 4, -2.5, 2.4, { south: 'paper' });
+  S.board(-3.4, -2.5, .9, 3.4, 1.1, 'x', { lines: [[.3, .84, .45], [.3, .74, .3], [.3, .64, .5]], diagram: [.36, .38], circle: [.66, .3], notes: [[.82, .78, 'shade2', .1], [.9, .78, 'ink', -.08], [.86, .6, 'ink', .05]] });
+  S.fig({ at: [-3.6, -1.95, 0], face: -Math.PI / 2, hair: 'cap', coat: 'half2', hands: { L: 'hip', R: 'write' }, anim: 'write' });
+  S.table(-2.4, -.6, 3.6, 1.4, .74);
+  [[-1.6, 'bun', 'ink', 'b', 'half2'], [0, 'curly', 'paper', 'a', null]].forEach(([x, hair, coat, build, skirt], i) => { S.stool(x, -1.25, .46); S.fig({ at: [x, -1.25, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build, skirt, hair, coat, pants: i === 0 ? 'paper' : 'ink', hands: i === 1 ? { L: 'lap', R: 'raise' } : { L: 'type', R: 'type' }, anim: i === 1 ? 'raise' : 'type', phase: i }); S.laptop(x, -.35, .74, -Math.PI / 2); });
+  [[-.8, 'long', 'stripe', 'b', 'ink'], [.8, 'short', 'ink', 'a', null]].forEach(([x, hair, coat, build, skirt], i) => { S.chair(x, 1.45, -Math.PI / 2); S.fig({ at: [x, 1.45, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, build, skirt, hair, coat, pants: i === 1 ? 'half2' : 'ink', hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 3 }); S.laptop(x, .55, .74, Math.PI / 2); });
+  S.mug(-2.0, .2, .74); S.plant(3.4, -2.0, 1.0); S.plant(-3.6, 2.1, .7);
+}
+tile('D4 · The spacious room at full page width', 'The same room as D1, drawn so people stand about 110 pixels tall. It needs the whole width of the page; the copy would sit above or below it.', '', { halo: 0 }, 1.95, 14, spacious);
+tile('D5 · A close-up beside the copy', 'Four at the table instead of six, the bench gone, the board kept. Fits a 560 pixel column with people about 95 pixels tall.', '', { halo: 0 }, 1.7, 14, closeup);
 tile('0 · Base, no halo', 'What you liked. People in ink and halftone, props in paper greys, everything outlined at the same weight.', '', { halo: 0 });
 tile('A · Heavier line on people', 'People outlined at twice the weight of the props. The oldest trick in drawing: the foreground gets the heavier contour.', '', { halo: 0, figOL: .07 });
 tile('B · Props in a second, lighter ink', 'Props drawn in a warm grey ink, people in the key ink. The two-ink print logic from Falllinie, with the world as the spot ink.', 'varB', { halo: 0 });

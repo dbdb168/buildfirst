@@ -95,6 +95,24 @@ function sortDraw(parent, items) {
   for (const i of out) parent.appendChild(items[i].g);
 }
 
+// a blob: capsules and balls drawn as one silhouette. One outline pass under one fill pass, so the parts of a limb or a
+// torso merge into a single contour instead of showing a seam at every joint.
+function blobDraw(g, prims, tone, ol = OL, halo = 0) {
+  const passes = [];
+  if (halo) passes.push({ s: 's-paper halo', f: 'f-paper no halo', grow: halo });
+  passes.push({ s: 's-' + OUT[tone], f: 'f-' + OUT[tone] + ' no', grow: ol });
+  if (PAT(tone)) passes.push({ s: 's-paper', f: 'f-paper no', grow: 0 });
+  passes.push({ s: 's-' + tone, f: 'f-' + tone + ' no', grow: 0 });
+  const els = prims.map(() => []);
+  for (const ps of passes) prims.forEach((p, i) => {
+    if (p.t === 'cap') { const [x1, y1] = P(p.a), [x2, y2] = P(p.b); els[i].push(el('line', { x1, y1, x2, y2, class: ps.s, style: `stroke-width:${r2((p.w + 2 * ps.grow) * T)}` }, g)); }
+    else { const [cx, cy] = P(p.c); els[i].push(el('circle', { cx, cy, r: r2((p.r + ps.grow) * T), class: ps.f }, g)); }
+  });
+  return els;
+}
+function blobMove(els, prims) { prims.forEach((p, i) => { if (p.t === 'cap') { const [x1, y1] = P(p.a), [x2, y2] = P(p.b); for (const e of els[i]) { e.setAttribute('x1', x1); e.setAttribute('y1', y1); e.setAttribute('x2', x2); e.setAttribute('y2', y2); } } else { const [cx, cy] = P(p.c); for (const e of els[i]) { e.setAttribute('cx', cx); e.setAttribute('cy', cy); } } }); }
+const cap = (a, b, w) => ({ t: 'cap', a, b, w }), bal = (c, r) => ({ t: 'ball', c, r });
+
 // ---------- the figure ----------
 // o: at [x,y,z], face (radians, direction the chest faces), pose 'stand'|'sit'|'walk', seat (m), lean (rad),
 //    hands {L, R}: a named gesture, [fwd, lat, up] from the shoulder in the body frame, or {abs:[x,y,z]}
@@ -112,11 +130,11 @@ function ik(S, Tg, a, b, pole) {
   const E = V.add(S, V.add(V.mul(dn, a * cosA), V.mul(pn, a * sinA)));
   return { E, H: V.add(S, V.mul(dn, L)) };
 }
-const KN = { halo: .06, figOL: OL, figScale: 1 };
+const KN = { halo: 0, figOL: OL, figScale: 1 };
 function figure(o) {
   const HALO = o.halo ?? KN.halo, FOL = o.ol ?? KN.figOL; const at = o.at, phi = o.face || 0, { f, r, up } = frame(phi), coat = o.coat || 'half', pants = o.pants || 'ink', hair = o.hair || 'short', ph = o.phase || 0;
   const sit = o.pose === 'sit', walk = o.pose === 'walk';
-  const B = o.build === 'b' ? { sh: .16, hip: .175, hipZ: .88, torso: .43, head: .29 } : { sh: .19, hip: .15, hipZ: .92, torso: .46, head: .30 };
+  const B = o.build === 'b' ? { sh: .17, hip: .17, hipZ: .88, torso: .43, head: .29, shb: .095, chest: .30, belly: .145, uarm: .115, larm: .10, thigh: .16, shin: .125, hr: .14 } : { sh: .20, hip: .155, hipZ: .92, torso: .46, head: .30, shb: .105, chest: .34, belly: .15, uarm: .13, larm: .11, thigh: .17, shin: .135, hr: .145 };
   const skirtTone = o.skirt === true ? pants : (o.skirt || null);
   const hands = Object.assign({ L: 'hang', R: 'hang' }, o.hands || {});
   const body = drawable(null, 0, 'fig'), arms = [drawable(null, 0, 'arm'), drawable(null, 0, 'arm')];
@@ -164,40 +182,53 @@ function figure(o) {
     }
   }
   solve(0);
-  // ---- draw: far leg, near leg, torso, far upper arm, near upper arm, neck, hair, head; forearms are their own drawables
+  // ---- draw: a body with volume. Each leg, the torso and each arm is one silhouette; forearms are their own drawables for depth
   const depth = p => p[0] + p[1];
   const legOrder = depth(J.hip[0]) <= depth(J.hip[1]) ? [0, 1] : [1, 0], armOrder = depth(J.sh[0]) <= depth(J.sh[1]) ? [0, 1] : [1, 0];
   const E = {}; const g = body.g;
-  E.leg = []; for (const i of legOrder) E.leg[i] = { thigh: capsule(g, J.hip[i], J.knee[i], .14, pants, HALO, FOL), shin: capsule(g, J.knee[i], J.ankle[i], .12, pants, HALO, FOL), foot: capsule(g, J.ankle[i], J.toe[i], .09, 'ink', HALO, FOL) };
+  const prims = () => ({
+    legs: [0, 1].map(i => [bal(J.hip[i], B.thigh * .55), cap(J.hip[i], J.knee[i], B.thigh), bal(J.knee[i], B.shin * .52), cap(J.knee[i], J.ankle[i], B.shin)]),
+    shoes: [0, 1].map(i => [cap(V.madd(J.ankle[i], up, -.02), V.madd(J.toe[i], up, -.02), .11)]),
+    torso: [bal(J.sh[0], B.shb), bal(J.sh[1], B.shb), cap(V.madd(J.pelvis, up, .16), V.madd(J.chest, up, .02), B.chest), cap(V.madd(J.pelvis, up, .04), V.madd(J.pelvis, up, .14), B.chest * .82), bal(V.madd(J.pelvis, up, .03), B.belly)],
+    uppers: [0, 1].map(i => [cap(J.sh[i], J.elbow[i], B.uarm), bal(J.elbow[i], B.larm * .5)]),
+    fores: [0, 1].map(i => [cap(J.elbow[i], J.hand[i], B.larm)]),
+    hands: [0, 1].map(i => [bal(J.hand[i], .055)]),
+    neck: [cap(V.madd(J.chest, up, .02), J.neck, .11)],
+    belt: [cap(V.madd(J.hip[0], r, -.02), V.madd(J.hip[1], r, .02), .035)],
+  });
+  let PR = prims();
+  E.legs = []; E.shoes = []; for (const i of legOrder) { E.legs[i] = blobDraw(g, PR.legs[i], pants, FOL, HALO); E.shoes[i] = blobDraw(g, PR.shoes[i], 'ink', FOL, HALO); }
   E.skirt = null; if (skirtTone) { if (HALO) el('polygon', { points: pts(J.skirt.map(P)), class: 'halo', style: `stroke-width:${r2(2 * HALO * T)}` }, g); E.skirt = poly(g, J.skirt, skirtTone, { 'stroke-linejoin': 'round', style: `stroke-width:${r2(FOL * 2 * T * .8)}` }); E.skirtU = PAT(skirtTone) ? E.skirt.previousSibling : null; if (E.skirtU) E.skirtU.setAttribute('style', `stroke-width:${r2(FOL * 2 * T * .8)}`); }
-  E.torsoA = capsule(g, J.pelvis, J.chest, .30, coat, HALO, FOL);
-  E.torsoH = el('polygon', { points: pts([J.sh[0], J.sh[1], J.hip[1], J.hip[0]].map(P)), class: 'halo', style: `stroke-width:${r2(2 * HALO * T)}` }, g);
-  E.torso = poly(g, [J.sh[0], J.sh[1], J.hip[1], J.hip[0]], coat, { 'stroke-linejoin': 'round', style: `stroke-width:${r2(FOL * 2 * T * .8)}` }); E.torsoU = PAT(coat) ? E.torso.previousSibling : null; if (E.torsoU) E.torsoU.setAttribute('style', `stroke-width:${r2(FOL * 2 * T * .8)}`);
-  E.upper = []; for (const i of armOrder) E.upper[i] = capsule(g, J.sh[i], J.elbow[i], .11, coat, HALO, FOL);
-  E.neck = capsule(g, J.chest, J.neck, .09, 'paper', HALO, FOL);
+  E.belt = (!skirtTone && pants !== 'ink') ? blobDraw(g, PR.belt, 'ink', 0, 0) : null;
+  E.torso = blobDraw(g, PR.torso, coat, FOL, HALO);
+  // a shirt showing at the collar when the coat is not already paper
+  E.collar = null; if (coat !== 'paper') { const nb = V.madd(J.chest, up, .06); E.collar = poly(g, [V.madd(nb, r, -.075), V.madd(nb, r, .075), V.madd(V.madd(nb, up, -.13), f, .02)], 'paper', { 'stroke-linejoin': 'round', style: 'stroke-width:.4' }); }
+  E.uppers = []; for (const i of armOrder) E.uppers[i] = blobDraw(g, PR.uppers[i], coat, FOL, HALO);
+  E.neck = blobDraw(g, PR.neck, 'paper', FOL, HALO);
   const back = V.mul(f, -.03);
   E.hair = null; E.hair2 = null;
-  if (hair !== 'bald') E.hair = ball(g, V.add(V.madd(J.head, up, .03), back), hair === 'curly' ? .155 : (hair === 'bob' ? .145 : .135), 'ink', HALO);
+  if (hair !== 'bald') E.hair = ball(g, V.add(V.madd(J.head, up, .03), back), hair === 'curly' ? B.hr + .02 : (hair === 'bob' ? B.hr + .01 : B.hr), 'ink', HALO);
   if (hair === 'bun') E.hair2 = ball(g, V.add(V.madd(J.head, up, .06), V.mul(f, -.12)), .055, 'ink');
   if (hair === 'tied') E.hair2 = capsule(g, V.add(V.madd(J.head, up, -.02), V.mul(f, -.12)), V.add(V.madd(J.head, up, -.26), V.mul(f, -.14)), .06, 'ink');
   if (hair === 'bob') E.hair2 = [capsule(g, V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, -.12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, -.13)), .07, 'ink'), capsule(g, V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, .12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, .13)), .07, 'ink')];
-  E.head = ball(g, J.head, .135, 'paper', hair === 'bald' ? HALO : 0); (Array.isArray(E.head) ? E.head[E.head.length - 1] : E.head).setAttribute('style', `stroke-width:${r2(FOL * 2 * T * .8)}`);
+  E.head = ball(g, J.head, B.hr, 'paper', hair === 'bald' ? HALO : 0); (Array.isArray(E.head) ? E.head[E.head.length - 1] : E.head).setAttribute('style', `stroke-width:${r2(FOL * 2 * T * .8)}`);
   if (hair === 'cap') E.visor = capsule(g, V.add(V.madd(J.head, up, .06), V.mul(f, .10)), V.add(V.madd(J.head, up, .055), V.mul(f, .22)), .05, 'ink');
   if (hair === 'long') E.hair2 = capsule(g, V.add(V.madd(J.head, up, -.02), back), V.add(V.madd(J.chest, up, .12), V.mul(f, -.08)), .16, 'ink');
-  if (hair === 'long') { g.insertBefore(E.hair2[0], E.torsoA[0]); g.insertBefore(E.hair2[1], E.torsoA[0]); }
-  E.fore = []; E.hand = [];
-  for (let i = 0; i < 2; i++) { const ag = arms[i].g; E.fore[i] = capsule(ag, J.elbow[i], J.hand[i], .10, coat, HALO, FOL); E.hand[i] = ball(ag, J.hand[i], .05, 'paper', HALO, FOL); }
+  if (hair === 'long') { const first = E.torso[0][0]; for (const l of E.hair2) g.insertBefore(l, first); }
+  E.fores = []; E.hands = [];
+  for (let i = 0; i < 2; i++) { const ag = arms[i].g; E.fores[i] = blobDraw(ag, PR.fores[i], coat, FOL, HALO); E.hands[i] = blobDraw(ag, PR.hands[i], 'paper', FOL, HALO); }
   function bboxes() {
     body.bb = bbOf([J.pelvis, J.chest, J.head, ...J.hip, ...J.knee, ...J.ankle, ...J.toe, ...J.sh], .16); body.key = depth(J.pelvis) + (o.bias || 0);
     for (let i = 0; i < 2; i++) { arms[i].bb = bbOf([J.elbow[i], J.hand[i]], .07); const dh = depth(J.hand[i]) - depth(J.pelvis); arms[i].key = depth(J.pelvis) + (o.bias || 0) + (dh > -.02 ? .011 : -.011); }
   }
   bboxes();
   function update(t) {
-    solve(t);
-    for (let i = 0; i < 2; i++) { moveCapsule(E.leg[i].thigh, J.hip[i], J.knee[i]); moveCapsule(E.leg[i].shin, J.knee[i], J.ankle[i]); moveCapsule(E.leg[i].foot, J.ankle[i], J.toe[i]); moveCapsule(E.upper[i], J.sh[i], J.elbow[i]); moveCapsule(E.fore[i], J.elbow[i], J.hand[i]); moveBall(E.hand[i], J.hand[i]); }
-    moveCapsule(E.torsoA, J.pelvis, J.chest); const tp = pts([J.sh[0], J.sh[1], J.hip[1], J.hip[0]].map(P)); E.torso.setAttribute('points', tp); E.torsoH.setAttribute('points', tp); if (E.torsoU) E.torsoU.setAttribute('points', tp);
+    solve(t); PR = prims();
+    for (let i = 0; i < 2; i++) { blobMove(E.legs[i], PR.legs[i]); blobMove(E.shoes[i], PR.shoes[i]); blobMove(E.uppers[i], PR.uppers[i]); blobMove(E.fores[i], PR.fores[i]); blobMove(E.hands[i], PR.hands[i]); }
+    blobMove(E.torso, PR.torso); blobMove(E.neck, PR.neck); if (E.belt) blobMove(E.belt, PR.belt);
+    if (E.collar) { const nb = V.madd(J.chest, up, .06); E.collar.setAttribute('points', pts([V.madd(nb, r, -.075), V.madd(nb, r, .075), V.madd(V.madd(nb, up, -.13), f, .02)].map(P))); }
     if (E.skirt) { const sp = pts(J.skirt.map(P)); E.skirt.setAttribute('points', sp); if (E.skirtU) E.skirtU.setAttribute('points', sp); }
-    moveCapsule(E.neck, J.chest, J.neck); moveBall(E.head, J.head); if (E.hair) moveBall(E.hair, V.add(V.madd(J.head, up, .03), back));
+    moveBall(E.head, J.head); if (E.hair) moveBall(E.hair, V.add(V.madd(J.head, up, .03), back));
     if (E.visor) moveCapsule(E.visor, V.add(V.madd(J.head, up, .06), V.mul(f, .10)), V.add(V.madd(J.head, up, .055), V.mul(f, .22)));
     if (E.hair2 && hair === 'bun') moveBall(E.hair2, V.add(V.madd(J.head, up, .06), V.mul(f, -.12)));
     if (E.hair2 && hair === 'tied') moveCapsule(E.hair2, V.add(V.madd(J.head, up, -.02), V.mul(f, -.12)), V.add(V.madd(J.head, up, -.26), V.mul(f, -.14)));

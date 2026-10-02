@@ -38,6 +38,8 @@ tile(grid('builds'), 'Build B, dress', S => person(S, { build: 'b', hair: 'bun',
 tile(grid('builds'), 'Build A, skirt', S => person(S, { build: 'a', hair: 'curly', coat: 'ink', skirt: 'half2', pants: 'paper' }));
 tile(grid('builds'), 'Seated, skirt', S => { S.stool(0, 0, .46); person(S, { build: 'b', pose: 'sit', seat: .46, hair: 'long', coat: 'stripe', skirt: 'ink', hands: { L: 'type', R: 'type' }, anim: 'type' }); });
 tile(grid('builds'), 'Walking, skirt', S => person(S, { build: 'b', pose: 'walk', hair: 'bob', coat: 'paper', skirt: 'half2', hands: { L: 'strap' } }));
+// ---- people: the same figure at the sizes it would be on the page
+[[2.0, '55 px · spacious room at page width'], [2.9, '80 px · the page today'], [3.6, '100 px'], [5.0, '140 px · a full-width stop']].forEach(([px, label]) => tile(grid('scale'), label, S => { S.stool(.5, .4, .46); person(S, { pose: 'sit', seat: .46, at: [.5, .4, 0], build: 'b', hair: 'bob', coat: 'half', skirt: 'ink', hands: { L: 'type', R: 'type' }, anim: 'type' }); const { f } = frame(F); S.laptop(.5 + f[0] * .45, .4 + f[1] * .45, .52, F + Math.PI); person(S, { at: [-.6, -.4, 0], hands: { R: 'point' }, anim: 'point', coat: 'ink', pants: 'paper' }); }, px));
 // ---- people: facings
 for (let i = 0; i < 8; i++) tile(grid('facings'), `${i * 45}°`, S => person(S, { face: i * Math.PI / 4, hands: { R: 'point' } }));
 // ---- people: hair and coats
@@ -62,7 +64,7 @@ for (let i = 0; i < 8; i++) tile(grid('facings'), `${i * 45}°`, S => person(S, 
 // ---- size and motion
 function resize() { for (const f of TILES) { const k = +document.getElementById('size').value; f.querySelector('svg').style.width = r2(f.dataset.w * f.dataset.px * k) + 'px'; } }
 document.getElementById('size').addEventListener('input', resize);
-document.getElementById('halo').addEventListener('change', e => document.body.classList.toggle('nohalo', !e.target.checked));
+document.getElementById('halo').addEventListener('change', e => document.body.classList.toggle('nohalo', !e.target.checked)); document.body.classList.toggle('nohalo', !document.getElementById('halo').checked);
 const t0 = performance.now();
 (function life(now) {
   const t = (now - t0) / 1000; const on = document.getElementById('motion').checked && !reduce;
