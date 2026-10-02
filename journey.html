@@ -1,0 +1,797 @@
+<title>BuildFirst, the Journey</title>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the map is the page. One tall drawing runs down the screen; a path draws itself from dot to dot as you
+   scroll, and each place it reaches is a stage of the visitor's own AI journey, from asking to agency. The copy sits
+   on the map beside each place and appears as the path arrives. Monochrome: ink on paper, nothing else. */
+:root{
+  --paper:#F3F2EE; --ink:#181818; --body:rgba(24,24,24,.82); --muted:rgba(24,24,24,.56); --faint:rgba(24,24,24,.36); --line:rgba(24,24,24,.12);
+  --g1:#FFFFFF; --g2:#F3F2EE; --g3:#E7E5DE; --g4:#D8D5CC; --g5:#BFBBB0;
+  --display:'Arimo','Helvetica Neue',Helvetica,Arial,sans-serif; --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth} @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{margin:0;font-family:var(--display);color:var(--ink);background:var(--paper);font-size:15px;line-height:1.55;overflow-x:hidden}
+a{color:var(--ink);text-decoration:none}
+.cap{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.slash{font-weight:400;color:var(--faint);margin-right:.08em}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px max(32px, calc((100% - 1280px) / 2));position:sticky;top:0;background:rgba(243,242,238,.84);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:30}
+.nav .mark{font-weight:700;font-size:20px;letter-spacing:-.02em}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a.cap{color:var(--muted)} .nav-links a.cap:hover,.nav-links a.cap.on{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:11px 20px;cursor:pointer;border:0;line-height:1;white-space:nowrap}
+.solid{background:var(--ink);color:var(--paper)} .solid:hover{opacity:.86}
+.ghost{background:rgba(255,255,255,.6);color:var(--ink);border:1px solid rgba(24,24,24,.3)} .ghost:hover{background:#fff}
+@media(max-width:860px){ .nav{padding:14px 20px} .nav-links a.cap{display:none} }
+
+/* ---- the map ---- */
+.map{position:relative;width:100%;max-width:1320px;margin:0 auto}
+.map svg.terrain{display:block;width:100%;height:auto}
+.map svg *{vector-effect:none}
+.stage{position:absolute;max-width:440px;opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;pointer-events:none;background:rgba(243,242,238,.88);border-radius:6px;box-shadow:0 0 0 14px rgba(243,242,238,.88),0 0 36px 30px rgba(243,242,238,.88)}
+.stage.arrived,.stage.always{opacity:1;transform:none;pointer-events:auto}
+.stage .cap{color:var(--muted);display:block}
+.stage h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,2.6vw,36px);line-height:1.02;letter-spacing:-.03em;margin:10px 0 0;text-wrap:balance}
+.stage h1{font-family:var(--display);font-weight:300;font-size:clamp(42px,4.6vw,66px);line-height:.96;letter-spacing:-.035em;margin:12px 0 0;text-wrap:balance}
+.stage p{margin:12px 0 0;color:var(--body);font-size:16px;line-height:1.55}
+.stage .lead{font-size:18px;color:rgba(24,24,24,.72)}
+.stage .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.stage .note{font-size:13px;color:var(--muted);margin-top:14px;line-height:1.5}
+.stage .offers{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column}
+.stage .offers li{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:baseline;padding:9px 8px 9px 6px;margin:0 -6px;border-top:1px solid var(--line);border-radius:8px;transition:background .15s;cursor:default}
+.stage .offers li:last-child{border-bottom:1px solid var(--line)}
+.stage .offers li b{font-weight:600;font-size:15px}
+.stage .offers li .meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.stage .offers li span.d{display:block;font-size:13.5px;color:var(--muted);line-height:1.45;margin-top:2px;grid-column:1/-1}
+.stage .offers li.lit,.stage .offers li:hover{background:#fff}
+.stage .offers li.lit b{text-decoration:underline;text-decoration-thickness:2.5px;text-underline-offset:4px}
+.card{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);padding:10px 13px;border-radius:12px;max-width:260px;font-size:13px;line-height:1.4;transform:translate(-50%,calc(-100% - 14px));opacity:0;transition:opacity .12s;z-index:20}
+.card.show{opacity:1}
+.card .cap{display:block;opacity:.6;margin-bottom:3px;font-size:10px}
+.ruler{position:absolute;left:0;top:0;height:100%;width:0;pointer-events:none}
+.ruler span{position:absolute;left:14px;transform:translateY(-50%);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);writing-mode:vertical-rl;transform:rotate(180deg) translateY(50%)}
+.ruler span.on{color:var(--ink)}
+.legend{position:absolute;right:max(16px, calc((100% - 1200px) / 2));top:22px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.8;text-align:right;pointer-events:none}
+.legend b{color:var(--ink);font-weight:500;display:block}
+.tapbar{display:none}
+footer{background:var(--ink);color:var(--paper);padding:44px max(32px, calc((100% - 1280px) / 2))}
+footer .cap{color:rgba(255,255,255,.5)}
+@media(max-width:860px){
+  .stage{max-width:none;transform:translateY(10px);box-shadow:0 0 0 10px rgba(243,242,238,.92),0 0 26px 20px rgba(243,242,238,.92)}
+  .stage h2{font-size:26px} .stage h1{font-size:40px}
+  .ruler,.legend{display:none}
+  .card{display:none}
+  .tapbar{display:block;position:fixed;left:12px;right:12px;bottom:12px;background:var(--ink);color:var(--paper);border-radius:14px;padding:11px 14px;font-size:13px;line-height:1.4;z-index:25;opacity:0;transition:opacity .2s;pointer-events:none}
+  .tapbar.show{opacity:1}
+  .tapbar .cap{display:block;opacity:.6;font-size:10px;margin-bottom:2px}
+}
+/* ---- the drawing ---- */
+.terrain polygon,.terrain ellipse,.terrain circle{stroke:var(--ink);stroke-width:.55;stroke-linejoin:round}
+.terrain .no{stroke:none}
+.terrain .f-paper{fill:var(--paper)} .terrain .f-white{fill:var(--g1)} .terrain .f-ink{fill:var(--ink)} .terrain .f-shade{fill:var(--g3)} .terrain .f-shade2{fill:var(--g4)} .terrain .f-stripe{fill:url(#stripe)} .terrain .f-none{fill:none}
+.terrain .f-half{fill:url(#half)} .terrain .f-half2{fill:url(#half2)}
+.terrain line{stroke-linecap:round;stroke-linejoin:round;fill:none}
+.terrain .s-ink{stroke:var(--ink)} .terrain .s-paper{stroke:var(--paper)} .terrain .s-white{stroke:#fff} .terrain .s-half{stroke:url(#half)} .terrain .s-half2{stroke:url(#half2)} .terrain .s-stripe{stroke:url(#stripe)} .terrain .s-shade{stroke:var(--g3)} .terrain .s-shade2{stroke:var(--g4)}
+.terrain .halo{fill:var(--paper);stroke:var(--paper);stroke-linejoin:round} .nohalo .terrain .halo{display:none}
+.terrain .ln{stroke:var(--ink);stroke-width:.5;fill:none;stroke-linecap:round}
+.terrain .shadow{opacity:.55}
+.terrain .steam{stroke:var(--ink);stroke-width:.45;fill:none;opacity:.5;animation:steam 2.6s ease-in-out infinite} .terrain .steam.s2{animation-delay:-1.3s}
+@keyframes steam{0%{transform:translateY(0);opacity:.5}100%{transform:translateY(-2.4px);opacity:0}}
+.terrain .place{transition:opacity .8s ease}
+.terrain .place.ahead{opacity:.38}
+.terrain [data-hover]{cursor:pointer}
+.terrain [data-hover].hot .f-white,.terrain [data-hover].hot .f-paper:not(.fig *):not(.arm *){fill:var(--g4)} .terrain [data-hover].hot .f-shade{fill:var(--g4)}
+.terrain .fig.hot .s-half,.terrain .fig.hot .s-half2,.terrain .fig.hot .s-stripe,.terrain .arm.hot .s-half,.terrain .arm.hot .s-half2,.terrain .arm.hot .s-stripe{stroke:var(--ink)} .terrain .fig.hot .f-half,.terrain .fig.hot .f-half2,.terrain .fig.hot .f-stripe{fill:var(--ink)}
+@media (prefers-reduced-motion: reduce){ .terrain .steam{animation:none;opacity:.3} .stage{transition:none} }
+.terrain .trail-clear{stroke:var(--paper);stroke-width:13;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.terrain .trail-ahead{stroke:var(--ink);stroke-width:.7;opacity:.22;stroke-dasharray:1.2 3.2;fill:none}
+.terrain .trail{stroke:var(--ink);stroke-width:5.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.terrain .trail-core{stroke:rgba(255,255,255,.14);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.terrain .tdot{fill:var(--ink);opacity:.28;transition:fill .35s,opacity .35s} .terrain .tdot.lit{fill:var(--paper);opacity:1}
+.terrain .head{fill:var(--ink)} .terrain .head-ring{fill:none;stroke:var(--ink);stroke-width:.8;opacity:.35}
+.terrain .contour{stroke:var(--ink);stroke-width:.5;opacity:.22;stroke-dasharray:.9 2.6;fill:none}
+.terrain .stipple{stroke:none} .terrain .stipple *{stroke:none}
+.terrain .f-none{fill:none;stroke:none}
+.terrain .shade{opacity:.22}
+</style>
+<div class="nav">
+  <a class="mark" href="#top">BuildFirst</a>
+  <div class="nav-links">
+    <a class="cap" href="#s1" data-nav="1">Start small</a><a class="cap" href="#s2" data-nav="2">Build together</a><a class="cap" href="#s4" data-nav="4">The recipes</a><a class="cap" href="#s5" data-nav="5">Extend</a><a class="cap" href="#s0" data-nav="0">Your guide</a>
+    <a class="btn solid" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Let's talk</a>
+  </div>
+</div>
+
+<div class="map" id="map">
+  <svg class="terrain" id="terrain" aria-hidden="true" focusable="false"></svg>
+  <div class="ruler" id="ruler"></div>
+  <div class="legend"><b>What you pick up on the way</b>Delegation · Description<br>Discernment · Diligence</div>
+  <div class="card" id="card"><span class="cap" id="cardCap"></span><span id="cardText"></span></div>
+
+  <section class="stage always" data-stage="0" id="top">
+    <span class="cap">Asking · the trailhead · Richmond, Virginia</span>
+    <h1>AI fluency built through use, not theory.</h1>
+    <p class="lead">This is the journey from asking to agency. It is walked, not studied, and it starts at a table with a real problem. Scroll, and the path draws itself.</p>
+    <div class="acts"><a class="btn solid" href="assessment.html">Find where you are · 10 min</a><a class="btn ghost" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Book a diagnostic call</a></div>
+  </section>
+
+  <section class="stage" data-stage="1" id="s1">
+    <span class="cap">Asking → Automation · start small</span>
+    <h2>Low commitment, high signal.</h2>
+    <p>A diagnostic call, a half-day workshop, or a focused sprint. You experience the approach before deciding on a longer engagement, and we tell you honestly whether we can help.</p>
+    <ul class="offers">
+      <li data-link="call"><b>A diagnostic call</b><span class="meta">30 min · free</span><span class="d">What you're working on, where it hurts, what a first build could be.</span></li>
+      <li data-link="halfday"><b>A half-day workshop</b><span class="meta">Teams</span><span class="d">Everyone builds one real workflow together and leaves with it.</span></li>
+      <li data-link="sprint1"><b>A focused sprint</b><span class="meta">2–4 weeks</span><span class="d">One capability gap, diagnosed, built and handed off.</span></li>
+    </ul>
+  </section>
+
+  <section class="stage" data-stage="2" id="s2">
+    <span class="cap">Automation · build together · one leader</span>
+    <h2>Build before you teach.</h2>
+    <p>Every engagement starts by building something useful together. Not a demo. Not a slide deck. A real workflow that solves a problem you have today. The learning happens inside the building, and fluency is personal before it is organizational.</p>
+    <ul class="offers">
+      <li data-link="sherpa"><b>Sherpa</b><span class="meta">$5,500 · 8–10 weeks</span><span class="d">1:1 coaching for senior leaders: useful AI workflows built alongside an experienced practitioner, and a sharper instinct for where AI creates value.</span></li>
+      <li data-link="stretch"><b>Stretch</b><span class="meta">Custom scope</span><span class="d">For experienced users: beyond prompts into agentic workflows, team-level patterns and strategic application.</span></li>
+      <li data-link="foundations"><b>Workplace AI foundations</b><span class="meta">Early career</span><span class="d">Hands-on sessions on actual tasks: research, writing, analysis, collaboration with AI as a working partner.</span></li>
+    </ul>
+  </section>
+
+  <section class="stage" data-stage="3" id="s3">
+    <span class="cap">Augmentation · build together · your team</span>
+    <h2>Diagnose first, prescribe second.</h2>
+    <p>The right application emerges from your workflows, constraints and context, not from a generic playbook. Your team builds with us, learns by solving, and owns the result.</p>
+    <ul class="offers">
+      <li data-link="workshops"><b>Team workshops</b><span class="meta">Half or full day</span><span class="d">No lectures. Everyone participates, builds something useful, and applies it on Monday.</span></li>
+      <li data-link="sprints"><b>Practical sprints</b><span class="meta">2–4 weeks</span><span class="d">A specific workflow or capability gap: we diagnose, build and test with your team, then hand off.</span></li>
+    </ul>
+  </section>
+
+  <section class="stage" data-stage="4" id="s4">
+    <span class="cap">Learn fast · the recipes · free and open</span>
+    <h2>The hut where the recipes come from.</h2>
+    <p>Writing and tools for the walk between sessions. Use them however helps; wanting to go deeper is usually the sign that hands-on work would accelerate things.</p>
+    <ul class="offers">
+      <li data-link="cookbook"><b>AI Cookbook</b><span class="meta">Substack</span><span class="d">Practical recipes and personal insights from real use, updated as new patterns emerge.</span></li>
+      <li data-link="groundwork"><b>Groundwork</b><span class="meta">Skill</span><span class="d">Which experiments to run, what to learn before you commit, and where to put the investment.</span></li>
+      <li data-link="ios"><b>IntelligenceOS</b><span class="meta">Coming soon</span><span class="d">An agentic operating system for running a company, open for you to customise.</span></li>
+      <li data-link="assess"><b>Fluency self-assessment</b><span class="meta">10 min</span><span class="d">Where you sit on the spectrum, and which path fits.</span></li>
+    </ul>
+  </section>
+
+  <section class="stage" data-stage="5" id="s5">
+    <span class="cap">Agency · extend across the organization</span>
+    <h2>Strategic overlay on every build.</h2>
+    <p>Custom tools, agents and workflows built from the strategic question down. Advisory for the decisions about tools, teams and investment. Fractional leadership when the function matters before the hire. The patterns become systems your people sustain on their own.</p>
+    <ul class="offers">
+      <li data-link="builds"><b>Strategic builds</b><span class="meta">Deliverables</span><span class="d">Not build-to-spec. We start with the strategic question, then build what delivers the outcome.</span></li>
+      <li data-link="advisory"><b>Advisory</b><span class="meta">Ongoing</span><span class="d">A thinking partner who is also a builder, for the decisions that shape adoption.</span></li>
+      <li data-link="fractional"><b>Fractional AI leadership</b><span class="meta">Part-time, embedded</span><span class="d">Strategy, execution and team development under one roof, before the full-time hire.</span></li>
+    </ul>
+  </section>
+
+  <section class="stage" data-stage="6" id="s6">
+    <span class="cap">Then the next workflow</span>
+    <h2>Ready to build?</h2>
+    <p>If this resonates, the next step is a conversation. Tell us what you're working on, and we'll tell you honestly whether we can help.</p>
+    <div class="acts"><a class="btn solid" href="https://calendar.app.google/DEAg4TgAgrToVEvx7" target="_blank" rel="noopener">Start a conversation</a><a class="btn ghost" href="mailto:david@thisisluminary.co">Email David</a></div>
+    <p class="note">BuildFirst · Build first. Learn fast. Repeat. · Richmond, Virginia</p>
+  </section>
+</div>
+<div class="tapbar" id="tapbar"><span class="cap" id="tapCap"></span><span id="tapText"></span></div>
+
+<footer>
+  <div style="font-weight:700;font-size:20px;letter-spacing:-.02em">BuildFirst</div>
+  <div class="cap" style="margin-top:10px">GenAI fluency for leaders · © 2026</div>
+</footer>
+
+<script>
+(() => {
+'use strict';
+// ---------- the kit, v4: a true-cube isometric world in metres; ink outlines, halftone shading, paper ----------
+// After Falllinie's rider: a body is capsules on a jointed skeleton, legs in dark ink, a jacket in halftone,
+// head and hands in paper, every shape outlined. Light never becomes a gradient.
+const NS = 'http://www.w3.org/2000/svg';
+const T = 14, RISE = 15, OL = 0.035;
+const r2 = n => Math.round(n * 100) / 100;
+const P = ([x, y, z = 0]) => [r2((x - y) * T), r2((x + y) * T / 2 - z * RISE)];
+const V = {
+  add: (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]], sub: (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]],
+  mul: (a, k) => [a[0] * k, a[1] * k, a[2] * k], madd: (a, b, k) => [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k],
+  len: a => Math.hypot(a[0], a[1], a[2]), norm: a => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; },
+  dot: (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2], lerp: (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t],
+};
+const lerp = (a, b, t) => a + (b - a) * t, clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+const pts = list => list.map(p => p.join(',')).join(' ');
+let seed = 7; const rnd = () => { seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+// tones. People: ink, half (light halftone), half2 (dark halftone), stripe, paper. Props: white, paper, shade, shade2 (flat greys).
+// The halftone is reserved for people, so a person never dissolves into a wall.
+const OUT = { ink: 'paper', paper: 'ink', white: 'ink', half: 'ink', half2: 'ink', stripe: 'ink', shade: 'ink', shade2: 'ink' };
+const PAT = t => t === 'half' || t === 'half2' || t === 'stripe';
+function poly(g, cells, tone = 'paper', extra = {}) {
+  const p = pts(cells.map(P));
+  if (PAT(tone)) { el('polygon', { points: p, class: 'f-paper', ...extra }, g); return el('polygon', { points: p, class: 'f-' + tone + ' no', ...extra }, g); }
+  return el('polygon', { points: p, class: 'f-' + tone, ...extra }, g);
+}
+// a capsule: a line with round caps, outlined in the opposite tone. Returns the lines so a figure can move them.
+function capsule(g, a, b, w, tone = 'paper', halo = 0, ol = OL) {
+  const [x1, y1] = P(a), [x2, y2] = P(b), lines = [];
+  if (halo) lines.push(el('line', { x1, y1, x2, y2, class: 's-paper halo', style: `stroke-width:${r2((w + 2 * halo) * T)}` }, g));
+  lines.push(el('line', { x1, y1, x2, y2, class: 's-' + OUT[tone], style: `stroke-width:${r2((w + 2 * ol) * T)}` }, g));
+  if (PAT(tone)) lines.push(el('line', { x1, y1, x2, y2, class: 's-paper', style: `stroke-width:${r2(w * T)}` }, g));
+  lines.push(el('line', { x1, y1, x2, y2, class: 's-' + tone, style: `stroke-width:${r2(w * T)}` }, g));
+  return lines;
+}
+const moveCapsule = (lines, a, b) => { const [x1, y1] = P(a), [x2, y2] = P(b); for (const l of lines) { l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2); } };
+function ball(g, p, r, tone = 'paper', halo = 0) { const [cx, cy] = P(p); const out = []; if (halo) out.push(el('circle', { cx, cy, r: r2((r + halo) * T), class: 'f-paper no halo' }, g)); if (PAT(tone)) { out.push(el('circle', { cx, cy, r: r2(r * T), class: 'f-paper' }, g)); out.push(el('circle', { cx, cy, r: r2(r * T), class: 'f-' + tone + ' no' }, g)); } else out.push(el('circle', { cx, cy, r: r2(r * T), class: 'f-' + tone }, g)); return halo ? out : out[out.length - 1]; }
+const moveBall = (c, p) => { const [cx, cy] = P(p); for (const e of (Array.isArray(c) ? c : [c])) { e.setAttribute('cx', cx); e.setAttribute('cy', cy); } };
+// a flat disc on the ground (or at height z): a circle of radius r in the plane projects to an ellipse
+function disc(g, [x, y, z], r, tone = 'half', cls = '') { const [cx, cy] = P([x, y, z]); return el('ellipse', { cx, cy, rx: r2(r * T * 1.414), ry: r2(r * T * .707), class: 'f-' + tone + ' ' + cls }, g); }
+function ring(z, cx, cy, r, n = 24, a0 = 0, a1 = Math.PI * 2) { const out = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; out.push([cx + r * Math.cos(a), cy + r * Math.sin(a), z]); } return out; }
+function cylinder(g, cx, cy, r, z0, z1, t = {}) {
+  // the visible side runs from the left extreme (135°) through the front (45°) to the right extreme (-45°)
+  const top = ring(z1, cx, cy, r, 14, Math.PI * .75, -Math.PI * .25), bot = ring(z0, cx, cy, r, 14, Math.PI * .75, -Math.PI * .25);
+  poly(g, [...top, ...bot.reverse()], t.side || 'shade');
+  const [tx, ty] = P([cx, cy, z1]); el('ellipse', { cx: tx, cy: ty, rx: r2(r * T * 1.414), ry: r2(r * T * .707), class: 'f-' + (t.top || 'white') }, g);
+}
+function box(g, x0, y0, x1, y1, z0, z1, t = {}) {
+  poly(g, [[x1, y0, z0], [x1, y1, z0], [x1, y1, z1], [x1, y0, z1]], t.east || 'paper');
+  poly(g, [[x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]], t.south || 'shade');
+  poly(g, [[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]], t.top || 'white');
+}
+// a rotated rectangle on the ground plane at height z: centre, half sizes along f (forward) and r (right)
+const frame = phi => ({ f: [Math.cos(phi), Math.sin(phi), 0], r: [-Math.sin(phi), Math.cos(phi), 0], up: [0, 0, 1] });
+function quad(c, phi, hf, hr, z) { const { f, r } = frame(phi); const C = [c[0], c[1], z]; return [V.madd(V.madd(C, f, -hf), r, -hr), V.madd(V.madd(C, f, hf), r, -hr), V.madd(V.madd(C, f, hf), r, hr), V.madd(V.madd(C, f, -hf), r, hr)]; }
+function slab(g, c, phi, hf, hr, z0, z1, t = {}) {
+  // a rotated box: the two visible sides are the ones facing the viewer (toward +x+y)
+  const lo = quad(c, phi, hf, hr, z0), hi = quad(c, phi, hf, hr, z1);
+  const faces = [0, 1, 2, 3].map(i => ({ i, j: (i + 1) % 4 })).map(({ i, j }) => { const m = V.lerp(lo[i], lo[j], .5); const n = [m[0] - c[0], m[1] - c[1], 0]; return { i, j, facing: n[0] + n[1] }; }).filter(s => s.facing > 0).sort((a, b) => a.facing - b.facing);
+  faces.forEach(({ i, j }, k) => poly(g, [lo[i], lo[j], hi[j], hi[i]], k === 0 ? (t.east || 'paper') : (t.south || 'shade')));
+  poly(g, hi, t.top || 'white');
+}
+
+const ln = (g, a, b, w = .45) => { const [x1, y1] = P(a), [x2, y2] = P(b); return el('line', { x1, y1, x2, y2, class: 'ln', style: `stroke-width:${w}` }, g); };
+// an ellipse in 3D: centre c, half-axes u and v (vectors), as a polygon
+const ellipse3 = (c, u, v, n = 14) => Array.from({ length: n }, (_, i) => { const a = i / n * Math.PI * 2; return V.add(c, V.add(V.mul(u, Math.cos(a)), V.mul(v, Math.sin(a)))); });
+
+// ---------- drawables and depth: things are sorted back to front by separating axis, then by x+y ----------
+const drawable = (bb, key, cls) => ({ g: el('g', cls ? { class: cls } : {}), bb, key, name: cls || '' });
+const bbOf = (list, pad = 0) => { const bb = [1e9, -1e9, 1e9, -1e9, 1e9, -1e9]; for (const p of list) { bb[0] = Math.min(bb[0], p[0] - pad); bb[1] = Math.max(bb[1], p[0] + pad); bb[2] = Math.min(bb[2], p[1] - pad); bb[3] = Math.max(bb[3], p[1] + pad); bb[4] = Math.min(bb[4], p[2] - pad); bb[5] = Math.max(bb[5], p[2] + pad); } return bb; };
+function behind(A, B) { // -1: A behind B, 1: B behind A, 0: no separating axis
+  const a = A.bb, b = B.bb, e = .012;
+  if (a[1] <= b[0] + e) return -1; if (b[1] <= a[0] + e) return 1;
+  if (a[3] <= b[2] + e) return -1; if (b[3] <= a[2] + e) return 1;
+  if (a[5] <= b[4] + e) return -1; if (b[5] <= a[4] + e) return 1;
+  return 0;
+}
+function screenBox(bb) { // the projected bounds of a 3D box
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (const x of [bb[0], bb[1]]) for (const y of [bb[2], bb[3]]) for (const z of [bb[4], bb[5]]) { const [sx, sy] = P([x, y, z]); x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy); }
+  return [x0, x1, y0, y1];
+}
+function sortDraw(parent, items) {
+  // an order constraint only matters between things that overlap on screen; between those a separating axis decides
+  const n = items.length, before = Array.from({ length: n }, () => []), sb = items.map(d => screenBox(d.bb));
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+    const a = sb[i], b = sb[j]; if (a[1] < b[0] || b[1] < a[0] || a[3] < b[2] || b[3] < a[2]) continue;
+    const s = behind(items[i], items[j]); if (s < 0) before[j].push(i); else if (s > 0) before[i].push(j);
+  }
+  // emit in key order (x + y, back to front) but never before the things that must be behind: Kahn's algorithm, picking
+  // the lowest key among the items whose dependencies are all drawn. A depth-first walk would pull a table forward as
+  // soon as a laptop on it was due, and the people sitting behind the table would then be drawn over it.
+  const left = before.map(b => b.length), after = Array.from({ length: n }, () => []); before.forEach((b, i) => b.forEach(j => after[j].push(i)));
+  const done = new Array(n).fill(false), out = []; const cycles = [];
+  for (let step = 0; step < n; step++) {
+    let pick = -1, pickAny = -1;
+    for (let i = 0; i < n; i++) { if (done[i]) continue; if (pickAny < 0 || items[i].key < items[pickAny].key) pickAny = i; if (left[i] === 0 && (pick < 0 || items[i].key < items[pick].key)) pick = i; }
+    if (pick < 0) { pick = pickAny; cycles.push(pick); }
+    done[pick] = true; out.push(pick); for (const j of after[pick]) left[j]--;
+  }
+  sortDraw.cycles = cycles; sortDraw.before = before;
+  for (const i of out) { items[i].g.__bb = items[i].bb; items[i].g.__key = items[i].key; parent.appendChild(items[i].g); }
+}
+
+// a blob: capsules and balls drawn as one silhouette. One outline pass under one fill pass, so the parts of a limb or a
+// torso merge into a single contour instead of showing a seam at every joint.
+function blobDraw(g, prims, tone, ol = OL, halo = 0) {
+  const passes = [];
+  if (halo) passes.push({ s: 's-paper halo', f: 'f-paper no halo', grow: halo });
+  passes.push({ s: 's-' + OUT[tone], f: 'f-' + OUT[tone] + ' no', grow: ol });
+  if (PAT(tone)) passes.push({ s: 's-paper', f: 'f-paper no', grow: 0 });
+  passes.push({ s: 's-' + tone, f: 'f-' + tone + ' no', grow: 0 });
+  const els = prims.map(() => []);
+  for (const ps of passes) prims.forEach((p, i) => {
+    if (p.t === 'cap') { const [x1, y1] = P(p.a), [x2, y2] = P(p.b); els[i].push(el('line', { x1, y1, x2, y2, class: ps.s, style: `stroke-width:${r2((p.w + 2 * ps.grow) * T)}` }, g)); }
+    else { const [cx, cy] = P(p.c); els[i].push(el('circle', { cx, cy, r: r2((p.r + ps.grow) * T), class: ps.f }, g)); }
+  });
+  return els;
+}
+function blobMove(els, prims) { prims.forEach((p, i) => { if (p.t === 'cap') { const [x1, y1] = P(p.a), [x2, y2] = P(p.b); for (const e of els[i]) { e.setAttribute('x1', x1); e.setAttribute('y1', y1); e.setAttribute('x2', x2); e.setAttribute('y2', y2); } } else { const [cx, cy] = P(p.c); for (const e of els[i]) { e.setAttribute('cx', cx); e.setAttribute('cy', cy); } } }); }
+const cap = (a, b, w) => ({ t: 'cap', a, b, w }), bal = (c, r) => ({ t: 'ball', c, r });
+
+// ---------- the figure ----------
+// o: at [x,y,z], face (radians, direction the chest faces), pose 'stand'|'sit'|'walk', seat (m), lean (rad),
+//    hands {L, R}: a named gesture, [fwd, lat, up] from the shoulder in the body frame, or {abs:[x,y,z]}
+//    coat 'half'|'half2'|'ink'|'paper', pants 'ink'|'paper'|'half2', hair 'short'|'curly'|'bun'|'cap'|'bald'|'long'|'tied'
+//    anim: 'type'|'point'|'talk'|'write'|'stir'|'nod'|'walk'|'raise'|'idle', phase
+const GEST = {
+  hang: [.03, .05, -.57], type: [.36, .10, -.52], point: [.52, .06, .02], raise: [.10, .20, .46], write: [.44, .12, .22], mug: [.24, -.02, -.24],
+  cross: [.17, -.12, -.22], hip: [.02, .15, -.47], talk: [.30, .16, -.30], strap: [.12, -.10, -.10], carry: [.12, .02, -.42], lap: [.26, .06, -.48],
+  lean: [.30, .14, -.60], wave: [.16, .26, .40], phone: [.18, .06, .12], hold: [.34, .02, -.30], rest: [.28, .12, -.50], chin: [.14, .02, .02],
+};
+function ik(S, Tg, a, b, pole) {
+  const d = V.sub(Tg, S), L = clamp(V.len(d), .05, a + b - .005), dn = V.mul(d, 1 / (V.len(d) || 1));
+  const cosA = clamp((a * a + L * L - b * b) / (2 * a * L), -1, 1), sinA = Math.sqrt(1 - cosA * cosA);
+  let pp = V.sub(pole, S); pp = V.sub(pp, V.mul(dn, V.dot(pp, dn))); const pn = V.len(pp) < 1e-4 ? [0, 0, 1] : V.mul(pp, 1 / V.len(pp));
+  const E = V.add(S, V.add(V.mul(dn, a * cosA), V.mul(pn, a * sinA)));
+  return { E, H: V.add(S, V.mul(dn, L)) };
+}
+const KN = { halo: 0, figOL: OL, figScale: 1 };
+function figure(o) {
+  const HALO = o.halo ?? KN.halo, FOL = o.ol ?? KN.figOL; const at = o.at, phi = o.face || 0, { f, r, up } = frame(phi), coat = o.coat || 'half', pants = o.pants || 'ink', hair = o.hair || 'short', ph = o.phase || 0;
+  const sit = o.pose === 'sit', walk = o.pose === 'walk';
+  const B = o.build === 'b' ? { sh: .17, hip: .17, hipZ: .88, torso: .43, head: .29, shb: .095, chest: .30, belly: .145, uarm: .115, larm: .10, thigh: .16, shin: .125, hr: .14 } : { sh: .20, hip: .155, hipZ: .92, torso: .46, head: .30, shb: .105, chest: .34, belly: .15, uarm: .13, larm: .11, thigh: .17, shin: .135, hr: .145 };
+  const skirtTone = o.skirt === true ? pants : (o.skirt || null);
+  const hands = Object.assign({ L: 'hang', R: 'hang' }, o.hands || {});
+  const body = drawable(null, 0, 'fig'), arms = [drawable(null, 0, 'arm'), drawable(null, 0, 'arm')];
+  const J = {};
+  function solve(t) {
+    const breathe = .006 * Math.sin(t * 1.6 + ph);
+    const wph = t * 6.2 + ph; const bob = walk ? .018 * Math.abs(Math.cos(wph)) : 0;
+    const hipZ = (sit ? (o.seat || .45) + .03 : B.hipZ) + bob;
+    const lean = (o.lean || 0) + (sit ? .06 : 0);
+    J.pelvis = V.madd(at, up, hipZ);
+    J.chest = V.add(J.pelvis, V.add(V.mul(up, B.torso * Math.cos(lean) + breathe), V.mul(f, B.torso * Math.sin(lean))));
+    let nodz = 0, nodf = 0; if (o.anim === 'nod') { nodz = -.018 * (.5 + .5 * Math.sin(t * 1.3 + ph)); nodf = .02 * (.5 + .5 * Math.sin(t * 1.3 + ph)); }
+    J.head = V.add(J.chest, V.add(V.mul(up, B.head * Math.cos(lean) + nodz), V.mul(f, B.head * Math.sin(lean) + .03 + nodf)));
+    J.neck = V.lerp(J.chest, J.head, .35);
+    J.sh = [V.madd(V.madd(J.chest, r, -B.sh), up, -.02), V.madd(V.madd(J.chest, r, B.sh), up, -.02)];
+    J.hip = [V.madd(J.pelvis, r, -B.hip), V.madd(J.pelvis, r, B.hip)];
+    // legs
+    J.knee = []; J.ankle = []; J.toe = [];
+    for (let i = 0; i < 2; i++) {
+      const side = i ? 1 : -1; let foot, pole;
+      if (sit) { foot = V.madd(V.madd([at[0], at[1], at[2]], f, .40), r, side * .16); pole = V.madd(V.madd(J.hip[i], f, 1), up, .5); }
+      else if (walk) { const sw = Math.sin(wph + i * Math.PI); foot = V.madd(V.madd([at[0], at[1], at[2] + Math.max(0, .09 * Math.sin(wph + i * Math.PI + .6))], f, .26 * sw), r, side * .13); pole = V.madd(V.madd(J.hip[i], f, 1), up, .3); }
+      else { foot = V.madd(V.madd([at[0], at[1], at[2]], f, .03 + (o.stance ? o.stance[i] : 0)), r, side * .15); pole = V.madd(J.hip[i], f, 1); }
+      const { E, H } = ik(J.hip[i], V.madd(foot, up, .05), .45, .44, pole); J.knee[i] = E; J.ankle[i] = H; J.toe[i] = V.madd(H, f, .22);
+    }
+    // a skirt: hips to just above the knees standing, over the lap when seated
+    if (skirtTone) { const hl = V.madd(V.madd(J.pelvis, r, -B.hip - .03), up, .04), hr = V.madd(V.madd(J.pelvis, r, B.hip + .03), up, .04); J.skirt = sit ? [hl, hr, V.madd(V.madd(J.knee[1], r, .11), up, .03), V.madd(V.madd(J.knee[0], r, -.11), up, .03)] : [hl, hr, V.madd(V.madd(V.madd(J.pelvis, r, B.hip + .13), up, -.5), f, .03), V.madd(V.madd(V.madd(J.pelvis, r, -B.hip - .13), up, -.5), f, .03)]; }
+    // arms
+    J.elbow = []; J.hand = [];
+    for (let i = 0; i < 2; i++) {
+      const side = i ? 1 : -1, spec = hands[i ? 'R' : 'L']; let target;
+      if (spec && spec.abs) target = spec.abs.slice();
+      else { const g = (Array.isArray(spec) ? spec : GEST[spec] || GEST.hang).slice(); target = V.add(J.sh[i], V.add(V.add(V.mul(f, g[0]), V.mul(r, g[1] * side)), V.mul(up, g[2]))); }
+      const a = o.anim;
+      if (a === 'type' && (spec === 'type' || spec === 'lap')) target[2] += .022 * Math.max(0, Math.sin(t * 9 + i * Math.PI + ph));
+      if (a === 'point' && spec === 'point') { target = V.madd(target, f, .04 * Math.sin(t * 1.7 + ph)); target[2] += .03 * Math.sin(t * 1.7 + ph + 1); }
+      if (a === 'talk' && spec === 'talk') { target[2] += .05 * Math.sin(t * 2.2 + i * 1.3 + ph); target = V.madd(target, f, .03 * Math.sin(t * 1.7 + i + ph)); }
+      if (a === 'write' && spec === 'write') { target = V.madd(target, r, .10 * Math.sin(t * 1.4 + ph)); target[2] += .04 * Math.sin(t * 2.8 + ph); }
+      if (a === 'stir' && spec === 'hold') { target = V.madd(V.madd(target, f, .05 * Math.cos(t * 2.2 + ph)), r, .05 * Math.sin(t * 2.2 + ph)); }
+      if (a === 'raise' && spec === 'raise') target[2] += .03 * Math.sin(t * 2 + ph);
+      if (a === 'wave' && spec === 'wave') target = V.madd(target, r, .08 * Math.sin(t * 4 + ph));
+      if (walk) { const sw = Math.sin(wph + i * Math.PI + Math.PI); target = V.madd(target, f, .16 * sw); }
+      const pole = V.add(J.sh[i], V.add(V.add(V.mul(r, side * .7), V.mul(f, -.35)), V.mul(up, -.25)));
+      const { E, H } = ik(J.sh[i], target, .30, .28, pole); J.elbow[i] = E; J.hand[i] = H;
+    }
+  }
+  solve(0);
+  // ---- draw: a body with volume. Each leg, the torso and each arm is one silhouette; forearms are their own drawables for depth
+  const depth = p => p[0] + p[1];
+  const legOrder = depth(J.hip[0]) <= depth(J.hip[1]) ? [0, 1] : [1, 0], armOrder = depth(J.sh[0]) <= depth(J.sh[1]) ? [0, 1] : [1, 0];
+  const E = {}; const g = body.g;
+  const prims = () => ({
+    legs: [0, 1].map(i => [bal(J.hip[i], B.thigh * .55), cap(J.hip[i], J.knee[i], B.thigh), bal(J.knee[i], B.shin * .52), cap(J.knee[i], J.ankle[i], B.shin)]),
+    shoes: [0, 1].map(i => [cap(V.madd(J.ankle[i], up, -.02), V.madd(J.toe[i], up, -.02), .11)]),
+    torso: [bal(J.sh[0], B.shb), bal(J.sh[1], B.shb), cap(V.madd(J.pelvis, up, .16), V.madd(J.chest, up, .02), B.chest), cap(V.madd(J.pelvis, up, .04), V.madd(J.pelvis, up, .14), B.chest * .82), bal(V.madd(J.pelvis, up, .03), B.belly)],
+    uppers: [0, 1].map(i => [cap(J.sh[i], J.elbow[i], B.uarm), bal(J.elbow[i], B.larm * .5)]),
+    fores: [0, 1].map(i => [cap(J.elbow[i], J.hand[i], B.larm)]),
+    hands: [0, 1].map(i => [bal(J.hand[i], .055)]),
+    neck: [cap(V.madd(J.chest, up, .02), J.neck, .11)],
+    belt: [cap(V.madd(J.hip[0], r, -.02), V.madd(J.hip[1], r, .02), .035)],
+  });
+  let PR = prims();
+  E.legs = []; E.shoes = []; for (const i of legOrder) { E.legs[i] = blobDraw(g, PR.legs[i], pants, FOL, HALO); E.shoes[i] = blobDraw(g, PR.shoes[i], 'ink', FOL, HALO); }
+  E.skirt = null; if (skirtTone) { if (HALO) el('polygon', { points: pts(J.skirt.map(P)), class: 'halo', style: `stroke-width:${r2(2 * HALO * T)}` }, g); E.skirt = poly(g, J.skirt, skirtTone, { 'stroke-linejoin': 'round', style: `stroke-width:${r2(FOL * 2 * T * .8)}` }); E.skirtU = PAT(skirtTone) ? E.skirt.previousSibling : null; if (E.skirtU) E.skirtU.setAttribute('style', `stroke-width:${r2(FOL * 2 * T * .8)}`); }
+  E.belt = (!skirtTone && pants !== 'ink') ? blobDraw(g, PR.belt, 'ink', 0, 0) : null;
+  E.torso = blobDraw(g, PR.torso, coat, FOL, HALO);
+  // a shirt showing at the collar when the coat is not already paper
+  E.collar = null; if (coat !== 'paper') { const nb = V.madd(J.chest, up, .06); E.collar = poly(g, [V.madd(nb, r, -.075), V.madd(nb, r, .075), V.madd(V.madd(nb, up, -.13), f, .02)], 'paper', { 'stroke-linejoin': 'round', style: 'stroke-width:.4' }); }
+  E.uppers = []; for (const i of armOrder) E.uppers[i] = blobDraw(g, PR.uppers[i], coat, FOL, HALO);
+  E.neck = blobDraw(g, PR.neck, 'paper', FOL, HALO);
+  const back = V.mul(f, -.03);
+  E.hair = null; E.hair2 = null;
+  if (hair !== 'bald') E.hair = ball(g, V.add(V.madd(J.head, up, .03), back), hair === 'curly' ? B.hr + .02 : (hair === 'bob' ? B.hr + .01 : B.hr), 'ink', HALO);
+  if (hair === 'bun') E.hair2 = ball(g, V.add(V.madd(J.head, up, .06), V.mul(f, -.12)), .055, 'ink');
+  if (hair === 'tied') E.hair2 = capsule(g, V.add(V.madd(J.head, up, -.02), V.mul(f, -.12)), V.add(V.madd(J.head, up, -.26), V.mul(f, -.14)), .06, 'ink');
+  if (hair === 'bob') E.hair2 = [capsule(g, V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, -.12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, -.13)), .07, 'ink'), capsule(g, V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, .12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, .13)), .07, 'ink')];
+  E.head = ball(g, J.head, B.hr, 'paper', hair === 'bald' ? HALO : 0); (Array.isArray(E.head) ? E.head[E.head.length - 1] : E.head).setAttribute('style', `stroke-width:${r2(FOL * 2 * T * .8)}`);
+  if (hair === 'cap') E.visor = capsule(g, V.add(V.madd(J.head, up, .06), V.mul(f, .10)), V.add(V.madd(J.head, up, .055), V.mul(f, .22)), .05, 'ink');
+  if (hair === 'long') E.hair2 = capsule(g, V.add(V.madd(J.head, up, -.02), back), V.add(V.madd(J.chest, up, .12), V.mul(f, -.08)), .16, 'ink');
+  if (hair === 'long') { const first = E.torso[0][0]; for (const l of E.hair2) g.insertBefore(l, first); }
+  E.fores = []; E.hands = [];
+  for (let i = 0; i < 2; i++) { const ag = arms[i].g; E.fores[i] = blobDraw(ag, PR.fores[i], coat, FOL, HALO); E.hands[i] = blobDraw(ag, PR.hands[i], 'paper', FOL, HALO); }
+  function bboxes() {
+    body.bb = bbOf([J.pelvis, J.chest, J.head, ...J.hip, ...J.knee, ...J.ankle, ...J.toe, ...J.sh], .16); body.key = depth(J.pelvis) + (o.bias || 0);
+    for (let i = 0; i < 2; i++) { arms[i].bb = bbOf([J.elbow[i], J.hand[i]], .07); const dh = depth(J.hand[i]) - depth(J.pelvis); arms[i].key = depth(J.pelvis) + (o.bias || 0) + (dh > -.02 ? .011 : -.011); }
+  }
+  bboxes();
+  function update(t) {
+    solve(t); PR = prims();
+    for (let i = 0; i < 2; i++) { blobMove(E.legs[i], PR.legs[i]); blobMove(E.shoes[i], PR.shoes[i]); blobMove(E.uppers[i], PR.uppers[i]); blobMove(E.fores[i], PR.fores[i]); blobMove(E.hands[i], PR.hands[i]); }
+    blobMove(E.torso, PR.torso); blobMove(E.neck, PR.neck); if (E.belt) blobMove(E.belt, PR.belt);
+    if (E.collar) { const nb = V.madd(J.chest, up, .06); E.collar.setAttribute('points', pts([V.madd(nb, r, -.075), V.madd(nb, r, .075), V.madd(V.madd(nb, up, -.13), f, .02)].map(P))); }
+    if (E.skirt) { const sp = pts(J.skirt.map(P)); E.skirt.setAttribute('points', sp); if (E.skirtU) E.skirtU.setAttribute('points', sp); }
+    moveBall(E.head, J.head); if (E.hair) moveBall(E.hair, V.add(V.madd(J.head, up, .03), back));
+    if (E.visor) moveCapsule(E.visor, V.add(V.madd(J.head, up, .06), V.mul(f, .10)), V.add(V.madd(J.head, up, .055), V.mul(f, .22)));
+    if (E.hair2 && hair === 'bun') moveBall(E.hair2, V.add(V.madd(J.head, up, .06), V.mul(f, -.12)));
+    if (E.hair2 && hair === 'tied') moveCapsule(E.hair2, V.add(V.madd(J.head, up, -.02), V.mul(f, -.12)), V.add(V.madd(J.head, up, -.26), V.mul(f, -.14)));
+    if (E.hair2 && hair === 'long') moveCapsule(E.hair2, V.add(V.madd(J.head, up, -.02), back), V.add(V.madd(J.chest, up, .12), V.mul(f, -.08)));
+    if (E.hair2 && hair === 'bob') { moveCapsule(E.hair2[0], V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, -.12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, -.13))); moveCapsule(E.hair2[1], V.add(V.madd(J.head, up, .02), V.madd(V.mul(f, -.06), r, .12)), V.add(V.madd(J.head, up, -.13), V.madd(V.mul(f, -.05), r, .13))); }
+  }
+  return { body, arms, update, J, o, all: [body, ...arms] };
+}
+
+// ---------- a scene: a floor layer that never sorts, a list of things that do, and the figures that move ----------
+function scene(g) {
+  const floor = el('g', { class: 'floor' }, g), items = [], life = [], floorPts = [];
+  const add = d => { items.push(d); return d; };
+  const S = { g, floor, items, life, add, floorPts };
+  S.shadow = (x, y, r = .30, tone = 'half') => { floorPts.push([x - r, y - r, 0], [x + r, y + r, 0], [x - r, y + r, 0], [x + r, y - r, 0]); return disc(floor, [x, y, 0], r, tone, 'no shadow'); };
+  S.pad = (cells, tone = 'paper') => { for (const c of cells) floorPts.push([c[0], c[1], c[2] || 0]); return poly(floor, cells, tone); };
+  S.shade = (x, y, r) => { floorPts.push([x - r, y - r, 0], [x + r, y + r, 0], [x - r, y + r, 0], [x + r, y - r, 0]); return disc(floor, [x, y, 0], r, 'half', 'no shade'); };
+  // the screen extent of everything drawn, from geometry alone: safe to call before the page is visible
+  S.extent = (pad = 0) => { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; const take = ([sx, sy]) => { x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy); }; for (const d of items) { const b = screenBox(d.bb); take([b[0], b[2]]); take([b[1], b[3]]); } for (const p of floorPts) take(P(p)); if (x0 > x1) { x0 = -10; x1 = 10; y0 = -10; y1 = 10; } return { x: x0 - pad, y: y0 - pad, width: x1 - x0 + 2 * pad, height: y1 - y0 + 2 * pad }; };
+  S.fig = o => { const F = figure(o); F.all.forEach(add); life.push(F); S.shadow(o.at[0], o.at[1], o.pose === 'sit' ? .26 : .30); return F; };
+  S.box = (x0, y0, x1, y1, z0, z1, t = {}, key) => { const d = drawable([x0, x1, y0, y1, z0, z1], key ?? (x0 + x1 + y0 + y1) / 2); box(d.g, x0, y0, x1, y1, z0, z1, t); return add(d); };
+  S.slab = (c, phi, hf, hr, z0, z1, t = {}) => { const q = quad(c, phi, hf, hr, z0); const bb = bbOf(q); bb[4] = z0; bb[5] = z1; const d = drawable(bb, c[0] + c[1]); slab(d.g, c, phi, hf, hr, z0, z1, t); return add(d); };
+  S.cylinder = (cx, cy, r, z0, z1, t = {}) => { const d = drawable([cx - r, cx + r, cy - r, cy + r, z0, z1], cx + cy); cylinder(d.g, cx, cy, r, z0, z1, t); return add(d); };
+  S.plane = (cells, tone, key) => { const bb = bbOf(cells, .01); const d = drawable(bb, key ?? (bb[0] + bb[1] + bb[2] + bb[3]) / 2); poly(d.g, cells, tone); return add(d); };
+  // furniture
+  S.table = (x, y, w, dd, h = .74, t = {}) => { const d = drawable([x, x + w, y, y + dd, 0, h], x + y + (w + dd) / 2); const g2 = d.g; const i = .09; for (const [lx, ly] of [[x + i, y + i], [x + w - i, y + i], [x + i, y + dd - i], [x + w - i, y + dd - i]]) capsule(g2, [lx, ly, 0], [lx, ly, h - .08], .07, 'paper'); box(g2, x + .05, y + .05, x + w - .05, y + dd - .05, h - .13, h - .04, { top: 'paper', east: 'paper', south: 'shade2' }); box(g2, x, y, x + w, y + dd, h - .04, h, { top: t.top || 'white', east: 'paper', south: 'shade' }); return add(d); };
+  S.roundTable = (x, y, r, h = .74) => { const d = drawable([x - r, x + r, y - r, y + r, 0, h], x + y); cylinder(d.g, x, y, r * .5, 0, .04, { top: 'paper', side: 'shade' }); capsule(d.g, [x, y, 0], [x, y, h - .05], .09, 'paper'); cylinder(d.g, x, y, r * .35, h - .1, h - .05, { top: 'paper', side: 'shade2' }); cylinder(d.g, x, y, r, h - .05, h, { top: 'white', side: 'shade' }); return add(d); };
+  S.chair = (x, y, phi, t = {}) => { const { f, r } = frame(phi); const c = [x, y]; const q = quad(c, phi, .21, .21, 0); const bb = bbOf(q); bb[4] = 0; bb[5] = .95; const d = drawable(bb, x + y); const g2 = d.g; for (const p of q) capsule(g2, V.lerp(p, [x, y, 0], .12), V.madd(V.lerp(p, [x, y, 0], .12), [0, 0, 1], .42), .04, 'ink'); slab(g2, c, phi, .21, .21, .42, .46, { top: t.seat || 'white', east: 'paper', south: 'shade' }); const b0 = V.madd(V.madd([x, y, .46], f, -.20), r, -.20), b1 = V.madd(V.madd([x, y, .46], f, -.20), r, .20); capsule(g2, b0, V.madd(b0, [0, 0, 1], .46), .04, 'ink'); capsule(g2, b1, V.madd(b1, [0, 0, 1], .46), .04, 'ink'); capsule(g2, V.madd(b0, [0, 0, 1], .46), V.madd(b1, [0, 0, 1], .46), .05, 'ink'); capsule(g2, V.madd(b0, [0, 0, 1], .30), V.madd(b1, [0, 0, 1], .30), .04, 'ink'); return add(d); };
+  S.stool = (x, y, h = .45) => { const d = drawable([x - .18, x + .18, y - .18, y + .18, 0, h], x + y); capsule(d.g, [x, y, 0], [x, y, h - .03], .05, 'ink'); cylinder(d.g, x, y, .17, h - .04, h, { top: 'white', side: 'shade' }); return add(d); };
+  S.laptop = (x, y, z, phi, t = {}) => {
+    const { f, r } = frame(phi), up = [0, 0, 1]; const q = quad([x, y], phi, .115, .165, z); const bb = bbOf(q, .02); bb[4] = z; bb[5] = z + .25; const d = drawable(bb, x + y); const g2 = d.g;
+    slab(g2, [x, y], phi, .115, .165, z, z + .018, { top: 'white', east: 'paper', south: 'shade2' });
+    const kc = V.madd([x, y, z + .019], f, -.03); poly(g2, quad([kc[0], kc[1]], phi, .04, .13, z + .019), 'shade');
+    for (let i = -1; i <= 1; i++) { const a = V.madd(V.madd([x, y, z + .02], f, -.03 + i * .025), r, -.12); ln(g2, a, V.madd(a, r, .24), .3); }
+    poly(g2, quad([x + f[0] * .07, y + f[1] * .07], phi, .02, .035, z + .019), 'paper');
+    const b0 = V.madd(V.madd([x, y, z + .018], f, -.115), r, -.165), b1 = V.madd(V.madd([x, y, z + .018], f, -.115), r, .165); const tilt = V.mul(f, -.075);
+    const t0 = V.add(V.madd(b0, up, .225), tilt), t1 = V.add(V.madd(b1, up, .225), tilt); const facing = f[0] + f[1] > 0;
+    const back = V.mul(f, -.014); poly(g2, [V.add(b0, back), V.add(b1, back), V.add(t1, back), V.add(t0, back)], 'shade2');
+    if (facing) { poly(g2, [b0, b1, t1, t0], 'shade2'); const L = (s, u) => V.lerp(V.lerp(b0, b1, s), V.lerp(t0, t1, s), u); poly(g2, [L(.07, .12), L(.93, .12), L(.93, .93), L(.07, .93)], t.screen || 'white'); [[.14, .78, .5], [.14, .66, .7], [.14, .54, .4]].forEach(([s, u, e]) => ln(g2, L(s, u), L(s + e, u), .3)); poly(g2, [L(.14, .22), L(.5, .22), L(.5, .44), L(.14, .44)], 'shade'); }
+    else { poly(g2, [b0, b1, t1, t0], 'paper'); ball(g2, V.lerp(V.lerp(b0, b1, .5), V.lerp(t0, t1, .5), .55), .022, 'ink'); }
+    ln(g2, b0, b1, .5); return add(d);
+  };
+  S.monitor = (x, y, z, phi, w = .55, h = .34) => { const { f, r } = frame(phi), up = [0, 0, 1]; const d = drawable([x - w / 2, x + w / 2, y - w / 2, y + w / 2, z, z + h + .12], x + y); const g2 = d.g; cylinder(g2, x, y, .11, z, z + .015, { top: 'paper', side: 'shade' }); capsule(g2, [x, y, z], [x, y, z + .11], .05, 'paper'); const b0 = V.madd([x, y, z + .10], r, -w / 2), b1 = V.madd([x, y, z + .10], r, w / 2); const facing = f[0] + f[1] > 0; const back = V.mul(f, -.025); poly(g2, [V.add(b0, back), V.add(b1, back), V.add(V.madd(b1, up, h), back), V.add(V.madd(b0, up, h), back)], 'shade'); poly(g2, [b0, b1, V.madd(b1, up, h), V.madd(b0, up, h)], facing ? 'shade2' : 'paper'); if (facing) { const L = (s, u) => V.madd(V.lerp(b0, b1, s), up, u * h); poly(g2, [L(.05, .08), L(.95, .08), L(.95, .94), L(.05, .94)], 'white'); [[.12, .8, .45], [.12, .68, .6], [.12, .56, .3]].forEach(([s, u, e]) => ln(g2, L(s, u), L(s + e, u), .3)); poly(g2, [L(.55, .2), L(.9, .2), L(.9, .5), L(.55, .5)], 'shade'); } return add(d); };
+  S.mug = (x, y, z, steam = true) => { const d = drawable([x - .06, x + .07, y - .06, y + .06, z, z + .1], x + y + .01); cylinder(d.g, x, y, .042, z, z + .09, { top: 'shade', side: 'paper' }); const [hx, hy] = P([x + .058, y - .02, z + .047]); el('ellipse', { cx: hx, cy: hy, rx: r2(.03 * T), ry: r2(.034 * T), class: 'f-none', style: 'stroke:var(--ink);stroke-width:.55' }, d.g); if (steam) { const [sx, sy] = P([x, y, z + .12]); el('path', { d: `M${sx} ${sy} c -.6 -.9 .6 -1.7 0 -2.6`, class: 'steam' }, d.g); el('path', { d: `M${sx + .8} ${sy} c -.6 -.9 .6 -1.7 0 -2.6`, class: 'steam s2' }, d.g); } return add(d); };
+  S.books = (x, y, z, n = 3, phi = 0) => { const d = drawable([x - .14, x + .14, y - .1, y + .1, z, z + n * .035], x + y); for (let i = 0; i < n; i++) slab(d.g, [x + (i % 2) * .02, y - (i % 2) * .015], phi + (i % 2) * .15, .11, .085, z + i * .035, z + i * .035 + .032, { top: i % 2 ? 'paper' : 'white', east: 'ink', south: 'shade2' }); return add(d); };
+  S.bag = (x, y, phi = 0) => { const d = drawable([x - .2, x + .2, y - .2, y + .2, 0, .32], x + y); slab(d.g, [x, y], phi, .08, .18, 0, .30, { top: 'shade2', east: 'shade', south: 'shade2' }); const { r } = frame(phi); const a = V.madd([x, y, .30], r, -.1), b = V.madd([x, y, .30], r, .1); const [ax, ay] = P(a), [bx, by] = P(b); el('path', { d: `M${ax} ${ay} Q ${(ax + bx) / 2} ${ay - 3} ${bx} ${by}`, class: 'ln' }, d.g); return add(d); };
+  S.wall = (x0, y0, x1, y1, h, t = {}) => S.box(x0, y0, x1, y1, 0, h, { top: 'white', east: t.east || 'paper', south: t.south || 'shade', ...t });
+  // a whiteboard on the face of a wall that runs along x (face at y = y1 + 0) or along y (face at x = x1)
+  S.board = (x, y, z, w, h, along = 'x', t = {}) => {
+    const a = [x, y, z], dir = along === 'x' ? [1, 0, 0] : [0, 1, 0], out = along === 'x' ? [0, 1, 0] : [1, 0, 0], up = [0, 0, 1]; const b = V.madd(a, dir, w);
+    const d = drawable([Math.min(a[0], b[0]) - .01, Math.max(a[0], b[0]) + .08, Math.min(a[1], b[1]) - .01, Math.max(a[1], b[1]) + .08, z - .03, z + h], (a[0] + b[0] + a[1] + b[1]) / 2 + .02); const g2 = d.g;
+    const L = (s, u) => V.madd(V.madd(a, dir, s * w), up, u * h);
+    poly(g2, [L(0, 0), L(1, 0), L(1, 1), L(0, 1)], 'shade'); poly(g2, [L(.02, .03), L(.98, .03), L(.98, .97), L(.02, .97)], 'white');
+    // the tray and two markers
+    poly(g2, [V.madd(L(0, 0), up, -.03), V.madd(L(1, 0), up, -.03), V.madd(V.madd(L(1, 0), out, .07), up, -.03), V.madd(V.madd(L(0, 0), out, .07), up, -.03)], 'paper'); poly(g2, [V.madd(V.madd(L(0, 0), out, .07), up, -.03), V.madd(V.madd(L(1, 0), out, .07), up, -.03), V.madd(V.madd(L(1, 0), out, .07), up, .01), V.madd(V.madd(L(0, 0), out, .07), up, .01)], 'shade2');
+    capsule(g2, V.madd(L(.12, 0), out, .035), V.madd(L(.19, 0), out, .035), .025, 'ink'); capsule(g2, V.madd(L(.22, 0), out, .035), V.madd(L(.29, 0), out, .035), .025, 'paper');
+    (t.lines || [[.08, .84, .5], [.08, .74, .36], [.08, .64, .55]]).forEach(([s, u, e]) => ln(g2, L(s, u), L(s + e * .8, u), .45));
+    // a little diagram: two boxes and an arrow
+    const dg = t.diagram || [.1, .42]; const [ds, du] = dg; const bx = (s, u) => poly(g2, [L(s, u), L(s + .14, u), L(s + .14, u + .14), L(s, u + .14)], 'paper'); bx(ds, du); bx(ds + .26, du); ln(g2, L(ds + .145, du + .07), L(ds + .255, du + .07), .45); ln(g2, L(ds + .225, du + .1), L(ds + .255, du + .07), .45); ln(g2, L(ds + .225, du + .04), L(ds + .255, du + .07), .45);
+    // a circled word
+    const cw = t.circle || [.78, .32]; poly(g2, ellipse3(L(cw[0], cw[1]), V.mul(dir, .11 * w), V.mul(up, .07 * h), 16), 'none'); ln(g2, L(cw[0] - .07, cw[1]), L(cw[0] + .07, cw[1]), .45);
+    (t.notes || []).forEach(([s, u, tone, rot = 0]) => { const c = L(s, u); const uu = V.add(V.mul(dir, .06 * Math.cos(rot)), V.mul(up, .06 * Math.sin(rot))), vv = V.add(V.mul(dir, -.06 * Math.sin(rot)), V.mul(up, .06 * Math.cos(rot))); poly(g2, [V.sub(V.sub(c, uu), vv), V.sub(V.add(c, uu), vv), V.add(V.add(c, uu), vv), V.add(V.sub(c, uu), vv)], tone || 'shade2'); });
+    return add(d);
+  };
+  S.plant = (x, y, h = .9, kind = 'fig') => { const d = drawable([x - .3, x + .3, y - .3, y + .3, 0, .3 + h], x + y); const g2 = d.g; const up = [0, 0, 1]; cylinder(g2, x, y, .13, 0, .2, { top: 'paper', side: 'shade' }); cylinder(g2, x, y, .15, .19, .24, { top: 'white', side: 'paper' }); disc(g2, [x, y, .245], .11, 'shade2', 'no'); const n = kind === 'fig' ? 7 : 5; capsule(g2, [x, y, .24], [x, y, .24 + h * .75], .035, 'ink'); for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2 + .7 + ((i * 13) % 5) * .1, dir = [Math.cos(a), Math.sin(a), 0], side = [-Math.sin(a), Math.cos(a), 0]; const zz = .24 + h * (.3 + .6 * ((i * 7) % n) / n), reach = .14 + .1 * ((i * 3) % 3) / 2; const c = V.madd(V.madd([x, y, zz], dir, reach), up, .05); capsule(g2, [x, y, zz - .04], V.madd(c, dir, -.08), .025, 'ink'); const u = V.add(V.mul(dir, .14), V.mul(up, .05)), v = V.add(V.mul(side, .075), V.mul(up, .03)); poly(g2, ellipse3(c, u, v, 12), 'shade'); ln(g2, V.sub(c, u), V.add(c, u), .35); } return add(d); };
+  S.tree = (x, y, h = 2.6, r = 1.0) => { const d = drawable([x - r, x + r, y - r, y + r, 0, h + r * 1.4], x + y); const g2 = d.g; const up = [0, 0, 1]; capsule(g2, [x, y, 0], [x, y, h], .18, 'paper'); capsule(g2, [x, y, h - .5], [x + .35 * r, y - .2 * r, h + .35 * r], .09, 'paper'); capsule(g2, [x, y, h - .3], [x - .3 * r, y + .15 * r, h + .3 * r], .08, 'paper'); const c = [x, y, h + r * .5]; ball(g2, V.add(c, [.35 * r, -.1 * r, -.05 * r]), r * .62, 'shade'); ball(g2, V.add(c, [-.35 * r, .2 * r, -.02 * r]), r * .6, 'shade'); ball(g2, V.add(c, [0, 0, .3 * r]), r * .68, 'shade'); ball(g2, V.add(c, [-.15 * r, -.2 * r, .55 * r]), r * .2, 'white'); return add(d); };
+  S.lamp = (x, y, h = 2.4) => { S.shadow(x, y, .55, 'shade'); const d = drawable([x - .1, x + .1, y - .1, y + .1, 0, h], x + y); capsule(d.g, [x, y, 0], [x, y, h], .06, 'ink'); ball(d.g, [x, y, h + .05], .11, 'ink'); return add(d); };
+  S.signpost = (x, y, arms) => { const d = drawable([x - .7, x + .7, y - .7, y + .7, 0, 3.2], x + y); const g2 = d.g; capsule(g2, [x, y, 0], [x, y, 3.0], .08, 'paper'); arms.forEach(({ z, phi, len = .8, tone = 'white' }) => { const { f } = frame(phi); const p = [x, y, z]; const q = V.madd(p, f, len); poly(g2, [p, q, V.madd(V.madd(q, f, .12), [0, 0, 1], .09), V.madd(q, [0, 0, 1], .18), V.madd(p, [0, 0, 1], .18)], tone); }); return add(d); };
+  S.bench = (x, y, phi, len = 1.5) => { const { f, r } = frame(phi); const c = [x, y]; const q = quad(c, phi, .22, len / 2, 0); const bb = bbOf(q); bb[4] = 0; bb[5] = .9; const d = drawable(bb, x + y); const g2 = d.g; for (const s of [-1, 1]) { const b = V.madd([x, y, 0], r, s * (len / 2 - .15)); capsule(g2, V.madd(b, f, .15), V.madd(V.madd(b, f, .15), [0, 0, 1], .42), .05, 'ink'); capsule(g2, V.madd(b, f, -.15), V.madd(V.madd(b, f, -.15), [0, 0, 1], .42), .05, 'ink'); } slab(g2, c, phi, .22, len / 2, .42, .47, { top: 'white', east: 'paper', south: 'shade' }); const b0 = V.madd(V.madd([x, y, .47], f, -.2), r, -len / 2 + .1), b1 = V.madd(V.madd([x, y, .47], f, -.2), r, len / 2 - .1); capsule(g2, b0, V.madd(b0, [0, 0, 1], .45), .04, 'ink'); capsule(g2, b1, V.madd(b1, [0, 0, 1], .45), .04, 'ink'); capsule(g2, V.madd(b0, [0, 0, 1], .45), V.madd(b1, [0, 0, 1], .45), .05, 'ink'); capsule(g2, V.madd(b0, [0, 0, 1], .28), V.madd(b1, [0, 0, 1], .28), .04, 'ink'); return add(d); };
+  S.rail = (x0, y0, x1, y1, h = 1.0, z0 = 0) => { const d = drawable([Math.min(x0, x1) - .03, Math.max(x0, x1) + .03, Math.min(y0, y1) - .03, Math.max(y0, y1) + .03, z0, z0 + h], (x0 + x1 + y0 + y1) / 2 + .03); const g2 = d.g; const L = Math.hypot(x1 - x0, y1 - y0), n = Math.max(1, Math.round(L / .7)); for (let i = 0; i <= n; i++) { const p = [lerp(x0, x1, i / n), lerp(y0, y1, i / n), z0]; capsule(g2, p, V.madd(p, [0, 0, 1], h), .05, 'ink'); } capsule(g2, [x0, y0, z0 + h], [x1, y1, z0 + h], .06, 'paper'); capsule(g2, [x0, y0, z0 + h * .5], [x1, y1, z0 + h * .5], .04, 'paper'); return add(d); };
+  S.counter = (x, y, w, dd, h = .9, t = {}) => S.box(x, y, x + w, y + dd, 0, h, { top: 'white', east: 'paper', south: 'shade', ...t });
+  S.kettle = (x, y, z, phi = 0) => { const { f } = frame(phi), up = [0, 0, 1]; const d = drawable([x - .22, x + .25, y - .18, y + .18, z, z + .36], x + y + .02); const g2 = d.g; cylinder(g2, x, y, .11, z, z + .15, { top: 'shade', side: 'paper' }); cylinder(g2, x, y, .085, z + .15, z + .19, { top: 'white', side: 'shade' }); ball(g2, [x, y, z + .215], .025, 'ink'); const sp0 = V.madd([x, y, z + .09], f, .09), sp1 = V.madd([x, y, z + .2], f, .2); capsule(g2, sp0, sp1, .04, 'paper'); const h0 = V.madd([x, y, z + .17], f, -.06), h1 = V.madd([x, y, z + .17], f, .05); const [ax, ay] = P(h0), [bx, by] = P(h1), [cx, cy] = P(V.madd([x, y, z + .36], f, 0)); el('path', { d: `M${ax} ${ay} Q ${cx} ${cy} ${bx} ${by}`, class: 'ln', style: 'stroke-width:.8' }, g2); const [sx, sy] = P(V.madd(sp1, up, .03)); el('path', { d: `M${sx} ${sy} c -.5 -.9 .7 -1.6 .1 -2.6`, class: 'steam' }, g2); return add(d); };
+  S.stove = (x, y, w, dd, h = .9) => { const d = S.counter(x, y, w, dd, h); const g2 = d.g; for (const [rx, ry] of [[.3, .28], [.7, .28], [.3, .68], [.7, .68]]) { disc(g2, [x + rx * w, y + ry * dd, h + .005], .085, 'shade2', 'no'); disc(g2, [x + rx * w, y + ry * dd, h + .006], .05, 'ink', 'no'); } for (const s of [.2, .35, .65, .8]) ball(g2, [x + s * w, y + dd + .005, h - .1], .022, 'ink'); poly(g2, [[x + .1, y + dd + .004, .18], [x + w - .1, y + dd + .004, .18], [x + w - .1, y + dd + .004, h - .25], [x + .1, y + dd + .004, h - .25]], 'white'); capsule(g2, [x + .25, y + dd + .03, h - .32], [x + w - .25, y + dd + .03, h - .32], .03, 'ink'); return d; };
+  S.pot = (x, y, z, r = .14, steam = true) => { const d = drawable([x - r, x + r, y - r, y + r, z, z + .16], x + y + .02); cylinder(d.g, x, y, r, z, z + .14, { top: 'shade2', side: 'paper' }); capsule(d.g, [x - r - .02, y, z + .1], [x - r - .14, y, z + .1], .035, 'ink'); if (steam) { const [sx, sy] = P([x, y, z + .18]); el('path', { d: `M${sx} ${sy} c -.8 -1.1 .8 -2 0 -3.2`, class: 'steam' }, d.g); el('path', { d: `M${sx + 1.1} ${sy} c -.8 -1.1 .8 -2 0 -3.2`, class: 'steam s2' }, d.g); } return add(d); };
+  S.stairs = (x, y, phi, n = 5, w = 1.0, rise = .2, run = .28) => { const { f } = frame(phi); const out = []; for (let i = 0; i < n; i++) { const c = V.madd([x, y, 0], f, run * i); out.push(S.slab([c[0], c[1]], phi, run / 2, w / 2, 0, rise * (i + 1), { top: 'white', east: 'paper', south: 'shade' })); } return out; };
+  S.flag = (x, y, h = 3.2, z0 = 0) => { const d = drawable([x - .05, x + .6, y - .05, y + .05, z0, z0 + h], x + y); capsule(d.g, [x, y, z0], [x, y, z0 + h], .05, 'ink'); poly(d.g, [[x, y, z0 + h], [x + .55, y + .02, z0 + h - .14], [x, y, z0 + h - .32]], 'ink'); return add(d); };
+  S.cairn = (x, y) => { const d = drawable([x - .4, x + .4, y - .4, y + .4, 0, .75], x + y); cylinder(d.g, x, y, .36, 0, .22, { top: 'paper', side: 'shade' }); cylinder(d.g, x + .03, y - .02, .26, .22, .44, { top: 'white', side: 'shade' }); cylinder(d.g, x - .02, y + .02, .16, .44, .62, { top: 'paper', side: 'shade2' }); return add(d); };
+  S.bike = (x, y, phi) => { const { f } = frame(phi), up = [0, 0, 1]; const d = drawable([x - .9, x + .9, y - .9, y + .9, 0, .95], x + y); const g2 = d.g; const w0 = V.madd([x, y, .33], f, -.5), w1 = V.madd([x, y, .33], f, .5); for (const w of [w0, w1]) { const [cx, cy] = P(w); el('circle', { cx, cy, r: r2(.33 * T * .95), class: 'f-none', style: 'stroke:var(--ink);stroke-width:.7' }, g2); el('circle', { cx, cy, r: r2(.26 * T * .95), class: 'f-none', style: 'stroke:var(--ink);stroke-width:.3' }, g2); for (let i = 0; i < 3; i++) { const an = i / 3 * Math.PI; el('line', { x1: r2(cx + Math.cos(an) * .3 * T), y1: r2(cy + Math.sin(an) * .3 * T), x2: r2(cx - Math.cos(an) * .3 * T), y2: r2(cy - Math.sin(an) * .3 * T), class: 'ln', style: 'stroke-width:.3' }, g2); } el('circle', { cx, cy, r: r2(.04 * T), class: 'f-ink' }, g2); } const seat = V.madd([x, y, .95], f, -.18), bar = V.madd([x, y, .95], f, .33), crank = V.madd([x, y, .36], f, .02); capsule(g2, w0, seat, .035, 'ink'); capsule(g2, seat, bar, .035, 'ink'); capsule(g2, bar, w1, .035, 'ink'); capsule(g2, seat, crank, .035, 'ink'); capsule(g2, crank, bar, .035, 'ink'); capsule(g2, w0, crank, .035, 'ink'); capsule(g2, V.madd(seat, f, -.1), V.madd(seat, f, .1), .06, 'ink'); capsule(g2, V.madd(V.madd(bar, up, .04), frame(phi).r, -.2), V.madd(V.madd(bar, up, .04), frame(phi).r, .2), .035, 'ink'); return add(d); };
+  S.pegboard = (x, y, z, w, h, along = 'x') => { const a = [x, y, z], dir = along === 'x' ? [1, 0, 0] : [0, 1, 0], up = [0, 0, 1]; const b = V.madd(a, dir, w); const d = drawable([Math.min(a[0], b[0]) - .01, Math.max(a[0], b[0]) + .01, Math.min(a[1], b[1]) - .01, Math.max(a[1], b[1]) + .01, z, z + h], (a[0] + b[0] + a[1] + b[1]) / 2 + .02); const g2 = d.g; const L = (s, u) => V.madd(V.madd(a, dir, s * w), up, u * h); poly(g2, [L(0, 0), L(1, 0), L(1, 1), L(0, 1)], 'paper'); for (let i = 1; i < w / .14; i++) for (let j = 1; j < h / .14; j++) ball(g2, V.madd(V.madd(a, dir, i * .14), up, j * .14), .014, 'ink'); capsule(g2, L(.16, .78), L(.16, .36), .04, 'paper'); poly(g2, [V.madd(L(.1, .84), up, 0), V.madd(L(.22, .84), up, 0), L(.22, .72), L(.1, .72)], 'shade2'); capsule(g2, L(.4, .82), L(.4, .4), .035, 'paper'); ball(g2, L(.4, .86), .035, 'shade2'); ball(g2, L(.4, .36), .035, 'shade2'); poly(g2, [L(.56, .82), L(.78, .82), L(.78, .5), L(.6, .62)], 'paper'); capsule(g2, L(.78, .82), L(.86, .88), .04, 'ink'); capsule(g2, L(.9, .78), L(.9, .5), .03, 'ink'); return add(d); };
+  S.window = (x, y, z, w, h, along = 'x', t = {}) => { const a = [x, y, z], dir = along === 'x' ? [1, 0, 0] : [0, 1, 0], out = along === 'x' ? [0, 1, 0] : [1, 0, 0], up = [0, 0, 1]; const b = V.madd(a, dir, w); const d = drawable([Math.min(a[0], b[0]) - .01, Math.max(a[0], b[0]) + .07, Math.min(a[1], b[1]) - .01, Math.max(a[1], b[1]) + .07, z - .04, z + h], (a[0] + b[0] + a[1] + b[1]) / 2 + .02); const g2 = d.g; const L = (s, u) => V.madd(V.madd(a, dir, s * w), up, u * h); poly(g2, [L(0, 0), L(1, 0), L(1, 1), L(0, 1)], 'shade'); poly(g2, [L(.04, .04), L(.96, .04), L(.96, .96), L(.04, .96)], 'white'); if (t.weather === 'rain' || t.weather === 'cloud') { for (const [s, u, rr] of [[.3, .78, .09], [.42, .84, .11], [.55, .78, .09]]) ball(g2, L(s, u), rr * h, 'paper'); } if (t.weather === 'rain') for (let i = 0; i < 7; i++) { const s = .1 + i * .12; ln(g2, L(s + .04, .62 - (i % 3) * .08), L(s, .5 - (i % 3) * .08), .4); } if (t.weather === 'sun') { ball(g2, L(.74, .76), .09 * h, 'white'); for (let i = 0; i < 5; i++) { const an = i / 5 * Math.PI * 2 + .3; ln(g2, V.add(L(.74, .76), V.add(V.mul(dir, .13 * h * Math.cos(an)), V.mul(up, .13 * h * Math.sin(an)))), V.add(L(.74, .76), V.add(V.mul(dir, .19 * h * Math.cos(an)), V.mul(up, .19 * h * Math.sin(an)))), .4); } } ln(g2, L(.5, .04), L(.5, .96), .5); ln(g2, L(.04, .5), L(.96, .5), .5); poly(g2, [V.madd(L(-.02, 0), up, -.04), V.madd(L(1.02, 0), up, -.04), V.madd(V.madd(L(1.02, 0), out, .07), up, -.04), V.madd(V.madd(L(-.02, 0), out, .07), up, -.04)], 'white'); poly(g2, [V.madd(V.madd(L(-.02, 0), out, .07), up, -.04), V.madd(V.madd(L(1.02, 0), out, .07), up, -.04), V.madd(V.madd(L(1.02, 0), out, .07), up, 0), V.madd(V.madd(L(-.02, 0), out, .07), up, 0)], 'shade2'); return add(d); };
+  S.seedlings = (x, y, z, n = 3, along = 'x') => { const dir = along === 'x' ? [1, 0, 0] : [0, 1, 0]; const d = drawable([x - .1, x + .1 + (along === 'x' ? n * .22 : 0), y - .1, y + .1 + (along === 'y' ? n * .22 : 0), z, z + .3], x + y + .03); for (let i = 0; i < n; i++) { const p = V.madd([x, y, z], dir, i * .22); cylinder(d.g, p[0], p[1], .06, z, z + .09, { top: 'paper', side: 'shade' }); capsule(d.g, V.madd(p, [0, 0, 1], .09), V.madd(p, [0, 0, 1], .22 + i * .03), .025, 'ink'); ball(d.g, V.madd(p, [0, 0, 1], .25 + i * .03), .045, 'shade2'); } return add(d); };
+  S.shelf = (x, y, w, dd, h = 1.8, levels = 3) => { const d = drawable([x, x + w, y, y + dd, 0, h], x + y + (w + dd) / 2); const g2 = d.g; for (let i = 0; i <= levels; i++) box(g2, x, y, x + w, y + dd, h * i / levels, h * i / levels + .03, { top: 'white', east: 'paper', south: 'shade' }); for (let i = 0; i < levels; i++) { let bx = x + .05; while (bx < x + w - .1) { const bw = .04 + rnd() * .05, bh = .2 + rnd() * .12; box(g2, bx, y + .05, bx + bw, y + dd - .05, h * i / levels + .03, h * i / levels + .03 + bh, { top: 'paper', east: rnd() < .5 ? 'ink' : 'shade2', south: 'shade2' }); bx += bw + .02; } } return add(d); };
+  S.easel = (x, y, phi, w = 1.2, h = 1.5, t = {}) => { const { f, r } = frame(phi), up = [0, 0, 1]; const top = 1.9; const b0 = V.madd([x, y, 0], r, -w / 2), b1 = V.madd([x, y, 0], r, w / 2); const bb = bbOf([b0, b1, V.madd([x, y, 0], f, -.5)], .1); bb[4] = 0; bb[5] = top + .05; const d = drawable(bb, x + y); const g2 = d.g; const dir = V.norm(V.sub(b1, b0)); for (const b of [b0, b1]) capsule(g2, V.madd(b, f, .08), V.madd(V.madd(b, f, -.02), up, top), .045, 'ink'); capsule(g2, V.madd([x, y, 0], f, -.55), V.madd([x, y, 0], up, top - .05), .045, 'ink'); const z0 = top - h; const L = (s, u) => V.madd(V.madd(b0, dir, s * w), up, z0 + u * h); poly(g2, [L(0, 0), L(1, 0), L(1, 1), L(0, 1)], 'white'); poly(g2, [L(.86, 0), L(1, 0), L(1, .12)], 'shade'); poly(g2, [L(.4, .97), L(.6, .97), L(.6, 1.03), L(.4, 1.03)], 'ink'); (t.lines || []).forEach(([s, u, e]) => ln(g2, L(s, u), L(s + e, u), .45)); (t.notes || []).forEach(([s, u, tone, rot = 0]) => { const c = L(s, u); const uu = V.add(V.mul(dir, .06 * Math.cos(rot)), V.mul(up, .06 * Math.sin(rot))), vv = V.add(V.mul(dir, -.06 * Math.sin(rot)), V.mul(up, .06 * Math.cos(rot))); poly(g2, [V.sub(V.sub(c, uu), vv), V.sub(V.add(c, uu), vv), V.add(V.add(c, uu), vv), V.add(V.sub(c, uu), vv)], tone || 'shade2'); }); if (t.diagram) { const [ds, du] = t.diagram; const bx = (s, u) => poly(g2, [L(s, u), L(s + .16, u), L(s + .16, u + .14), L(s, u + .14)], 'paper'); bx(ds, du); bx(ds + .3, du); ln(g2, L(ds + .165, du + .07), L(ds + .295, du + .07), .45); } return add(d); };
+  S.platform = (x0, y0, x1, y1, z, t = {}) => { const d = S.box(x0, y0, x1, y1, z - .12, z, { top: 'white', east: 'paper', south: 'shade' }); const posts = drawable([x0, x1, y0, y1, 0, z], (x0 + x1 + y0 + y1) / 2 - .5); for (const [px, py] of [[x0 + .1, y0 + .1], [x1 - .1, y0 + .1], [x0 + .1, y1 - .1], [x1 - .1, y1 - .1]]) capsule(posts.g, [px, py, 0], [px, py, z - .12], .08, 'paper'); add(posts); return d; };
+  S.dog = (x, y, phi, z = 0) => { // a dog, sitting: haunches on the ground, front legs straight, head up, ears down, tail curled
+    const { f, r } = frame(phi), up = [0, 0, 1], HALO = KN.halo; const d = drawable([x - .45, x + .45, y - .45, y + .45, z, z + .75], x + y, 'fig'); const g2 = d.g; const at = [x, y, z]; disc(g2, [x, y, z + .002], .34, 'half', 'no shadow');
+    const B = V.madd(V.madd(at, f, -.12), up, .2), C = V.madd(V.madd(at, f, .2), up, .38);
+    capsule(g2, V.madd(V.madd(B, f, -.1), up, -.06), V.madd(V.madd(B, f, -.3), up, .14), .05, 'ink', HALO);
+    for (const s of [-1, 1]) capsule(g2, V.madd(V.madd(B, r, s * .1), up, -.1), V.madd(V.madd(V.madd(B, r, s * .11), f, .22), up, -.17), .07, 'ink', HALO);
+    ball(g2, B, .19, 'half2', HALO); capsule(g2, B, C, .22, 'half2', HALO);
+    for (const s of [-1, 1]) capsule(g2, V.madd(C, r, s * .07), V.madd(V.madd(V.madd(C, r, s * .08), f, .04), up, -.36), .06, 'ink', HALO);
+    const H = V.madd(V.madd(C, f, .1), up, .22); capsule(g2, V.madd(C, up, .05), H, .12, 'half2', HALO); ball(g2, H, .11, 'half2', HALO);
+    capsule(g2, V.madd(H, f, .05), V.madd(V.madd(H, f, .19), up, -.03), .07, 'half2', HALO); ball(g2, V.madd(V.madd(H, f, .2), up, -.02), .03, 'ink');
+    for (const s of [-1, 1]) capsule(g2, V.madd(V.madd(H, up, .07), r, s * .08), V.madd(V.madd(V.madd(H, up, -.06), r, s * .12), f, -.03), .055, 'ink', HALO);
+    capsule(g2, V.madd(V.madd(C, f, .09), r, -.1), V.madd(V.madd(C, f, .09), r, .1), .025, 'ink');
+    return add(d); };
+  S.done = () => sortDraw(g, items);
+  return S;
+}
+// hover: any drawable can carry a caption
+const H = {};
+const hov = (d, link, cap, text) => { const list = (Array.isArray(d) ? d : [d]).flatMap(x => x.all ? x.all : [x]); for (const x of list) { x.g.setAttribute('data-hover', text); x.g.setAttribute('data-cap', cap); if (link) { x.g.setAttribute('data-link', link); (H[link] = H[link] || []).push(x.g); } } return d; };
+
+// ---------- the seven stops, each a vignette of people doing the thing ----------
+// Coordinates are metres around each stop's own origin. The viewer looks from +x+y; a figure facing π/4 faces us.
+const Q = Math.PI / 4;
+const SCENES = [
+  // 0 · the trailhead: a porch in Richmond, a table, a real problem
+  { door: [-3.2, 3.0], build(S) {
+    S.pad([[-4, -3], [4, -3], [4, 3], [-4, 3]], 'paper');
+    S.shade(3.0, -1.4, 1.0);
+    // the house wall behind the deck, with a window and a door
+    S.wall(-3.6, -3.05, .4, -2.9, 2.7, { south: 'paper' }); S.window(-3.1, -2.9, 1.1, 1.0, .9, 'x'); S.plane([[-.95, -2.9, .25], [-.15, -2.9, .25], [-.15, -2.9, 2.3], [-.95, -2.9, 2.3]], 'half2', -3.3);
+    // the deck, a step, the railing
+    S.box(-3.6, -2.9, .4, -.6, 0, .25, { top: 'white', east: 'paper', south: 'half' }, -5.5); S.box(-.6, -.6, .4, -.25, 0, .13, { top: 'white', east: 'paper', south: 'half' }, -1.2);
+    S.rail(-3.6, -.6, -.9, -.6, .95, .25); S.rail(.4, -2.9, .4, -.6, .95, .25);
+    // the table, two chairs, the laptop, the mug, the notebook
+    const table = S.table(-2.4, -2.1, 1.5, .75, .74); S.chair(-2.75, -1.72, 0); S.chair(-.55, -1.72, Math.PI);
+    const laptop = S.laptop(-1.75, -1.72, .74, Math.PI); S.mug(-1.25, -1.95, .74); S.slab([-1.2, -1.5], 0, .11, .15, .74, .76, { top: 'white', east: 'paper', south: 'half' });
+    const david = S.fig({ at: [-2.75, -1.72, .25], face: 0, pose: 'sit', seat: .46, hair: 'short', coat: 'half', pants: 'ink', hands: { L: 'lap', R: { abs: [-1.9, -1.78, 1.2] } }, anim: 'point' });
+    david.o.hands.R = 'point'; david.update(0);
+    const you = S.fig({ at: [-.55, -1.72, .25], face: Math.PI, pose: 'sit', seat: .46, build: 'b', hair: 'tied', coat: 'ink', pants: 'paper', skirt: 'half2', hands: { L: 'talk', R: 'talk' }, anim: 'talk' });
+    hov(david, 'guide', 'Your guide', 'David Beath. Twenty-five years leading innovation at IDEO, Capital One and DBS; founded BuildFirst in Richmond, Virginia, and works from this porch when he is not in your building.');
+    hov(you, 'you', 'You', 'A leader with a real problem and a laptop. Most journeys start exactly like this: a table, a conversation, and the first build before the first slide.');
+    hov([table, laptop], 'table', 'Where it starts', 'A table, two chairs, a mug and a laptop. The first build happens here, on something you actually need.');
+    const lamp = S.lamp(1.0, -1.0, 2.5); hov(lamp, 'lamp', '6am', 'The porch light is on at six. That is when the new prompt chain gets tested, before the kids are up.');
+    const bikes = [S.bike(1.4, -2.45, .15), S.bike(1.9, -1.75, .1)]; hov(bikes, 'bikes', 'The kids', 'Two bikes against the fence. The reason the day starts early.');
+    S.tree(3.1, -1.6, 2.6, 1.15); S.tree(-4.2, 1.4, 2.2, .95); S.plant(.9, .4, .8);
+    const dog = S.dog(1.8, .35, Math.PI * .6, 0); hov(dog, 'dog', 'The dog', 'Comes to every call. Has opinions about prompt chains.');
+  } },
+  // 1 · start small: a signpost, a decision, low commitment
+  { door: [-2.6, 2.5], build(S) {
+    S.pad([[-3.5, -2.5], [3.5, -2.5], [3.5, 2.5], [-3.5, 2.5]], 'paper'); S.shade(2.7, -1.6, 1.0);
+    const post = S.signpost(.5, -1.1, [{ z: 2.6, phi: 0 }, { z: 2.15, phi: Math.PI / 2 }, { z: 1.7, phi: 0 }]);
+    hov(post, 'call', 'Three ways in', 'A thirty-minute call, a half-day workshop, or a two-to-four-week sprint. Pick the arm that fits; all three are low commitment and high signal.');
+    const you = S.fig({ at: [-.6, -.1, 0], face: -Q, hair: 'curly', coat: 'ink', pants: 'paper', hands: { L: 'strap', R: 'chin' }, anim: 'nod' });
+    const david = S.fig({ at: [1.5, .6, 0], face: Math.PI * .85, hair: 'short', coat: 'half', hands: { L: 'hip', R: { abs: [1.2, -.6, 2.5] } } });
+    hov(you, 'halfday', 'Reading the signs', 'You, with a laptop bag and a question. Which first step is worth a half day?');
+    hov(david, 'sprint1', 'Honest advice', 'David points at the arm that fits. Sometimes that is a call and nothing more; we tell you honestly whether we can help.');
+    const bench = S.bench(-2.0, 1.4, Q, 1.6); const builder = S.fig({ at: [-2.0, 1.4, 0], face: Q, pose: 'sit', seat: .47, build: 'b', hair: 'bun', coat: 'paper', hands: { L: 'lap', R: 'lap' }, anim: 'type' });
+    S.laptop(-1.65, 1.75, .52, Q + Math.PI); hov([bench, builder], 'sprint1', 'A focused sprint', 'Someone who picked the sprint, already building on the bench.');
+    S.tree(2.8, -1.9, 2.5, 1.1); S.bag(-1.2, .5, -Q);
+  } },
+  // 2 · build together, one leader: a table under a tree, David alongside
+  { door: [-2.6, 2.5], build(S) {
+    S.pad([[-3.5, -2.5], [3.5, -2.5], [3.5, 2.5], [-3.5, 2.5]], 'white'); S.shade(1.6, -.9, 1.3);
+    const table = S.table(-1.1, -.9, 2.3, .9, .74); S.stool(-.3, -1.35, .46);
+    const leader = S.fig({ at: [-.3, -1.35, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build: 'b', hair: 'bob', coat: 'ink', pants: 'paper', skirt: 'ink', hands: { L: 'type', R: 'type' }, anim: 'type' });
+    const laptop = S.laptop(-.3, -.6, .74, -Math.PI / 2);
+    const david = S.fig({ at: [1.15, -1.55, 0], face: Math.PI / 2 + .5, hair: 'short', coat: 'half', lean: .16, hands: { L: 'hip', R: { abs: [.1, -.7, 1.05] } }, anim: 'point' });
+    hov([leader, laptop], 'sherpa', 'Sherpa', 'Eight to ten weeks, one to one. A leader builds a workflow that solves a real problem, and keeps it. Starts with a diagnostic call.');
+    hov(david, 'coach', 'Alongside', 'That is usually David. Pointing at the thing you just built, and at the next thing.');
+    const books = S.books(.85, -.3, .74, 4, .2); hov(books, 'stretch', 'Stretch', 'For experienced users: the stack on the table is where prompts become agentic workflows and team-level patterns.');
+    const bag = S.bag(-1.7, .7, Q); hov(bag, 'foundations', 'Workplace AI foundations', 'The bag by the table belongs to someone early in their career, learning AI on real tasks, not demos.');
+    S.mug(-.85, -.4, .74); S.chair(-1.6, -.45, 0, {});
+    S.tree(2.4, -1.8, 2.8, 1.25); S.plant(-2.9, 1.3, .8);
+  } },
+  // 3 · build together, the team: a room with a long table, a whiteboard and a workbench
+  { door: [-3.4, 3.0], build(S) {
+    S.pad([[-4.5, -3], [4.5, -3], [4.5, 3], [-4.5, 3]], 'white');
+    S.wall(-4.5, -3.05, 4.5, -2.9, 2.4, { south: 'paper' });
+    const board = S.board(-3.9, -2.9, .9, 3.2, 1.1, 'x', { lines: [[.3, .84, .45], [.3, .74, .3], [.3, .64, .5]], diagram: [.36, .38], circle: [.66, .3], notes: [[.82, .78, 'shade2', .1], [.9, .78, 'ink', -.08], [.82, .64, 'ink', .05], [.9, .64, 'shade2', .12], [.86, .5, 'shade2', -.1]] });
+    const fac = S.fig({ at: [-4.3, -2.4, 0], face: -Math.PI / 2, hair: 'cap', coat: 'half2', hands: { L: 'hip', R: 'write' }, anim: 'write' });
+    hov([board, fac], 'board', 'Diagnose first', 'Diagnose first, prescribe second. The right application emerges from your workflows and constraints, not a playbook.');
+    const table = S.table(-3.1, -1.0, 3.8, 1.0, .74); const team = [table];
+    [[-2.4, 'short', 'half'], [-1.3, 'bun', 'ink'], [-.2, 'curly', 'paper']].forEach(([x, hair, coat], i) => { team.push(S.fig({ at: [x, -1.45, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build: i === 1 ? 'b' : 'a', skirt: i === 1 ? 'half2' : null, hair, coat, pants: i === 1 ? 'paper' : 'ink', hands: i === 2 ? { L: 'lap', R: 'raise' } : { L: 'type', R: 'type' }, anim: i === 2 ? 'raise' : 'type', phase: i })); S.laptop(x, -.75, .74, -Math.PI / 2); S.stool(x, -1.45, .46); });
+    [[-1.9, 'long', 'stripe'], [-.8, 'short', 'ink'], [.3, 'tied', 'half2']].forEach(([x, hair, coat], i) => { S.chair(x, .45, -Math.PI / 2); team.push(S.fig({ at: [x, .45, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, build: i === 1 ? 'a' : 'b', skirt: i === 0 ? 'ink' : null, hair, coat, pants: i === 1 ? 'half2' : 'ink', hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 3 })); S.laptop(x, -.28, .74, Math.PI / 2); });
+    S.mug(-2.8, -.5, .74); S.mug(.5, -.6, .74, false);
+    hov(team, 'workshops', 'Team workshops', 'A long table, a half day or a full day. No lectures: everyone builds something useful and applies it on Monday.');
+    const bench = S.table(1.6, .3, 1.7, .8, .9); S.monitor(2.6, .5, .9, Math.PI / 2, .5, .32); S.slab([1.95, .7], 0, .14, .1, .9, 1.08, { top: 'half2', east: 'paper', south: 'half' });
+    const b1 = S.fig({ at: [2.0, 1.5, 0], face: -Math.PI / 2, build: 'b', hair: 'bob', coat: 'paper', lean: .22, hands: { L: { abs: [1.85, 1.0, .95] }, R: { abs: [2.1, 1.0, .95] } } });
+    const b2 = S.fig({ at: [3.5, 1.6, 0], face: -Math.PI / 2 - .5, hair: 'curly', coat: 'half', hands: { L: 'cross', R: 'point' }, anim: 'point' });
+    hov([bench, b1, b2], 'sprints', 'Practical sprints', 'The bench: two to four weeks on one workflow or capability gap, built and tested with your team, then handed off with your people owning it.');
+    S.plant(3.9, -2.3, 1.0); S.plant(-4.0, 2.2, .7);
+  } },
+  // 4 · learn fast: the hut where the recipes come from
+  { door: [-2.6, 2.5], build(S) {
+    S.pad([[-3.5, -2.5], [3.5, -2.5], [3.5, 2.5], [-3.5, 2.5]], 'white');
+    S.wall(-3.5, -2.55, 3.5, -2.4, 2.4, { south: 'paper' }); S.wall(-3.62, -2.55, -3.5, 1.6, 2.4, { east: 'paper' });
+    const peg = S.pegboard(-3.49, -1.9, 1.0, 2.1, 1.0, 'y'); hov(peg, 'ios', 'IntelligenceOS', 'The pegboard: an agentic operating system for running a company, every tool in its place. Open source, for you to customise.');
+    S.window(.5, -2.4, 1.05, 1.2, .85, 'x', { weather: 'rain' }); S.box(.35, -2.4, 1.85, -2.15, .85, .92, { top: 'white', east: 'paper', south: 'half' }, -1.5);
+    const seeds = S.seedlings(.6, -2.3, .92, 4, 'x'); hov(seeds, 'groundwork', 'Groundwork', 'On the sill: seedlings. Groundwork works out which experiments to run, what to learn before you commit, and where the investment goes.');
+    S.stove(-3.0, -2.2, 3.0, .7, .9); const kettle = S.kettle(-2.35, -1.75, .9, -Math.PI / 2); hov(kettle, 'cookbook', 'The kettle', 'Always on. Most recipes start with a question and a cup of tea.');
+    const pot = S.pot(-1.3, -1.78, .9, .15); hov(pot, 'cookbook', 'AI Cookbook', 'The stove. Every recipe was cooked here first, on a real problem, then written down on Substack.');
+    const cook = S.fig({ at: [-1.3, -.95, 0], face: -Math.PI / 2, build: 'b', hair: 'bun', coat: 'paper', pants: 'ink', lean: .1, hands: { L: { abs: [-1.8, -1.6, .95] }, R: 'hold' }, anim: 'stir' });
+    hov(cook, 'cookbook', 'Cooking', 'Recipes are written from real use, then shared.');
+    const table = S.table(-.3, -.4, 1.5, .8, .74); S.chair(.45, -.85, Math.PI / 2);
+    const reader = S.fig({ at: [.45, -.85, 0], face: Math.PI / 2, pose: 'sit', seat: .46, hair: 'short', coat: 'half', hands: { L: 'type', R: 'type' }, anim: 'type' });
+    S.laptop(.45, -.1, .74, -Math.PI / 2);
+    const card = S.slab([.9, .25], Q, .1, .14, .74, .755, { top: 'white', east: 'paper', south: 'half' }); hov(card, 'assess', 'The self-assessment', 'Ten questions, ten minutes: where you sit on the spectrum, and which path fits. It is a mirror, not a grade.');
+    hov([table, reader], 'cookbook', 'Between sessions', 'Reading a recipe, trying it on your own work.');
+    S.shelf(1.9, -2.15, 1.3, .35, 1.9, 3); S.plant(2.9, 1.6, .9);
+  } },
+  // 5 · extend across the organization: an open floor, a mezzanine, a way in on every level
+  { door: [-3.4, 3.0], build(S) {
+    S.pad([[-5, -3.5], [5, -3.5], [5, 3.5], [-5, 3.5]], 'white');
+    S.wall(-5, -3.55, 5, -3.4, 2.2, { south: 'paper' });
+    const plat = S.platform(-5, -3.4, -2.2, -1.6, 1.6); S.rail(-5, -1.6, -2.2, -1.6, .95, 1.6); S.rail(-2.2, -3.4, -2.2, -1.6, .95, 1.6);
+    S.stairs(-.4, -2.55, Math.PI, 7, 1.0, .225, .26); S.flag(-4.7, -3.2, 2.6, 1.6);
+    const look = S.fig({ at: [-3.7, -2.5, 1.6], face: Q, hair: 'short', coat: 'half', hands: { L: 'hip', R: 'point' }, anim: 'point' });
+    const frac = S.fig({ at: [-2.65, -3.0, 1.6], face: Q + .2, build: 'b', hair: 'long', coat: 'ink', pants: 'paper', skirt: 'half2', hands: { L: 'cross', R: 'cross' }, anim: 'nod' });
+    hov([plat, look], 'advisory', 'The lookout', 'Advisory is the view from here: the whole organization, which experiments are working, and where the next build goes.');
+    hov(frac, 'fractional', 'Fractional AI leadership', 'Part-time, embedded. Strategy, execution and team development under one roof, before the full-time hire.');
+    const table = S.table(-1.2, -1.3, 2.6, 1.0, .74); const crew = [table];
+    [[-.7, 'curly', 'ink', 'paper'], [.6, 'bun', 'half', 'ink']].forEach(([x, hair, coat, pants], i) => { S.stool(x, -1.75, .46); crew.push(S.fig({ at: [x, -1.75, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build: i ? 'b' : 'a', skirt: i ? 'ink' : null, hair, coat, pants, hands: { L: 'type', R: 'type' }, anim: 'type', phase: i })); S.laptop(x, -1.05, .74, -Math.PI / 2); });
+    [[-.2, 'short', 'half2'], [1.0, 'cap', 'stripe']].forEach(([x, hair, coat], i) => { S.chair(x, .15, -Math.PI / 2); crew.push(S.fig({ at: [x, .15, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair, coat, hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 2 })); S.laptop(x, -.58, .74, Math.PI / 2); });
+    hov(crew, 'builds', 'Strategic builds', 'Custom tools, agents and workflows, built from the strategic question down. The build is the deliverable; the thinking is what makes it valuable.');
+    const easel = S.easel(3.2, -2.0, Q, 1.4, 1.3, { notes: [[.14, .74, 'shade2', .1], [.3, .74, 'ink', -.06], [.46, .74, 'shade2', .08], [.62, .74, 'ink', -.1], [.14, .5, 'ink', -.05], [.3, .5, 'shade2', .12], [.62, .5, 'shade2', .04]], lines: [[.1, .28, .5], [.1, .18, .7]], diagram: [.55, .12] });
+    const a1 = S.fig({ at: [2.5, -.9, 0], face: Q + Math.PI, build: 'b', hair: 'tied', coat: 'half', skirt: 'ink', hands: { L: 'hip', R: 'write' }, anim: 'write' });
+    const a2 = S.fig({ at: [3.95, -1.0, 0], face: Q + Math.PI + .4, hair: 'short', coat: 'ink', pants: 'paper', hands: { L: 'chin', R: 'cross' }, anim: 'nod' });
+    hov([easel, a1, a2], 'advisory', 'Advisory', 'A thinking partner who is also a builder, for the decisions about tools, workflows, team structure and investment.');
+    const desk = S.table(1.9, .15, 1.5, .8, .74); S.monitor(2.45, .35, .74, Math.PI / 2, .6, .36); S.monitor(3.05, .35, .74, Math.PI / 2 + .3, .5, .32); S.chair(2.6, 1.25, -Math.PI / 2);
+    const dev = S.fig({ at: [2.6, 1.25, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, hair: 'curly', coat: 'half2', hands: { L: 'type', R: 'type' }, anim: 'type', phase: 5 });
+    hov([desk, dev], 'builds', 'The build', 'Not build-to-spec. We start with the strategic question, then build what delivers the outcome.');
+    const w1 = S.fig({ at: [-4.6, 3.05, 0], face: 0, pose: 'walk', hair: 'short', coat: 'paper', hands: { L: 'carry' }, bias: 40, phase: 1 });
+    const w2 = S.fig({ at: [-4.6, 3.05, 0], face: 0, pose: 'walk', build: 'b', hair: 'bob', coat: 'half', pants: 'paper', skirt: 'half2', hands: { R: 'strap' }, bias: 40, phase: 2.5 });
+    S.movers = [{ F: w1, dir: [1, 0, 0], len: 9.0, speed: .5, lag: 0 }, { F: w2, dir: [1, 0, 0], len: 9.0, speed: .5, lag: 4.6 }];
+    hov([w1, w2], 'systems', 'Repeatable systems', 'The patterns we build together become systems your team sustains without us. That is the point of the climb.');
+    S.plant(4.3, -2.9, 1.0); S.plant(-4.3, 2.6, .8);
+  } },
+  // 6 · then the next workflow: a cairn, and someone walking on
+  { door: [-1.4, 1.6], build(S) {
+    S.pad([[-2.5, -2], [2.5, -2], [2.5, 2], [-2.5, 2]], 'paper'); S.shade(1.9, -1.0, 1.0);
+    const cairn = S.cairn(.1, .2); hov(cairn, 'cairn', 'The next workflow', 'Build first. Learn fast. Repeat.');
+    const walker = S.fig({ at: [-1.2, 1.0, 0], face: Q, pose: 'walk', hair: 'curly', coat: 'ink', pants: 'paper', hands: { L: 'strap', R: 'wave' }, anim: 'wave' });
+    hov(walker, 'cairn', 'Onward', 'Fluency is personal before it is organizational. Then the next workflow.');
+    S.tree(1.9, -1.4, 2.4, 1.0);
+  } },
+];
+
+// ---------- the page: the map is the site; a path draws down it as you scroll and the stops come alive ----------
+const map = document.getElementById('map'), svg = document.getElementById('terrain');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stages = [...document.querySelectorAll('.stage')];
+function layout() {
+  const narrow = innerWidth < 860;
+  if (narrow) {
+    const W = 520, s = 2.1, xs = [262, 268, 255, 268, 258, 264, 262];
+    return { W, H: 7000, s, narrow, places: xs.map(x => ({ x, y: 0 })), text: xs.map(() => ({ left: 14, top: 0, width: 82 })) };
+  }
+  const W = 1000, s = 2.2;
+  const pl = [[710, 360], [290, 1180], [710, 2000], [290, 2840], [710, 3660], [290, 4520], [500, 5240]];
+  const H = 5600;
+  return { W, H, s, narrow, places: pl.map(([x, y]) => ({ x, y })), text: pl.map(([x, y], i) => ({ left: i === 6 ? 34 : (x > 500 ? 7 : 55), top: (y + (i === 0 ? -250 : (i === 6 ? 60 : -150))) / H * 100, width: i === 6 ? 36 : 38 })) };
+}
+let L = null, trail = null, lens = null, dotsOnTrail = [], stopLen = [], head = null, headRing = null, total = 0, sceneObjs = [], placeGs = [];
+function build() {
+  L = layout();
+  if (L.narrow) {
+    const pxPerUnit = map.clientWidth / L.W;
+    stages.forEach((st, i) => { st.style.left = L.text[i].left + '%'; st.style.width = L.text[i].width + '%'; });
+    const hs = stages.map(st => st.offsetHeight / pxPerUnit);
+    // a stop is about 250 units tall at this scale; copy sits below it
+    const tops = []; let y = 40 + hs[0] + 60 + 120;
+    L.places.forEach((p, i) => { p.y = Math.round(y); tops.push(i === 0 ? 40 : p.y + (i === 6 ? 80 : 230)); if (i < 6) y = tops[i] + hs[i] + 140 + 120; if (i === 0) y = p.y + 230 + 110 + 120; });
+    L.H = Math.round(tops[6] + hs[6] + 180);
+    L.text.forEach((t, i) => { t.top = tops[i] / L.H * 100; });
+  }
+  const { W, H: HH, s, places } = L;
+  svg.replaceChildren(); for (const k in H) delete H[k]; sceneObjs = []; placeGs = [];
+  svg.setAttribute('viewBox', `0 0 ${W} ${HH}`); svg.setAttribute('preserveAspectRatio', 'xMidYMin meet');
+  const defs = el('defs', {}, svg);
+  for (const [id, sp, r] of [['half', 1.05, .30], ['half2', .85, .33]]) { const p = el('pattern', { id, width: sp, height: sp, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs); el('circle', { cx: sp / 2, cy: sp / 2, r, fill: '#181818' }, p); }
+  { const p = el('pattern', { id: 'stripe', width: 1.6, height: 1.6, patternUnits: 'userSpaceOnUse' }, defs); el('rect', { x: 0, y: 0, width: 1.6, height: .55, fill: '#181818' }, p); }
+  const spacings = [17, 14.5, 12.5, 10.5, 9, 7.6, 6.4];
+  spacings.forEach((sp, i) => { const p = el('pattern', { id: 'pb' + i, width: sp, height: sp, patternUnits: 'userSpaceOnUse' }, defs); el('circle', { cx: sp / 2, cy: sp / 2, r: L.narrow ? .95 : .75, fill: '#181818', opacity: .34 }, p); });
+  const dense = el('pattern', { id: 'pdense', width: 3.6, height: 3.6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(30)' }, defs); el('circle', { cx: 1.8, cy: 1.8, r: .7, fill: '#181818', opacity: .3 }, dense);
+  const rows = el('pattern', { id: 'prows', width: 9, height: 4.5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(-6)' }, defs); el('circle', { cx: 2, cy: 2.2, r: .7, fill: '#181818', opacity: .32 }, rows); el('circle', { cx: 6.5, cy: 2.2, r: .7, fill: '#181818', opacity: .32 }, rows);
+  const grid = el('pattern', { id: 'pgrid', width: 5.2, height: 5.2, patternUnits: 'userSpaceOnUse' }, defs); el('rect', { x: 1.3, y: 1.3, width: 2.4, height: 2.4, fill: '#181818', opacity: .22 }, grid);
+  const ground = el('g', { class: 'stipple' }, svg), contours = el('g', {}, svg), trailL = el('g', {}, svg), placesL = el('g', {}, svg), lifeL = el('g', {}, svg);
+  const nb = spacings.length; for (let i = 0; i < nb; i++) el('rect', { x: 0, y: Math.floor(i * HH / nb), width: W, height: Math.ceil(HH / nb) + 1, fill: `url(#pb${i})` }, ground);
+  el('rect', { x: 0, y: HH - 620, width: W, height: 620, fill: 'url(#pgrid)' }, ground);
+  const ry = places[0].y + Math.round(62 * s);
+  el('path', { d: `M-10 ${ry} C ${W * .3} ${ry - 30} ${W * .6} ${ry + 40} ${W + 10} ${ry + 5} L ${W + 10} ${ry + 60} C ${W * .6} ${ry + 95} ${W * .3} ${ry + 25} -10 ${ry + 55} Z`, fill: 'url(#prows)', class: 'stipple' }, ground);
+  seed = 5;
+  for (let i = 0; i < 14; i++) { const y = 420 + rnd() * (HH - 1200); const side = rnd() < .5 ? -1 : 1; const px = places.reduce((a, p) => Math.abs(p.y - y) < Math.abs(a.y - y) ? p : a, places[0]).x; const x = clamp(px + side * (200 + rnd() * 220), 60, W - 60); el('ellipse', { cx: x, cy: y, rx: 50 + rnd() * 70, ry: 26 + rnd() * 30, fill: 'url(#pdense)', transform: `rotate(${(rnd() * 40 - 20).toFixed(1)} ${x} ${y})` }, ground); }
+  for (let y = 560; y < HH - 700; y += 330) { let d = `M0 ${y}`; for (let x = 0; x <= W; x += 50) d += ` L${x} ${(y + Math.sin(x / 140 + y / 97) * 22 + Math.sin(x / 61 + y / 31) * 8).toFixed(1)}`; el('path', { d, class: 'contour' }, contours); }
+  // the places
+  const doors = [];
+  places.forEach((p, i) => {
+    const g = el('g', { class: 'place ahead', transform: `translate(${p.x} ${p.y}) scale(${s})`, 'data-place': i }, placesL); placeGs.push(g);
+    seed = 11 + i; const sc = scene(g); SCENES[i].build(sc); sc.done(); sceneObjs.push(sc);
+    const [dx, dy] = P([SCENES[i].door[0], SCENES[i].door[1], 0]); doors.push([p.x + dx * s, p.y + dy * s]);
+  });
+  // the trail: through the door of every place, winding, always descending
+  const way = [];
+  doors.forEach((d, i) => {
+    if (i === 0) way.push([d[0] - 20, d[1] - 70]); way.push(d);
+    if (i < doors.length - 1) {
+      const nd = doors[i + 1];
+      if (L.narrow) { way.push([36, d[1] + 150]); way.push([36, nd[1] - 260]); }
+      else { const bend = (i % 2 ? -1 : 1) * 130; way.push([lerp(d[0], nd[0], .35) + bend, lerp(d[1], nd[1], .38)]); way.push([lerp(d[0], nd[0], .7) - bend * .7, lerp(d[1], nd[1], .72)]); }
+    }
+  });
+  const last = way[way.length - 1]; if (L.narrow) { way.push([36, last[1] + 130]); way.push([36, HH - 20]); } else { way.push([last[0] - 130, last[1] + 90]); way.push([last[0] - 170, HH - 20]); }
+  const catmull = (p) => { let d = `M${p[0][0]} ${p[0][1]}`; for (let i = 0; i < p.length - 1; i++) { const p0 = p[Math.max(0, i - 1)], p1 = p[i], p2 = p[i + 1], p3 = p[Math.min(p.length - 1, i + 2)]; d += ` C${r2(p1[0] + (p2[0] - p0[0]) / 6)} ${r2(p1[1] + (p2[1] - p0[1]) / 6)} ${r2(p2[0] - (p3[0] - p1[0]) / 6)} ${r2(p2[1] - (p3[1] - p1[1]) / 6)} ${r2(p2[0])} ${r2(p2[1])}`; } return d; };
+  const d = catmull(way);
+  el('path', { d, class: 'trail-clear' }, trailL); el('path', { d, class: 'trail-ahead' }, trailL);
+  trail = el('path', { d, class: 'trail' }, trailL); const core = el('path', { d, class: 'trail-core' }, trailL);
+  total = trail.getTotalLength();
+  lens = []; let maxy = -1e9; for (let l = 0; l <= total; l += 2) { const q = trail.getPointAtLength(l); maxy = Math.max(maxy, q.y); lens.push([maxy, l]); }
+  stopLen = places.map((p, i) => i === 0 ? 0 : lengthAtY(p.y - Math.round(35 * s)));
+  dotsOnTrail = []; const dg = el('g', {}, trailL); for (let l = 8; l < total - 6; l += 11) { const q = trail.getPointAtLength(l); dotsOnTrail.push([l, el('circle', { cx: r2(q.x), cy: r2(q.y), r: 1.15, class: 'tdot' }, dg)]); }
+  trail.style.strokeDasharray = `0 ${total + 10}`; core.style.strokeDasharray = `0 ${total + 10}`; trail._core = core;
+  head = el('circle', { r: 4.2, class: 'head' }, lifeL); headRing = el('circle', { r: 8, class: 'head-ring' }, lifeL);
+  stages.forEach((st, i) => { const t = L.text[i]; st.style.left = t.left + '%'; st.style.top = t.top + '%'; st.style.width = t.width + '%'; });
+  const ruler = document.getElementById('ruler'); ruler.replaceChildren();
+  [['Asking', 0], ['Automation', 2], ['Augmentation', 3], ['Agency', 5]].forEach(([w, i]) => { const sp = document.createElement('span'); sp.textContent = w; sp.dataset.stage = i; sp.style.top = (places[i].y / HH * 100) + '%'; ruler.appendChild(sp); });
+  drawn = -1; onScroll();
+}
+// ---------- scroll: the focal line of the viewport is where the path's head is ----------
+let drawn = -1, target = 0, raf = 0, current = -1;
+const navLinks = [...document.querySelectorAll('[data-nav]')];
+function lengthAtY(y) { let lo = 0, hi = lens.length - 1; if (y <= lens[0][0]) return 0; if (y >= lens[hi][0]) return lens[hi][1]; while (lo < hi) { const m = (lo + hi) >> 1; if (lens[m][0] < y) lo = m + 1; else hi = m; } return lens[lo][1]; }
+function onScroll() {
+  const r = map.getBoundingClientRect(); const pxPerUnit = r.width / L.W; const focal = innerHeight * (L.narrow ? .5 : .46);
+  const yUnits = (focal - r.top) / pxPerUnit; target = clamp(lengthAtY(yUnits), 0, total);
+  if (drawn < 0) drawn = target;
+  if (!raf) raf = requestAnimationFrame(tick);
+}
+const arrived = [];
+function tick() {
+  raf = 0; drawn = reduce ? target : lerp(drawn, target, .12);
+  const dl = clamp(drawn, 0, total);
+  trail.style.strokeDasharray = `${r2(dl)} ${r2(total + 10)}`; trail._core.style.strokeDasharray = `${r2(Math.max(0, dl - 3))} ${r2(total + 10)}`;
+  for (const [l, c] of dotsOnTrail) c.classList.toggle('lit', l <= dl);
+  const q = trail.getPointAtLength(dl); head.setAttribute('cx', r2(q.x)); head.setAttribute('cy', r2(q.y)); headRing.setAttribute('cx', r2(q.x)); headRing.setAttribute('cy', r2(q.y));
+  let cur = -1; stopLen.forEach((sl, i) => { const a = dl >= sl; arrived[i] = a; stages[i].classList.toggle('arrived', a); placeGs[i].classList.toggle('ahead', !a); if (a) cur = i; });
+  if (cur !== current) { current = cur; navLinks.forEach(n => n.classList.toggle('on', +n.dataset.nav === cur)); document.querySelectorAll('.ruler span').forEach(sp => sp.classList.toggle('on', +sp.dataset.stage <= cur)); }
+  if (Math.abs(drawn - target) > .05) raf = requestAnimationFrame(tick);
+}
+addEventListener('scroll', onScroll, { passive: true });
+let rt = 0; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 150); });
+// ---------- life: the stops the path has reached move, when they are on screen ----------
+const t0 = performance.now(); let visible = [], lastVis = 0;
+function life(now) {
+  const t = (now - t0) / 1000;
+  if (now - lastVis > 400) { lastVis = now; visible = placeGs.map((g, i) => { if (!arrived[i]) return false; const r = g.getBoundingClientRect(); return r.bottom > -100 && r.top < innerHeight + 100; }); }
+  if (!reduce) sceneObjs.forEach((sc, i) => { if (!visible[i]) return; for (const F of sc.life) F.update(t); for (const m of sc.movers || []) { const off = ((t - (m.lag || 0)) * m.speed % m.len + m.len) % m.len; const [dx, dy] = P([m.dir[0] * off, m.dir[1] * off, 0]); const op = clamp(Math.min(off, m.len - off) / .6, 0, 1); for (const d of m.F.all) { d.g.setAttribute('transform', `translate(${dx} ${dy})`); d.g.style.opacity = op; } } });
+  requestAnimationFrame(life);
+}
+// ---------- hover: the drawing and the copy light each other ----------
+const card = document.getElementById('card'), cardCap = document.getElementById('cardCap'), cardText = document.getElementById('cardText');
+const tapbar = document.getElementById('tapbar'), tapCap = document.getElementById('tapCap'), tapText = document.getElementById('tapText');
+let hot = null, tapTimer = 0;
+const litFor = (link, on) => { for (const g of H[link] || []) g.classList.toggle('hot', on); const li = document.querySelector(`.offers li[data-link="${link}"]`); if (li) li.classList.toggle('lit', on); };
+function setHot(g, e) {
+  if (hot && hot !== g) { hot.classList.remove('hot'); if (hot.dataset.link) litFor(hot.dataset.link, false); }
+  hot = g;
+  if (!g) { card.classList.remove('show'); tapbar.classList.remove('show'); return; }
+  g.classList.add('hot'); if (g.dataset.link) litFor(g.dataset.link, true);
+  if (e && e.pointerType === 'mouse') { const r = map.getBoundingClientRect(); cardCap.textContent = g.dataset.cap; cardText.textContent = g.dataset.hover; card.style.left = (e.clientX - r.left) + 'px'; card.style.top = (e.clientY - r.top) + 'px'; card.classList.add('show'); }
+  else { tapCap.textContent = g.dataset.cap; tapText.textContent = g.dataset.hover; tapbar.classList.add('show'); clearTimeout(tapTimer); tapTimer = setTimeout(() => setHot(null), 4200); }
+}
+svg.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; const g = e.target.closest && e.target.closest('[data-hover]'); if (g !== hot) setHot(g, e); else if (g) { const r = map.getBoundingClientRect(); card.style.left = (e.clientX - r.left) + 'px'; card.style.top = (e.clientY - r.top) + 'px'; } });
+svg.addEventListener('pointerleave', () => setHot(null));
+svg.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') return; const g = e.target.closest && e.target.closest('[data-hover]'); setHot(g === hot ? null : g, e); });
+addEventListener('scroll', () => { if (hot && card.classList.contains('show')) setHot(null); }, { passive: true });
+document.addEventListener('pointerover', e => { const li = e.target.closest && e.target.closest('.offers li[data-link]'); if (li) litFor(li.dataset.link, true); });
+document.addEventListener('pointerout', e => { const li = e.target.closest && e.target.closest('.offers li[data-link]'); if (li && !(hot && hot.dataset.link === li.dataset.link)) litFor(li.dataset.link, false); });
+build(); requestAnimationFrame(life);
+window.bfJourney = { go: i => stages[i].scrollIntoView({ behavior: 'smooth', block: 'center' }), layout: () => L, scenes: () => sceneObjs };
+
+})();
+</script>

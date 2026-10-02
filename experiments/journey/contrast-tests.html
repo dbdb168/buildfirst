@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<title>Contrast tests</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{ --paper:#F3F2EE; --ink:#181818; --body:rgba(24,24,24,.82); --muted:rgba(24,24,24,.56); --faint:rgba(24,24,24,.36); --line:rgba(24,24,24,.12); --g1:#FFFFFF; --g2:#F3F2EE; --g3:#E7E5DE; --g4:#D8D5CC; --g5:#BFBBB0; --grey:#8F8E88; --accent:#B5452F;
+  --display:'Arimo','Helvetica Neue',Helvetica,Arial,sans-serif; --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace; }
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--display);color:var(--ink);background:var(--paper);font-size:15px;line-height:1.5}
+.cap{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+main{padding:28px max(24px, calc((100% - 1400px) / 2)) 80px}
+h1{font-weight:300;font-size:clamp(30px,3.6vw,48px);letter-spacing:-.035em;line-height:1.02;margin:12px 0 10px}
+p.lead{max-width:680px;color:var(--body);margin:0 0 20px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(560px, 1fr));gap:30px 40px;align-items:start}
+figure{margin:0;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:10px}
+figure svg{display:block;height:auto;max-width:100%;overflow:visible}
+figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-align:center;line-height:1.7}
+figcaption small{display:block;font-family:var(--display);font-size:13px;letter-spacing:0;text-transform:none;color:var(--muted);max-width:520px}
+svg.defs{position:absolute;width:0;height:0}
+/* ---- the drawing ---- */
+__DRAWING__
+/* ---- the variants ---- */
+.varB polygon:not(.fig *):not(.arm *),.varB ellipse:not(.fig *):not(.arm *),.varB circle:not(.fig *):not(.arm *){stroke:var(--grey)}
+.varB .ln:not(.fig *):not(.arm *),.varB .s-ink:not(.fig *):not(.arm *){stroke:var(--grey)}
+.varB .f-ink:not(.fig *):not(.arm *){fill:var(--grey)}
+.varB .shadow{opacity:.55}
+.varD .fig .s-half,.varD .arm .s-half{stroke:url(#halfA)} .varD .fig .s-half2,.varD .arm .s-half2{stroke:url(#half2A)} .varD .fig .s-stripe,.varD .arm .s-stripe{stroke:url(#stripeA)}
+.varD .fig .f-half{fill:url(#halfA)} .varD .fig .f-half2{fill:url(#half2A)} .varD .fig .f-stripe{fill:url(#stripeA)}
+.varD .shadow{fill:url(#halfA)}
+.varE polygon:not(.fig *):not(.arm *):not(.shadow){fill:var(--paper)} .varE ellipse:not(.fig *):not(.arm *):not(.shadow){fill:var(--paper)} .varE circle:not(.fig *):not(.arm *){fill:var(--paper)}
+.varE .f-ink:not(.fig *):not(.arm *){fill:var(--ink)}
+.varE .floor polygon{fill:var(--paper)}
+.varG .fig .shadow{opacity:.95}
+.varG .shadow{opacity:.95}
+</style>
+<svg class="defs terrain" aria-hidden="true"><defs>
+  <pattern id="half" width="1.05" height="1.05" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".525" cy=".525" r=".30" fill="#181818"/></pattern>
+  <pattern id="half2" width=".85" height=".85" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".425" cy=".425" r=".33" fill="#181818"/></pattern>
+  <pattern id="stripe" width="1.6" height="1.6" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="1.6" height=".55" fill="#181818"/></pattern>
+  <pattern id="halfA" width="1.05" height="1.05" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".525" cy=".525" r=".34" fill="#B5452F"/></pattern>
+  <pattern id="half2A" width=".85" height=".85" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".425" cy=".425" r=".36" fill="#B5452F"/></pattern>
+  <pattern id="stripeA" width="1.6" height="1.6" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="1.6" height=".6" fill="#B5452F"/></pattern>
+</defs></svg>
+<main>
+  <span class="cap">Contrast between prop and person · halo off everywhere</span>
+  <h1>Air first, then size, then seven ways to make the people come forward.</h1>
+  <p class="lead">First the room with more space in it, at the same scale and at page scale. Then the same dense room each time: the base is the current drawing with the halo removed, each variant changes one thing, and the last two combine the ones that work.</p>
+  <div class="grid" id="grid"></div>
+</main>
+<script>
+(() => {
+'use strict';
+__KIT__
+__SCENES__
+const LIFE = [];
+// the team room with air in it: a 12 by 8 metre floor, a 5.6 metre table, 1.6 metres between seats, the bench and the board a stride away
+function spacious(S) {
+  S.pad([[-6, -4], [6, -4], [6, 4], [-6, 4]], 'white');
+  S.wall(-6, -4.05, 6, -3.9, 2.4, { south: 'paper' });
+  S.board(-5.2, -3.9, .9, 4.2, 1.1, 'x', { lines: [[.3, .84, .45], [.3, .74, .3], [.3, .64, .5]], diagram: [.36, .38], circle: [.66, .3], notes: [[.82, .78, 'shade2', .1], [.9, .78, 'ink', -.08], [.82, .64, 'ink', .05], [.9, .64, 'shade2', .12], [.86, .5, 'shade2', -.1]] });
+  S.fig({ at: [-5.5, -3.35, 0], face: -Math.PI / 2, hair: 'cap', coat: 'half2', hands: { L: 'hip', R: 'write' }, anim: 'write' });
+  S.table(-4.6, -1.3, 5.6, 1.4, .74);
+  [[-3.8, 'short', 'half', 'a', null], [-2.2, 'bun', 'ink', 'b', 'half2'], [-.6, 'curly', 'paper', 'a', null]].forEach(([x, hair, coat, build, skirt], i) => { S.stool(x, -1.95, .46); S.fig({ at: [x, -1.95, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build, skirt, hair, coat, pants: i === 1 ? 'paper' : 'ink', hands: i === 2 ? { L: 'lap', R: 'raise' } : { L: 'type', R: 'type' }, anim: i === 2 ? 'raise' : 'type', phase: i }); S.laptop(x, -1.05, .74, -Math.PI / 2); });
+  [[-3.0, 'long', 'stripe', 'b', 'ink'], [-1.4, 'short', 'ink', 'a', null], [.2, 'tied', 'half2', 'b', null]].forEach(([x, hair, coat, build, skirt], i) => { S.chair(x, .75, -Math.PI / 2); S.fig({ at: [x, .75, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, build, skirt, hair, coat, pants: i === 1 ? 'half2' : 'ink', hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 3 }); S.laptop(x, -.15, .74, Math.PI / 2); });
+  S.mug(-4.2, -.5, .74); S.mug(.6, -.9, .74, false); S.mug(-1.9, -.6, .74, false);
+  S.table(3.0, 1.2, 1.8, .8, .9); S.monitor(4.1, 1.4, .9, Math.PI / 2, .5, .32); S.slab([3.4, 1.6], 0, .14, .1, .9, 1.08, { top: 'shade2', east: 'paper', south: 'shade' });
+  S.fig({ at: [3.3, 2.5, 0], face: -Math.PI / 2, build: 'b', hair: 'bob', coat: 'paper', lean: .22, hands: { L: { abs: [3.15, 2.0, .95] }, R: { abs: [3.4, 2.0, .95] } } });
+  S.fig({ at: [4.7, 2.6, 0], face: -Math.PI / 2 - .5, hair: 'curly', coat: 'half', hands: { L: 'cross', R: 'point' }, anim: 'point' });
+  S.plant(5.3, -3.3, 1.0); S.plant(-5.4, 3.2, .7); S.plant(5.3, 3.3, .9);
+}
+function tile(label, note, cls, knobs, px = 1.55, pad = 14, build = S => SCENES[3].build(S)) {
+  const fig = document.createElement('figure'); if (cls) fig.className = cls; const svg = el('svg', { class: 'terrain' }, fig); document.getElementById('grid').appendChild(fig);
+  const saved = Object.assign({}, KN); Object.assign(KN, knobs || {});
+  const root = el('g', {}, svg); const S = scene(root); seed = 14; build(S); S.done();
+  Object.assign(KN, saved);
+  let b = S.extent(2); try { const m = root.getBBox(); if (m.width > 1 && m.height > 1) b = { x: Math.min(b.x, m.x), y: Math.min(b.y, m.y), width: Math.max(b.x + b.width, m.x + m.width) - Math.min(b.x, m.x), height: Math.max(b.y + b.height, m.y + m.height) - Math.min(b.y, m.y) }; } catch (e) {}
+  const x0 = b.x - pad, y0 = b.y - pad, w = b.width + 2 * pad, h = b.height + 2 * pad;
+  svg.setAttribute('viewBox', `${r2(x0)} ${r2(y0)} ${r2(w)} ${r2(h)}`); svg.style.width = r2(w * px) + 'px';
+  const cap = document.createElement('figcaption'); cap.textContent = label; const sm = document.createElement('small'); sm.textContent = note; cap.appendChild(sm); fig.appendChild(cap);
+  LIFE.push(...S.life);
+}
+tile('D0 · The room as it is', 'A 9 by 6 metre floor, a 3.8 metre table, 1.1 metres between seats, the bench a step from the table. Halo off.', '', { halo: 0 }, 1.2);
+tile('D1 · The same room with air in it', 'A 12 by 8 metre floor, a 5.6 metre table, 1.6 metres between seats, the near row staggered against the far row, the bench and the board a stride away. Same seven people. Drawn at the same scale per metre as D0.', '', { halo: 0 }, 1.2, 14, spacious);
+tile('D2 · The spacious room at page scale', 'What D1 costs: to fit the page column it has to be drawn smaller, so each person loses about a third of their size.', '', { halo: 0 }, .85, 14, spacious);
+tile('D3 · The spacious room with F applied', 'Air plus the lighter ink on props and the heavier contour on people.', 'varB', { halo: 0, figOL: .06 }, 1.2, 14, spacious);
+// a close-up: four at a shorter table, the board behind, the bench gone; small enough to sit beside the copy at a size where the people read
+function closeup(S) {
+  S.pad([[-4, -2.6], [4, -2.6], [4, 2.6], [-4, 2.6]], 'white');
+  S.wall(-4, -2.65, 4, -2.5, 2.4, { south: 'paper' });
+  S.board(-3.4, -2.5, .9, 3.4, 1.1, 'x', { lines: [[.3, .84, .45], [.3, .74, .3], [.3, .64, .5]], diagram: [.36, .38], circle: [.66, .3], notes: [[.82, .78, 'shade2', .1], [.9, .78, 'ink', -.08], [.86, .6, 'ink', .05]] });
+  S.fig({ at: [-3.6, -1.95, 0], face: -Math.PI / 2, hair: 'cap', coat: 'half2', hands: { L: 'hip', R: 'write' }, anim: 'write' });
+  S.table(-2.4, -.6, 3.6, 1.4, .74);
+  [[-1.6, 'bun', 'ink', 'b', 'half2'], [0, 'curly', 'paper', 'a', null]].forEach(([x, hair, coat, build, skirt], i) => { S.stool(x, -1.25, .46); S.fig({ at: [x, -1.25, 0], face: Math.PI / 2, pose: 'sit', seat: .46, build, skirt, hair, coat, pants: i === 0 ? 'paper' : 'ink', hands: i === 1 ? { L: 'lap', R: 'raise' } : { L: 'type', R: 'type' }, anim: i === 1 ? 'raise' : 'type', phase: i }); S.laptop(x, -.35, .74, -Math.PI / 2); });
+  [[-.8, 'long', 'stripe', 'b', 'ink'], [.8, 'short', 'ink', 'a', null]].forEach(([x, hair, coat, build, skirt], i) => { S.chair(x, 1.45, -Math.PI / 2); S.fig({ at: [x, 1.45, 0], face: -Math.PI / 2, pose: 'sit', seat: .46, build, skirt, hair, coat, pants: i === 1 ? 'half2' : 'ink', hands: { L: 'type', R: 'type' }, anim: 'type', phase: i + 3 }); S.laptop(x, .55, .74, Math.PI / 2); });
+  S.mug(-2.0, .2, .74); S.plant(3.4, -2.0, 1.0); S.plant(-3.6, 2.1, .7);
+}
+tile('D4 · The spacious room at full page width', 'The same room as D1, drawn so people stand about 110 pixels tall. It needs the whole width of the page; the copy would sit above or below it.', '', { halo: 0 }, 1.95, 14, spacious);
+tile('D5 · A close-up beside the copy', 'Four at the table instead of six, the bench gone, the board kept. Fits a 560 pixel column with people about 95 pixels tall.', '', { halo: 0 }, 1.7, 14, closeup);
+tile('0 · Base, no halo', 'What you liked. People in ink and halftone, props in paper greys, everything outlined at the same weight.', '', { halo: 0 });
+tile('A · Heavier line on people', 'People outlined at twice the weight of the props. The oldest trick in drawing: the foreground gets the heavier contour.', '', { halo: 0, figOL: .07 });
+tile('B · Props in a second, lighter ink', 'Props drawn in a warm grey ink, people in the key ink. The two-ink print logic from Falllinie, with the world as the spot ink.', 'varB', { halo: 0 });
+tile('C · A hairline cut', 'The halo kept, but a third of the width. A woodcut gap rather than a sticker edge.', '', { halo: .02 });
+tile('D · One accent, worn by people', 'The halftone that only people wear becomes the one colour on the page. Props stay monochrome.', 'varD', { halo: 0 });
+tile('E · Props as line drawings', 'Props lose their fills entirely and become hairline wireframes; people are the only solid things.', 'varE', { halo: 0 });
+tile('F · B plus A', 'Lighter ink on props and a heavier contour on people together.', 'varB', { halo: 0, figOL: .06 });
+tile('G · F plus a firmer shadow', 'As F, with the halftone puddle under each person darkened so every figure is anchored to the floor.', 'varB varG', { halo: 0, figOL: .06 });
+const t0 = performance.now(); (function life(now) { const t = (now - t0) / 1000; for (const F of LIFE) F.update(t); requestAnimationFrame(life); })(t0);
+})();
+</script>
+</html>
