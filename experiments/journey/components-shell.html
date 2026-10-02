@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<title>Journey components</title>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{ --paper:#F3F2EE; --ink:#181818; --body:rgba(24,24,24,.82); --muted:rgba(24,24,24,.56); --faint:rgba(24,24,24,.36); --line:rgba(24,24,24,.12); --g1:#FFFFFF; --g2:#F3F2EE; --g3:#E7E5DE; --g4:#D8D5CC; --g5:#BFBBB0;
+  --display:'Arimo','Helvetica Neue',Helvetica,Arial,sans-serif; --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace; }
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--display);color:var(--ink);background:var(--paper);font-size:15px;line-height:1.5}
+.cap{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px max(24px, calc((100% - 1320px) / 2));background:rgba(243,242,238,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .mark{font-weight:700;font-size:18px;letter-spacing:-.02em}
+header nav{display:flex;gap:18px}
+header nav a{color:var(--muted);text-decoration:none} header nav a:hover{color:var(--ink)}
+header .controls{display:flex;gap:18px;align-items:center;color:var(--muted)}
+header label{display:flex;align-items:center;gap:8px}
+input[type=range]{accent-color:var(--ink);width:120px} input[type=checkbox]{accent-color:var(--ink)}
+main{padding:28px max(24px, calc((100% - 1320px) / 2)) 80px}
+section{padding:28px 0 12px;border-top:1px solid var(--line)} section:first-child{border-top:0;padding-top:8px}
+h1{font-weight:300;font-size:clamp(34px,4vw,54px);letter-spacing:-.035em;line-height:1;margin:14px 0 10px}
+h2{font-weight:600;font-size:26px;letter-spacing:-.03em;margin:0 0 4px} h3{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:26px 0 6px}
+p.lead{max-width:640px;color:var(--body);margin:0 0 10px;font-size:16px}
+.grid{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:flex-end}
+figure{margin:0;padding:10px 6px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;border-radius:8px;transition:background .15s}
+figure:hover{background:rgba(255,255,255,.7)}
+figure svg{display:block;height:auto;max-width:min(100%, 92vw);overflow:visible}
+figcaption{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+#stops{gap:28px 36px;align-items:flex-start}
+#stops figure{padding:14px 10px 10px}
+#stops figcaption{font-size:11px;color:var(--ink)}
+svg.defs{position:absolute;width:0;height:0}
+footer{padding:28px max(24px, calc((100% - 1320px) / 2));border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+/* ---- the drawing ---- */
+__DRAWING__
+</style>
+<header>
+  <div><span class="mark">BuildFirst</span> <span class="cap" style="margin-left:10px">the journey · components</span></div>
+  <nav class="cap"><a href="#people">People</a><a href="#props">Props</a><a href="#together">Together</a><a href="journey.html">The page</a></nav>
+  <div class="controls cap"><label>Size <input type="range" id="size" min=".5" max="1.6" step=".05" value="1"></label><label><input type="checkbox" id="motion" checked> Motion</label></div>
+</header>
+<svg class="defs terrain" aria-hidden="true"><defs>
+  <pattern id="half" width="1.05" height="1.05" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".525" cy=".525" r=".30" fill="#181818"/></pattern>
+  <pattern id="half2" width=".85" height=".85" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx=".425" cy=".425" r=".33" fill="#181818"/></pattern>
+  <pattern id="stripe" width="1.6" height="1.6" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="1.6" height=".55" fill="#181818"/></pattern>
+</defs></svg>
+<main>
+  <section id="people">
+    <span class="cap">One kit, three registers</span>
+    <h1>The people, the props, and the two together.</h1>
+    <p class="lead">Everything on the journey page is drawn live by one kit: a true-cube isometric world in metres, ink outlines, paper, and a 45° halftone that only people wear. People are jointed bodies solved from where their hands need to be; props are flat paper greys with real structure. Hover any tile to isolate it; the slider resizes everything.</p>
+    <h2>People</h2>
+    <h3>Poses · what a body is doing</h3><div class="grid" id="poses"></div>
+    <h3>Facings · the same pointing figure from eight directions</h3><div class="grid" id="facings"></div>
+    <h3>Hair · seven silhouettes, no faces</h3><div class="grid" id="hair"></div>
+    <h3>Coats and trousers · five tones, three legs</h3><div class="grid" id="coats"></div>
+  </section>
+  <section id="props">
+    <h2>Props</h2>
+    <p class="lead">Furniture and things, each a small drawable with its own depth box so people can sit behind them and reach over them. No halftone here: a halftone shape on the page is always a person.</p>
+    <div class="grid" id="propgrid"></div>
+  </section>
+  <section id="together">
+    <h2>Together</h2>
+    <p class="lead">The seven stops as they are composed on the page, people and props sorted back to front. On the page each one comes alive when the path arrives; here they are all alive at once.</p>
+    <div class="grid" id="stops"></div>
+  </section>
+</main>
+<footer class="cap">BuildFirst · the journey, an experiment · people, props, and the stops · inspired by Falllinie and dotscene</footer>
+<script>
+(() => {
+'use strict';
+__KIT__
+__SCENES__
+__COMPONENTS__
+})();
+</script>
+</html>
