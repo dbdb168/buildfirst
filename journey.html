@@ -281,11 +281,19 @@ function sortDraw(parent, items) {
     const a = sb[i], b = sb[j]; if (a[1] < b[0] || b[1] < a[0] || a[3] < b[2] || b[3] < a[2]) continue;
     const s = behind(items[i], items[j]); if (s < 0) before[j].push(i); else if (s > 0) before[i].push(j);
   }
-  const order = items.map((_, i) => i).sort((a, b) => items[a].key - items[b].key), state = new Array(n).fill(0), out = [];
-  const cycles = []; const visit = i => { if (state[i] === 1) { cycles.push(i); return; } if (state[i]) return; state[i] = 1; const deps = before[i].slice().sort((a, b) => items[a].key - items[b].key); for (const d of deps) visit(d); state[i] = 2; out.push(i); };
+  // emit in key order (x + y, back to front) but never before the things that must be behind: Kahn's algorithm, picking
+  // the lowest key among the items whose dependencies are all drawn. A depth-first walk would pull a table forward as
+  // soon as a laptop on it was due, and the people sitting behind the table would then be drawn over it.
+  const left = before.map(b => b.length), after = Array.from({ length: n }, () => []); before.forEach((b, i) => b.forEach(j => after[j].push(i)));
+  const done = new Array(n).fill(false), out = []; const cycles = [];
+  for (let step = 0; step < n; step++) {
+    let pick = -1, pickAny = -1;
+    for (let i = 0; i < n; i++) { if (done[i]) continue; if (pickAny < 0 || items[i].key < items[pickAny].key) pickAny = i; if (left[i] === 0 && (pick < 0 || items[i].key < items[pick].key)) pick = i; }
+    if (pick < 0) { pick = pickAny; cycles.push(pick); }
+    done[pick] = true; out.push(pick); for (const j of after[pick]) left[j]--;
+  }
   sortDraw.cycles = cycles; sortDraw.before = before;
-  for (const i of order) visit(i);
-  for (const i of out) parent.appendChild(items[i].g);
+  for (const i of out) { items[i].g.__bb = items[i].bb; items[i].g.__key = items[i].key; parent.appendChild(items[i].g); }
 }
 
 // a blob: capsules and balls drawn as one silhouette. One outline pass under one fill pass, so the parts of a limb or a
