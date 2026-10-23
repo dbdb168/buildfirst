@@ -113,8 +113,8 @@ export default {
       <div>
         <div class="steps">
           <div class="stepline"><div><div class="n">1</div><div class="dur">Thirty minutes</div></div><div><h3>A conversation.</h3><p>You tell us what you’re trying to do. We listen for the real problem and any date that matters, like a board meeting or a strategy due in ninety days.</p></div></div>
-          <div class="stepline"><div><div class="n">2</div><div class="dur">A few days later</div></div><div><h3>One page: here’s what I heard.</h3><p>A short proposal in your words, with the shape of the eight sessions. A starting point, not a contract.</p></div></div>
-          <div class="stepline"><div><div class="n">3</div><div class="dur">The first session</div></div><div><h3>You start building.</h3><p>One fixed fee for the programme, agreed before we begin. Most clients pay from a learning and development budget.</p></div></div>
+          <div class="stepline"><div><div class="n">2</div><div class="dur">A few days later</div></div><div><h3>One page: here’s what we heard.</h3><p>A short proposal in your words, with the shape of the eight sessions. A starting point, not a contract.</p></div></div>
+          <div class="stepline"><div><div class="n">3</div><div class="dur">The first session</div></div><div><h3>You start building.</h3><p>One fixed fee for the whole programme, agreed before we begin. No surprises later.</p></div></div>
         </div>
       </div>
     </div>

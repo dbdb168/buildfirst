@@ -11,7 +11,7 @@ export const Q = {
     context: 'Coaching',
   },
   payingForward: {
-    text: '“I’ve been paying forward. I’ll share my experiences and try to generate some excitement and curiosity about it. It’s not as hard as you think it might be.”',
+    text: '“I’ve been paying forward… I’ll share my experiences and try to generate some excitement and interest and curiosity… it’s not as hard as you think it might be.”',
     who: 'Senior technology executive, financial services',
     context: 'Coaching, a few months in',
   },
@@ -47,12 +47,12 @@ export const Q = {
   },
   // Working sessions and advisory
   makingUsThink: {
-    text: '“It’s hard to get our team sometimes to chat about certain topics, but you did a great job of fostering some of that conversation and really making us think.”',
+    text: '“It’s hard to get our team sometimes to chat about certain topics, but you guys did a great job of fostering some of that conversation and really making us think.”',
     who: 'Implementation lead, regional healthcare provider',
     context: 'After a working session with their team',
   },
   notTooSoon: {
-    text: '“I don’t feel that you’re trying to get us started too soon at all. I appreciate that you continue to think through our options with me.”',
+    text: '“I don’t feel that you’re trying to get us started too soon at all. You’ve been great and I appreciate that you continue to think through our options with me.”',
     who: 'Implementation lead, regional healthcare provider',
     context: 'While planning a sprint',
   },
