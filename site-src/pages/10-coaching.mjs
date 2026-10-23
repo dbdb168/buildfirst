@@ -131,7 +131,7 @@ export default {
         <details><summary>Which tools will we use?</summary><p>Whatever fits you. We work in Claude most days, but we’re tool-agnostic. If your company runs on Microsoft Copilot, we start there.</p></details>
         <details><summary>What about our data?</summary><p>We start on made-up data, so nothing confidential is at risk while you learn. When real work comes in, we sign an NDA and stay inside the tools and rules your company already has.</p></details>
         <details><summary>Can two of us do it together?</summary><p>Yes. Two leaders from the same firm can share the programme, which helps when you’ll be making the decisions together.</p></details>
-        <details><summary>What happens after?</summary><p>It sticks, because you built it yourself. Some clients stop there. Others bring their team into a <a href="/workshops">workshop</a> or turn a tool they built into a <a href="/builds">build</a>.</p></details>
+        <details><summary>What happens after?</summary><p>It sticks, because you built it yourself. Some clients stop there. Others bring their team into a <a href="/workshops">workshop</a>, or turn a tool they built into a <a href="/builds">system the whole business uses</a>.</p></details>
       </div>
     </div>
   </div>

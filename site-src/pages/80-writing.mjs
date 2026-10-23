@@ -3,7 +3,7 @@ import { SITE, stairs, ctaBand } from '../layout.mjs';
 export default {
   path: '/writing',
   title: 'Writing and tools',
-  description: 'The AI Cookbook, a weekly write-up of what works and what breaks, plus free tools: the BuildFirst assessment and Groundwork.',
+  description: 'The AI Cookbook, a running write-up of what works and what breaks, plus free tools: the BuildFirst assessment and Groundwork.',
   body: `
 <section class="hero compact">
   <div class="wrap">

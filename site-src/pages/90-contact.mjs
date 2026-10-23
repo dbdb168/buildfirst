@@ -43,7 +43,7 @@ export default {
       <div><span class="num">02</span><h2>Or write to us.</h2></div>
       <div class="prose">
         <p class="lede"><a href="mailto:${SITE.email}">${SITE.email}</a></p>
-        <p>We’re on <a href="${SITE.linkedin}">LinkedIn</a> too, and we write every week in <a href="${SITE.substack}">The AI Cookbook</a>. Based in Richmond, Virginia.</p>
+        <p>We’re on <a href="${SITE.linkedin}">LinkedIn</a> too, and we write about what we’re learning in <a href="${SITE.substack}">The AI Cookbook</a>. Based in Richmond, Virginia.</p>
       </div>
     </div>
   </div>
