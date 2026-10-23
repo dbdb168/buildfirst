@@ -29,6 +29,11 @@
       "source": "/assessment.html",
       "destination": "/assessment",
       "permanent": true
+    },
+    {
+      "source": "/build-intake.html",
+      "destination": "/build-intake",
+      "permanent": true
     }
   ]
 }

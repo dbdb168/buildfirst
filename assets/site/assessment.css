@@ -479,3 +479,5 @@
     }
   }
 .assess-wrap { padding-top: clamp(40px, 6vw, 72px); }
+
+@media (max-width: 560px) { .assess { padding-left: 0; padding-right: 0; } }
