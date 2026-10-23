@@ -1,0 +1,480 @@
+/* The BuildFirst assessment, in the site's look. Scoped to .assess so it sits beside site.css. */
+.assess {
+  --black: var(--ink);
+  --coral: var(--terracotta);
+  --coral-dark: #b44f30;
+  --coral-light: #f8e7df;
+  --warm-gray: var(--muted);
+  --light-gray: var(--tint);
+  --divider: var(--rule);
+  --white: #fff;
+  --drain-1: var(--terracotta);
+  --drain-2: #e08a6c;
+  --neutral: var(--faint);
+  --energy-4: #86a98f;
+  --energy-5: var(--sage);
+  --delegation: var(--blue);
+  --description: #c98a26;
+  --discernment: var(--sage);
+  --diligence: #7d5a8c;
+  --amber: var(--ochre);
+  --amber-light: #f0bd6a;
+  font-family: var(--label);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.assess .page-head { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+.assess .page-head .eyebrow { margin-bottom: 16px; }
+.assess h1 { font-weight: 800; letter-spacing: -0.025em; font-size: clamp(34px, 4.4vw, 52px); line-height: 1.04; margin: 0 0 16px; }
+.assess .page-head .dek { font-family: var(--read); font-size: clamp(19px, 1.5vw, 22px); color: var(--ink-2); margin: 0; }
+.assess .section-header, .assess .spectrum-narrative h3, .assess .dim-card-title,
+.assess .focus-area-title, .assess .results-cta h3 { font-weight: 700; letter-spacing: -0.015em; margin-top: 0; }
+.assess .section-desc, .assess .results-intro, .assess .spectrum-narrative p,
+.assess .focus-area p, .assess .ai-prompt-intro, .assess .results-cta p { font-family: var(--read); font-size: 17px; }
+.assess .section { margin: 0 0 48px; padding: 0; }
+.assess button[type="submit"], .assess .btn-cta { border-radius: 999px; background: var(--ink); }
+.assess button[type="submit"]:hover, .assess .btn-cta:hover { background: var(--terracotta); opacity: 1; }
+.assess .progress-bar { top: 0; }
+  
+
+
+
+  .assess {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px 32px 64px;
+  }
+
+  .assess .logo {
+    font-family: var(--display);
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+  .assess .logo-build { color: var(--black); }
+  .assess .logo-first { color: var(--coral); }
+
+  .assess h1 {
+    font-family: var(--display);
+    font-size: 34px;
+    font-weight: 400;
+    color: var(--black);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .assess .subtitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--coral);
+    margin-bottom: 24px;
+  }
+
+  .assess .intro {
+    font-size: 15.5px;
+    line-height: 1.75;
+    margin-bottom: 8px;
+  }
+
+  .assess .time-note {
+    font-size: 14px;
+    color: var(--warm-gray);
+    font-style: italic;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  /* Sections */
+  .assess .section { margin-bottom: 40px; }
+  .assess .section-header {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+  .assess .section-desc {
+    font-size: 14px;
+    color: var(--warm-gray);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  /* Form elements */
+  .assess label {
+    display: block;
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: var(--black);
+  }
+
+  .assess input[type="text"],
+  .assess input[type="email"],
+  .assess textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: var(--label);
+    font-size: 15px;
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    background: var(--white);
+    color: var(--black);
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+
+  .assess input[type="text"]:focus,
+  .assess input[type="email"]:focus,
+  .assess textarea:focus {
+    outline: none;
+    border-color: var(--coral);
+  }
+
+  .assess textarea { resize: vertical; min-height: 80px; }
+  .assess .field { margin-bottom: 20px; }
+
+  /* Energy grid */
+  .assess .energy-grid { margin-bottom: 24px; }
+  .assess .energy-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--light-gray);
+    gap: 16px;
+  }
+  .assess .energy-row:last-child { border-bottom: none; }
+  .assess .energy-activity { font-size: 15px; color: var(--black); }
+  .assess .energy-scale { display: flex; gap: 6px; align-items: center; }
+  .assess .energy-label-left,
+  .assess .energy-label-right {
+    font-size: 11px;
+    color: var(--warm-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    width: 48px;
+    text-align: center;
+  }
+  .assess .energy-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--divider); background: var(--white);
+    cursor: pointer; transition: all 0.15s;
+    font-size: 13px; font-weight: 600; color: var(--warm-gray);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .assess .energy-btn:hover { border-color: var(--coral); color: var(--coral); }
+  .assess .energy-btn.selected { background: var(--coral); border-color: var(--coral); color: var(--white); }
+  .assess .energy-btn.selected.drain-1 { background: var(--drain-1); border-color: var(--drain-1); }
+  .assess .energy-btn.selected.drain-2 { background: var(--drain-2); border-color: var(--drain-2); }
+  .assess .energy-btn.selected.neutral { background: var(--neutral); border-color: var(--neutral); }
+  .assess .energy-btn.selected.energy-4 { background: var(--energy-4); border-color: var(--energy-4); }
+  .assess .energy-btn.selected.energy-5 { background: var(--energy-5); border-color: var(--energy-5); }
+
+  /* Radio options */
+  .assess .option-group { margin-bottom: 24px; }
+  .assess .option-group label.option-label { font-weight: 400; font-size: 15px; margin-bottom: 0; }
+  .assess .option-label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border: 1px solid var(--divider);
+    border-radius: 6px; margin-bottom: 8px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .assess .option-label:hover { border-color: var(--coral); background: var(--coral-light); }
+  .assess .option-label input[type="radio"],
+  .assess .option-label input[type="checkbox"] {
+    accent-color: var(--coral); width: 16px; height: 16px; flex-shrink: 0;
+  }
+  .assess .option-label.selected { border-color: var(--coral); background: var(--coral-light); }
+
+  /* Question numbering */
+  .assess .q-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--coral-light); color: var(--coral);
+    font-size: 13px; font-weight: 700; margin-right: 10px; flex-shrink: 0;
+  }
+  .assess .q-label {
+    display: flex; align-items: center;
+    font-weight: 500; font-size: 15px; margin-bottom: 12px; color: var(--black);
+  }
+  .assess .q-dimension {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 2px 8px; border-radius: 3px; margin-left: auto;
+  }
+  .assess .q-dimension.dim-delegation { background: #E8F0F8; color: var(--delegation); }
+  .assess .q-dimension.dim-description { background: #FDF3E5; color: var(--description); }
+  .assess .q-dimension.dim-discernment { background: #EDF3EA; color: var(--discernment); }
+  .assess .q-dimension.dim-diligence { background: #F3EAF5; color: var(--diligence); }
+  .assess .q-dimension.dim-spectrum { background: var(--coral-light); color: var(--coral); }
+
+  .assess .fluency-question {
+    margin-bottom: 28px; padding-bottom: 28px;
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .assess .fluency-question:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  /* Submit */
+  .assess .submit-section {
+    background: var(--light-gray); border-radius: 8px;
+    padding: 28px 32px; margin-top: 40px;
+  }
+  .assess .submit-section p { font-size: 14.5px; color: var(--warm-gray); margin-bottom: 16px; }
+  .assess button[type="submit"] {
+    font-family: var(--label);
+    font-size: 16px; font-weight: 600; color: var(--white);
+    background: var(--coral); border: none; border-radius: 6px;
+    padding: 14px 40px; cursor: pointer; transition: background 0.2s;
+  }
+  .assess button[type="submit"]:hover { background: var(--coral-dark); }
+  .assess button[type="submit"]:disabled { background: var(--divider); cursor: not-allowed; }
+
+  .assess .tagline {
+    text-align: center;
+    font-family: var(--display);
+    font-size: 14px; color: var(--coral); font-style: italic;
+    margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--divider);
+  }
+
+  /* Progress bar */
+  .assess .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--coral); transition: width 0.3s; z-index: 100;
+  }
+
+  /* =============================== */
+  /* RESULTS STATE — THREE-DOT VIEW  */
+  /* =============================== */
+  .assess .results-state { display: none; }
+  .assess .results-state h1 { margin-bottom: 8px; }
+  .assess .results-intro {
+    font-size: 15.5px; line-height: 1.75; color: var(--warm-gray); margin-bottom: 32px;
+  }
+
+  /* Overall score */
+  .assess .overall-score { text-align: center; margin-bottom: 32px; }
+  .assess .overall-score .score-num {
+    font-family: var(--display);
+    font-size: 3rem; color: var(--coral); line-height: 1;
+  }
+  .assess .overall-score .score-label {
+    font-family: var(--label); font-size: 0.72rem;
+    color: var(--warm-gray); text-transform: uppercase;
+    letter-spacing: 0.08em; margin-top: 4px;
+  }
+  .assess .overall-score .score-bar {
+    height: 4px; background: var(--divider); border-radius: 2px;
+    overflow: hidden; max-width: 200px; margin: 12px auto 0;
+  }
+  .assess .overall-score .score-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(to right, var(--coral), var(--blue));
+  }
+
+  /* Spectrum bar */
+  .assess .spectrum-section { margin-bottom: 48px; }
+  .assess .spectrum-bar {
+    display: flex; height: 48px; border-radius: 8px;
+    overflow: hidden; position: relative; margin-bottom: 0;
+  }
+  .assess .spectrum-segment {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; color: var(--white); opacity: 0.35;
+    transition: opacity 0.4s; position: relative;
+  }
+  .assess .spectrum-segment.active { opacity: 1; }
+  .assess .spectrum-segment.seg-asking { background: var(--terracotta); }
+  .assess .spectrum-segment.seg-automation { background: var(--ochre); }
+  .assess .spectrum-segment.seg-augmentation { background: var(--blue); }
+  .assess .spectrum-segment.seg-agency { background: var(--sage); }
+
+  /* Three-layer markers */
+  .assess .spectrum-layers { position: relative; margin-top: 16px; margin-bottom: 12px; }
+  .assess .spectrum-layer { display: flex; align-items: center; height: 24px; margin-bottom: 4px; }
+  .assess .spectrum-layer-label {
+    font-family: var(--label); font-size: 0.68rem;
+    color: var(--warm-gray); width: 72px; flex-shrink: 0;
+    letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  .assess .spectrum-track {
+    flex: 1; height: 6px; background: var(--divider);
+    border-radius: 3px; position: relative; overflow: visible;
+  }
+  .assess .layer-marker {
+    position: absolute; top: 50%; transform: translate(-50%, -50%);
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--white);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .assess .layer-marker.marker-practice { background: var(--coral); }
+  .assess .layer-marker.marker-thinking { background: var(--blue); }
+  .assess .layer-marker.marker-ambition { background: var(--warm-gray); }
+
+  /* Legend */
+  .assess .spectrum-legend {
+    display: flex; gap: 20px; justify-content: center;
+    margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .assess .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--warm-gray); }
+  .assess .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .assess .legend-dot.practice { background: var(--coral); }
+  .assess .legend-dot.thinking { background: var(--blue); }
+  .assess .legend-dot.ambition { background: var(--warm-gray); }
+
+  /* Spectrum narrative */
+  .assess .spectrum-narrative {
+    background: var(--light-gray); border-radius: 8px;
+    padding: 24px; margin-top: 0;
+  }
+  .assess .spectrum-narrative h3 {
+    font-family: var(--display);
+    font-size: 1.2rem; font-weight: 400; margin-bottom: 12px;
+  }
+  .assess .spectrum-narrative p {
+    font-size: 14.5px; line-height: 1.7; color: var(--black); margin-bottom: 12px;
+  }
+  .assess .spectrum-narrative p:last-child { margin-bottom: 0; }
+  .assess .spectrum-narrative .next-move { font-weight: 600; color: var(--black); }
+
+  /* 4D cards */
+  .assess .dimension-section { margin-bottom: 40px; }
+  .assess .dimension-section .section-header { margin-bottom: 4px; }
+  .assess .dimension-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;
+  }
+  .assess .dim-card {
+    border: 1px solid var(--divider); border-radius: 8px;
+    padding: 20px; position: relative; overflow: hidden;
+  }
+  .assess .dim-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .assess .dim-card.card-delegation::before { background: var(--delegation); }
+  .assess .dim-card.card-description::before { background: var(--description); }
+  .assess .dim-card.card-discernment::before { background: var(--discernment); }
+  .assess .dim-card.card-diligence::before { background: var(--diligence); }
+  .assess .dim-card-title { font-family: var(--display); font-size: 17px; margin-bottom: 2px; }
+  .assess .dim-card-what { font-size: 12px; color: var(--warm-gray); margin-bottom: 12px; line-height: 1.5; }
+  .assess .dim-card-level { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .assess .dim-card-level.level-developing { color: var(--drain-1); }
+  .assess .dim-card-level.level-growing { color: var(--description); }
+  .assess .dim-card-level.level-strong { color: var(--energy-5); }
+  .assess .dim-bar-track { height: 6px; background: var(--light-gray); border-radius: 3px; overflow: hidden; }
+  .assess .dim-bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+  .assess .dim-card.card-delegation .dim-bar-fill { background: var(--delegation); }
+  .assess .dim-card.card-description .dim-bar-fill { background: var(--description); }
+  .assess .dim-card.card-discernment .dim-bar-fill { background: var(--discernment); }
+  .assess .dim-card.card-diligence .dim-bar-fill { background: var(--diligence); }
+
+  /* Focus area */
+  .assess .focus-area {
+    background: var(--coral-light); border-radius: 8px;
+    padding: 20px 24px; margin-bottom: 40px;
+  }
+  .assess .focus-area-title {
+    font-family: var(--display);
+    font-size: 17px; margin-bottom: 8px;
+  }
+  .assess .focus-area p { font-size: 14.5px; line-height: 1.7; color: var(--black); }
+
+  /* Sent confirmation */
+  .assess .sent-confirmation {
+    text-align: center; padding: 24px; background: var(--light-gray);
+    border-radius: 8px; margin-bottom: 20px;
+  }
+  .assess .sent-confirmation p { font-size: 14.5px; color: var(--warm-gray); line-height: 1.7; }
+  .assess .sent-confirmation .check { font-size: 32px; margin-bottom: 8px; }
+
+  /* AI prompt section */
+  .assess .ai-prompt-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--divider); }
+  .assess .ai-prompt-section .section-header { margin-bottom: 4px; }
+  .assess .ai-prompt-intro { font-size: 14.5px; color: var(--warm-gray); line-height: 1.7; margin-bottom: 16px; }
+  .assess .ai-prompt-intro strong { color: var(--coral); }
+  .assess .prompt-box {
+    position: relative; background: var(--black); color: #E8E0DA;
+    border-radius: 8px; padding: 24px; padding-top: 48px;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 13px; line-height: 1.8;
+    white-space: pre-wrap; word-wrap: break-word; overflow-x: auto;
+  }
+  .assess .copy-btn {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,0.1); color: #E8E0DA;
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 5px;
+    padding: 6px 14px; font-family: var(--label);
+    font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+  }
+  .assess .copy-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); }
+  .assess .copy-btn.copied { background: var(--energy-5); border-color: var(--energy-5); color: var(--white); }
+
+  /* Your responses */
+  .assess .responses-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--divider); }
+  .assess .responses-section .section-header { margin-bottom: 4px; }
+  .assess .response-item { margin-bottom: 20px; }
+  .assess .response-item-label {
+    font-size: 13px; font-weight: 600; color: var(--warm-gray);
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px;
+  }
+  .assess .response-item-text {
+    font-size: 15px; line-height: 1.7; color: var(--black);
+    padding: 12px 16px; background: var(--light-gray);
+    border-radius: 6px; white-space: pre-wrap;
+  }
+
+  /* Framework attribution */
+  .assess .framework-note {
+    font-size: 12.5px; color: var(--warm-gray); text-align: center;
+    margin-top: 16px; line-height: 1.6;
+  }
+  .assess .framework-note a { color: var(--coral); text-decoration: none; }
+  .assess .framework-note a:hover { text-decoration: underline; }
+
+  /* CTA */
+  .assess .results-cta {
+    text-align: center; padding: 32px 0 0;
+    border-top: 1px solid var(--divider); margin-top: 40px;
+  }
+  .assess .results-cta h3 {
+    font-family: var(--display);
+    font-size: 1.2rem; font-weight: 400; margin-bottom: 8px;
+  }
+  .assess .results-cta p { font-size: 14.5px; color: var(--warm-gray); margin-bottom: 20px; line-height: 1.7; }
+  .assess .btn-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%);
+    color: var(--white); padding: 14px 28px; border-radius: 6px;
+    font-size: 15px; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
+  }
+  .assess .btn-cta:hover { opacity: 0.9; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .assess { padding: 32px 20px 48px; }
+    .assess h1 { font-size: 28px; }
+    .assess .energy-row { grid-template-columns: 1fr; gap: 8px; }
+    .assess .energy-scale { justify-content: center; }
+    .assess .dimension-grid { grid-template-columns: 1fr; }
+    .assess .q-dimension { display: none; }
+  }
+
+  /* Print */
+  @media print {
+    .assess .progress-bar { display: none; }
+    .assess { padding: 24px 16px; max-width: none; }
+    .assess .spectrum-segment,
+  .assess .layer-marker,
+  .assess .spectrum-track,
+  .assess .legend-dot,
+  .assess .dim-bar-fill,
+  .assess .energy-btn.selected,
+  .assess .focus-area,
+  .assess .spectrum-narrative,
+  .assess .overall-score .score-bar-fill,
+  .assess .btn-cta,
+  .assess .sent-confirmation,
+  .assess .prompt-box {
+      print-color-adjust: exact; -webkit-print-color-adjust: exact;
+    }
+  }

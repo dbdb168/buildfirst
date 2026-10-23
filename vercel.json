@@ -1,9 +1,34 @@
 {
   "redirects": [
-    { "source": "/approach.html", "destination": "/how-we-work", "permanent": true },
-    { "source": "/approach", "destination": "/how-we-work", "permanent": true },
-    { "source": "/writing-tools.html", "destination": "/writing", "permanent": true },
-    { "source": "/writing-tools", "destination": "/writing", "permanent": true },
-    { "source": "/sherpa", "destination": "/coaching", "permanent": false }
+    {
+      "source": "/approach.html",
+      "destination": "/how-we-work",
+      "permanent": true
+    },
+    {
+      "source": "/approach",
+      "destination": "/how-we-work",
+      "permanent": true
+    },
+    {
+      "source": "/writing-tools.html",
+      "destination": "/writing",
+      "permanent": true
+    },
+    {
+      "source": "/writing-tools",
+      "destination": "/writing",
+      "permanent": true
+    },
+    {
+      "source": "/sherpa",
+      "destination": "/coaching",
+      "permanent": false
+    },
+    {
+      "source": "/assessment.html",
+      "destination": "/assessment",
+      "permanent": true
+    }
   ]
 }

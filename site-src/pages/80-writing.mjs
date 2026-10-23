@@ -40,7 +40,7 @@ export default {
       <p class="lede">Things we use with clients, made available to anyone.</p>
     </div>
     <div class="tools">
-      <div class="tool"><div class="label">Five minutes</div><h3>The BuildFirst assessment.</h3><p>Where you are with AI today, across four ways of working and four fluency skills, and what would help most next.</p><a class="textlink" href="/assessment.html">Take the assessment</a></div>
+      <div class="tool"><div class="label">Ten minutes</div><h3>The BuildFirst assessment.</h3><p>Where you are with AI today, across four ways of working and four fluency skills, and what would help most next.</p><a class="textlink" href="/assessment">Take the assessment</a></div>
       <div class="tool"><div class="label">A skill for Claude</div><h3>Groundwork.</h3><p>From a long list of AI ideas to three priorities, and the one thing to learn before you commit budget. Built on lean experimentation methods.</p><a class="textlink" href="https://github.com/dbdb168/groundwork">Get Groundwork</a></div>
       <div class="tool"><div class="label">Coming soon</div><h3>IntelligenceOS.</h3><p>The operating system we use to run BuildFirst: frameworks, folders and agents for a small company. We’ll share it when it’s ready.</p></div>
     </div>

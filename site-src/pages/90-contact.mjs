@@ -3,7 +3,7 @@ import { SITE, stairs } from '../layout.mjs';
 export default {
   path: '/contact',
   title: 'Start a conversation',
-  description: 'Book a thirty-minute conversation, tell us what you want to build, or take the five-minute assessment first.',
+  description: 'Book a thirty-minute conversation, tell us what you want to build, or take the ten-minute assessment first.',
   body: `
 <section class="hero compact">
   <div class="wrap">
@@ -19,7 +19,7 @@ export default {
     <div class="contact-grid">
       <a class="contact-card" data-c="1" href="${SITE.calendar}"><div class="label">Thirty minutes, no cost</div><h3>Book a conversation.</h3><p>Tell us what you’re trying to do with AI. We’ll tell you honestly whether we can help, and what we’d try first.</p><span class="go">Pick a time <span>→</span></span></a>
       <a class="contact-card" data-c="4" href="/build-intake.html"><div class="label">A few minutes</div><h3>Tell us what you want to build.</h3><p>Describe the problem. We’ll bring a working prototype to the first conversation, not a proposal.</p><span class="go">Describe it <span>→</span></span></a>
-      <a class="contact-card" data-c="2" href="/assessment.html"><div class="label">Five minutes</div><h3>Take the assessment.</h3><p>See where you are with AI today and what would help most next. A good start before a first call.</p><span class="go">Start the assessment <span>→</span></span></a>
+      <a class="contact-card" data-c="2" href="/assessment"><div class="label">Ten minutes</div><h3>Take the assessment.</h3><p>See where you are with AI today and what would help most next. A good start before a first call.</p><span class="go">Start the assessment <span>→</span></span></a>
     </div>
   </div>
 </section>

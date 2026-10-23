@@ -22,7 +22,7 @@ export default {
     <p class="dek">Reading about AI was never going to show you what it can do. To lead your team through this, you have to have used it yourself. That’s what we help you do.</p>
     <div class="actions">
       <a class="button" href="/contact">Start a conversation <span class="arrow">→</span></a>
-      <a class="textlink" href="/assessment.html">Take the five-minute assessment</a>
+      <a class="textlink" href="/assessment">Take the ten-minute assessment</a>
     </div>
   </div>
   ${stairs()}

@@ -1,5 +1,5 @@
 // Shared page shell for the BuildFirst site: head, header, footer.
-// Every page in site-src/pages/ exports { path, title, description, body, ground }.
+// Every page in site-src/pages/ exports { path, title, description, body, ground, head }.
 
 export const SITE = {
   name: 'BuildFirst',
@@ -42,7 +42,7 @@ function nav(current) {
 }
 
 export function layout(page) {
-  const { path, title, description, body, ground = 'cover' } = page;
+  const { path, title, description, body, ground = 'cover', head = '' } = page;
   const fullTitle = path === '/' ? `BuildFirst · ${title}` : `${title} · BuildFirst`;
   return `<!doctype html>
 <html lang="en">
@@ -61,7 +61,7 @@ ${SITE.review ? '<meta name="robots" content="noindex, nofollow">' : ''}
 <link rel="preload" href="/assets/site/fonts/BricolageGrotesque-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/site/fonts/Newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site/site.css">
-${SITE.review ? '' : `<script async src="https://www.googletagmanager.com/gtag/js?id=G-MKWKYTLT70"></script>
+${head ? head + '\n' : ''}${SITE.review ? '' : `<script async src="https://www.googletagmanager.com/gtag/js?id=G-MKWKYTLT70"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MKWKYTLT70');</script>`}
 </head>
 <body>

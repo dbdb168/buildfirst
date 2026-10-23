@@ -70,7 +70,7 @@ export default {
           <li><strong>Augmentation.</strong> Working alongside it on something hard, thinking out loud.</li>
           <li><strong>Agency.</strong> A system that acts on your behalf, inside limits you set.</li>
         </ul>
-        <p>Our <a href="/assessment.html">five-minute assessment</a> shows where you are today, and where it would help most to go next.</p>
+        <p>Our <a href="/assessment">ten-minute assessment</a> shows where you are today, and where it would help most to go next.</p>
       </div>
     </div>
   </div>
