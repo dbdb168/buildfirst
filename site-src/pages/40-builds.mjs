@@ -12,7 +12,7 @@ export default {
     <h1>You know what you need. We build it with you.</h1>
     <p class="dek">A working system for a real, costly problem, built in steps. You see a prototype before you sign anything, and you decide at every step whether to keep going.</p>
     <div class="actions">
-      <a class="button" href="/build-intake.html">Tell us what you want to build <span class="arrow">→</span></a>
+      <a class="button" href="/build-intake">Tell us what you want to build <span class="arrow">→</span></a>
       <a class="textlink" href="${SITE.calendar}">Or book a conversation</a>
     </div>
   </div>
@@ -125,6 +125,6 @@ export default {
   </div>
 </section>
 
-${ctaBand({ title: 'Tell us what you want to build.', text: 'A few minutes describing the problem. We’ll bring a prototype to the first conversation.', primary: ['Start with the build form', '/build-intake.html'], secondary: ['Book a conversation', SITE.calendar] })}
+${ctaBand({ title: 'Tell us what you want to build.', text: 'A few minutes describing the problem. We’ll bring a prototype to the first conversation.', primary: ['Start with the build form', '/build-intake'], secondary: ['Book a conversation', SITE.calendar] })}
 `,
 };

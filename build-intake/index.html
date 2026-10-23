@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tell us what you want to build · BuildFirst</title>
+<meta name="description" content="A few minutes describing the problem. We’ll bring a working prototype to the first conversation, not a proposal.">
+
+<link rel="canonical" href="https://buildfirst.io/build-intake">
+<meta property="og:title" content="Tell us what you want to build · BuildFirst">
+<meta property="og:description" content="A few minutes describing the problem. We’ll bring a working prototype to the first conversation, not a proposal.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f3ede2">
+<link rel="icon" href="/assets/site/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/site/fonts/BricolageGrotesque-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/site/fonts/Newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site/site.css">
+<link rel="stylesheet" href="/assets/site/build-intake.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MKWKYTLT70"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MKWKYTLT70');</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header on-paper">
+  <div class="wrap">
+    <a class="wordmark" href="/" aria-label="BuildFirst home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>BuildFirst</a>
+    
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="has-menu"><a href="/#offers">What we do</a><div class="menu"><a href="/coaching"><i class="sw" style="background:var(--terracotta)"></i><span><span class="t">Coaching</span><span class="d">Eight sessions, one to one. You build something real from the first.</span></span></a><a href="/workshops"><i class="sw" style="background:var(--ochre)"></i><span><span class="t">Workshops</span><span class="d">One hands-on day. Everyone builds, nobody watches.</span></span></a><a href="/sprints"><i class="sw" style="background:var(--sage)"></i><span><span class="t">Sprints</span><span class="d">Two days, three problems, working prototypes your people built.</span></span></a><a href="/builds"><i class="sw" style="background:var(--blue)"></i><span><span class="t">Builds</span><span class="d">Prototype first, then a pilot, then the real thing.</span></span></a></div></div>
+  <a href="/how-we-work">How we work</a>
+  <a href="/work">Work</a>
+  <a href="/about">About</a>
+  <a href="/writing">Writing</a>
+</nav>
+    <a class="button cta" href="/contact">Start a conversation</a>
+    <button class="menu-toggle" aria-controls="nav" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<main id="main">
+
+<section class="section intake-wrap">
+  <div class="wrap">
+<div class="intake" id="intake">
+
+  <div class="page-head">
+    <div class="eyebrow">Builds · About five minutes</div>
+    <h1>Tell us what you want to build.</h1>
+    <p class="dek">You spend a few minutes telling us what you need. We spend the time to bring a working prototype to the first conversation. Not a proposal, not a slide: something you can react to.</p>
+  </div>
+
+  <div class="steps" aria-hidden="true">
+    <i class="step-dot active"></i><i class="step-dot"></i><i class="step-dot"></i><i class="step-dot"></i><i class="step-dot"></i><i class="step-dot"></i><i class="step-dot"></i><i class="step-dot"></i>
+  </div>
+
+  <!-- STEP 1: WHO ARE YOU -->
+  <div class="form-step active" id="step-0">
+    <div class="step-label">Step 1 of 8</div>
+    <h2 class="step-question">First, a bit about you.</h2>
+    <p class="step-hint">So we know who we’re talking to.</p>
+    <div class="field-group">
+      <label class="field-label" for="f-name">Your name <span class="req" aria-hidden="true">*</span></label>
+      <input type="text" id="f-name" autocomplete="name">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+      <input type="email" id="f-email" autocomplete="email">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-role">Your role <span class="req" aria-hidden="true">*</span></label>
+      <input type="text" id="f-role" placeholder="For example: COO, founder, head of operations">
+    </div>
+    <div class="btn-row"><button type="button" class="button" onclick="goTo(1)">Next <span class="arrow">→</span></button></div>
+  </div>
+
+  <!-- STEP 2: INDUSTRY AND CONTEXT -->
+  <div class="form-step" id="step-1">
+    <div class="step-label">Step 2 of 8</div>
+    <h2 class="step-question">What world do you work in?</h2>
+    <p class="step-hint">Your industry, the size of the business, the kind of work your team does day to day. It helps us understand the ground before we talk.</p>
+    <div class="field-group">
+      <label class="field-label" for="f-industry">Industry <span class="req" aria-hidden="true">*</span></label>
+      <select id="f-industry">
+        <option value="">Choose your industry</option>
+        <option>Healthcare</option>
+        <option>Financial services</option>
+        <option>Insurance</option>
+        <option>Legal</option>
+        <option>Technology</option>
+        <option>Professional services</option>
+        <option>Education</option>
+        <option>Media and publishing</option>
+        <option>Manufacturing</option>
+        <option>Real estate</option>
+        <option>Government and public sector</option>
+        <option>Non-profit</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-context">Tell us about the business in a sentence or two. <span class="req" aria-hidden="true">*</span></label>
+      <textarea id="f-context" rows="3" placeholder="For example: a 200-person insurance broker. My team handles commercial underwriting, about 500 submissions a month."></textarea>
+    </div>
+    <div class="btn-row"><button type="button" class="button ghost" onclick="goTo(0)">← Back</button><button type="button" class="button" onclick="goTo(2)">Next <span class="arrow">→</span></button></div>
+  </div>
+
+  <!-- STEP 3: WHAT TO BUILD -->
+  <div class="form-step" id="step-2">
+    <div class="step-label">Step 3 of 8</div>
+    <h2 class="step-question"><label for="f-build">What do you want to build? <span class="req" aria-hidden="true">*</span></label></h2>
+    <p class="step-hint">No need for technical detail. Describe it the way you would to a colleague. What would this thing do?</p>
+    <div class="field-group">
+      <textarea id="f-build" rows="5" placeholder="For example: a tool that reads our client intake forms, pulls out the key data and fills in our underwriting templates. Today it’s all by hand and takes about two hours a submission."></textarea>
+    </div>
+    <div class="btn-row"><button type="button" class="button ghost" onclick="goTo(1)">← Back</button><button type="button" class="button" onclick="goTo(3)">Next <span class="arrow">→</span></button></div>
+  </div>
+
+  <!-- STEP 4: WHO HAS THIS PROBLEM -->
+  <div class="form-step" id="step-3">
+    <div class="step-label">Step 4 of 8</div>
+    <h2 class="step-question">Who has this problem?</h2>
+    <p class="step-hint">You? Your team? Your customers? Knowing who feels it helps us build the right thing.</p>
+    <div class="field-group">
+      <label class="field-label" for="f-who">Who would use this? <span class="req" aria-hidden="true">*</span></label>
+      <textarea id="f-who" rows="3" placeholder="For example: my underwriting team of eight. They spend hours on data entry. Some are comfortable with new tools, some aren’t."></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-howmany">Roughly how many people does it touch? <span class="req" aria-hidden="true">*</span></label>
+      <input type="text" id="f-howmany" placeholder="For example: eight on my team, and 50 brokers downstream">
+    </div>
+    <div class="btn-row"><button type="button" class="button ghost" onclick="goTo(2)">← Back</button><button type="button" class="button" onclick="goTo(4)">Next <span class="arrow">→</span></button></div>
+  </div>
+
+  <!-- STEP 5: WHAT HAPPENS TODAY -->
+  <div class="form-step" id="step-4">
+    <div class="step-label">Step 5 of 8</div>
+    <h2 class="step-question"><label for="f-process">Walk us through what happens today. <span class="req" aria-hidden="true">*</span></label></h2>
+    <p class="step-hint">The process, step by step. Where does it start and end? Where does it break or slow down? This is the most useful part: the more you share, the better the prototype we can bring.</p>
+    <div class="field-group">
+      <textarea id="f-process" rows="6" placeholder="For example:&#10;1. A broker emails us a submission PDF&#10;2. An underwriter reads 20 to 40 pages&#10;3. They pull out revenue, claims history and limits by hand&#10;4. They type it into our quoting system&#10;5. They check it against our appetite guide&#10;About two hours each, 25 a day"></textarea>
+    </div>
+    <div class="btn-row"><button type="button" class="button ghost" onclick="goTo(3)">← Back</button><button type="button" class="button" onclick="goTo(5)">Next <span class="arrow">→</span></button></div>
+  </div>
+
+  <!-- STEP 6: WHAT CHANGES -->
+  <div class="form-step" id="step-5">
+    <div class="step-label">Step 6 of 8</div>
+    <h2 class="step-question"><label for="f-outcome">If this worked perfectly, what would change? <span class="req" aria-hidden="true">*</span></label></h2>
+    <p class="step-hint">Time saved, revenue unlocked, fewer errors, a team freed up. What are you really after?</p>
+    <div class="field-group">
+      <textarea id="f-outcome" rows="4" placeholder="For example: two hours back on every submission, about 1,000 hours a month. We take on more without hiring, and the data entry errors go."></textarea>
+    </div>
+    <div class="btn-row"><button type="button" class="button ghost" onclick="goTo(4)">← Back</button><button type="button" class="button" onclick="goTo(6)">Next <span class="arrow">→</span></button></div>
+  </div>
+
+  <!-- STEP 7: WHAT EXISTS TODAY -->
+  <div class="form-step" id="step-6">
+    <div class="step-label">Step 7 of 8</div>
+    <h2 class="step-question">What are you working with today?</h2>
+    <p class="step-hint">The tools, systems and AI you already use. It tells us what we’d be building on, or replacing. Pick any that apply.</p>
+    <div class="option-grid">
+        <button type="button" class="option-card" onclick="toggleOption(this,'tools')" data-val="No AI yet">
+          <span class="t">No AI yet</span><span class="d">Not started with AI tools</span>
+        </button>
+        <button type="button" class="option-card" onclick="toggleOption(this,'tools')" data-val="ChatGPT / OpenAI">
+          <span class="t">ChatGPT / OpenAI</span><span class="d">ChatGPT or the OpenAI API</span>
+        </button>
+        <button type="button" class="option-card" onclick="toggleOption(this,'tools')" data-val="Copilot / Microsoft">
+          <span class="t">Copilot / Microsoft</span><span class="d">Microsoft 365 Copilot</span>
+        </button>
+        <button type="button" class="option-card" onclick="toggleOption(this,'tools')" data-val="Claude / Anthropic">
+          <span class="t">Claude / Anthropic</span><span class="d">Already using Claude</span>
+        </button>
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-systems">Any particular systems involved? <span class="opt">Optional</span></label>
+      <input type="text" id="f-systems" placeholder="For example: Salesforce, Excel, SharePoint, an in-house CRM">
+    </div>
+    <div class="btn-row"><button type="button" class="button ghost" onclick="goTo(5)">← Back</button><button type="button" class="button" onclick="goTo(7)">Next <span class="arrow">→</span></button></div>
+  </div>
+
+  <!-- STEP 8: REVIEW AND SEND -->
+  <div class="form-step" id="step-7">
+    <div class="step-label">Step 8 of 8</div>
+    <h2 class="step-question">Here’s what we have.</h2>
+    <p class="step-hint">Check it looks right. When you send it, it comes straight to us and we’ll come prepared.</p>
+    <div id="review-container" class="review"></div>
+    <div class="field-group">
+      <label class="field-label" for="f-anything">Anything else we should know? <span class="opt">Optional</span></label>
+      <textarea id="f-anything" rows="3" placeholder="Timing, budget, who else is involved, any worries"></textarea>
+    </div>
+    <div class="btn-row"><button type="button" class="button ghost" onclick="goTo(6)">← Back</button><button type="button" class="button" onclick="submitForm()">Send it <span class="arrow">→</span></button></div>
+  </div>
+
+  <!-- SENT -->
+  <div class="form-step" id="step-success">
+    <div class="success">
+      <div class="success-mark" aria-hidden="true">✓</div>
+      <h2>Got it. Now it’s our turn.</h2>
+      <p>You’ve done your part. We’ll read everything you shared and start building. When we meet, we’ll have a prototype for you to react to, not a pitch deck.</p>
+      <div class="btn-row">
+        <a class="button" href="https://calendar.app.google/rkTTjqxVoTrrZAki8" target="_blank" rel="noopener">Book thirty minutes <span class="arrow">→</span></a>
+        <a class="button ghost" href="/builds">Back to Builds</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+  </div>
+</section>
+<script src="/assets/site/build-intake.js"></script>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <a class="wordmark" href="/"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>BuildFirst</a>
+      <p>Hands-on AI for leaders and the businesses they run. Build first, learn fast, repeat. Based in Richmond, Virginia.</p>
+    </div>
+    <div>
+      <h4>What we do</h4>
+      <ul><li><a href="/coaching">Coaching</a></li><li><a href="/workshops">Workshops</a></li><li><a href="/sprints">Sprints</a></li><li><a href="/builds">Builds</a></li></ul>
+    </div>
+    <div>
+      <h4>BuildFirst</h4>
+      <ul>
+        <li><a href="/how-we-work">How we work</a></li>
+        <li><a href="/work">Work</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/writing">Writing and tools</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Get in touch</h4>
+      <ul>
+        <li><a href="/contact">Start a conversation</a></li>
+        <li><a href="mailto:david@thisisluminary.co">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/dbeath/">LinkedIn</a></li>
+        <li><a href="https://theaicookbook.substack.com">The AI Cookbook</a></li>
+      </ul>
+    </div>
+    <div class="base"><span>© 2026 BuildFirst, a trading name of DB8 LLC</span><span>Build first. Learn fast. Repeat.</span></div>
+  </div>
+</footer>
+<script src="/assets/site/site.js" defer></script>
+</body>
+</html>
