@@ -568,35 +568,30 @@ function submitForm() {
     }).catch(function(err) { console.warn('[BuildFirst] Final save failed:', err); });
   }
 
-  // Mailto fallback — replace with webhook POST in production
-  var subject = encodeURIComponent('BuildFirst: Build Inquiry from ' + (data.name || 'Website'));
-  var body = encodeURIComponent(
-    'BUILD INQUIRY\n' +
-    '=============\n\n' +
-    'Name: ' + data.name + '\n' +
-    'Email: ' + data.email + '\n' +
-    'Role: ' + data.role + '\n\n' +
-    'INDUSTRY & CONTEXT\n' +
-    'Industry: ' + data.industry + '\n' +
-    'Context: ' + data.context + '\n\n' +
-    'THE BUILD\n' +
-    'What they want to build:\n' + data.build + '\n\n' +
-    'THE PROBLEM\n' +
-    'Who has this problem: ' + data.who + '\n' +
-    'How many affected: ' + data.howmany + '\n\n' +
-    'CURRENT PROCESS\n' +
-    data.process + '\n\n' +
-    'DESIRED OUTCOME\n' +
-    data.outcome + '\n\n' +
-    'CURRENT TOOLS\n' +
-    'AI Tools: ' + (data.tools || 'Not specified') + '\n' +
-    'Systems: ' + (data.systems || 'Not specified') + '\n\n' +
-    'ADDITIONAL NOTES\n' +
-    (data.anything || 'None') + '\n'
-  );
-
-  // Open mailto in new tab so success screen stays visible
-  window.open('mailto:david@thisisluminary.co?subject=' + subject + '&body=' + body, '_blank');
+  // Email the answers to David through FormSubmit (same route as the assessment)
+  fetch('https://formsubmit.co/ajax/david@thisisluminary.co', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      '_subject': 'BuildFirst: Build Inquiry from ' + (data.name || 'Website'),
+      '_template': 'table',
+      '_captcha': 'false',
+      '_replyto': data.email,
+      'Name': data.name,
+      'Email': data.email,
+      'Role': data.role,
+      'Industry': data.industry,
+      'Business Context': data.context,
+      'What They Want to Build': data.build,
+      'Who Has This Problem': data.who,
+      'How Many People Affected': data.howmany,
+      'Current Process': data.process,
+      'Most Desired Outcome': data.outcome,
+      'Current AI Tools': data.tools || 'Not specified',
+      'Existing Systems': data.systems || 'Not specified',
+      'Anything Else': data.anything || 'None',
+    }),
+  }).catch(function(err) { console.warn('[BuildFirst] Email send failed:', err); });
 
   document.querySelectorAll('.form-step').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById('step-success').classList.add('active');
