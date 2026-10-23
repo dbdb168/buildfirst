@@ -46,7 +46,7 @@ export default {
     </div>
     <div class="field-group">
       <label class="field-label" for="f-role">Your role ${req}</label>
-      <input type="text" id="f-role" placeholder="For example: COO, founder, head of operations">
+      <input type="text" id="f-role" placeholder="e.g. Founder, COO, head of operations">
     </div>
     <div class="btn-row">${next(1)}</div>
   </div>
@@ -77,7 +77,7 @@ export default {
     </div>
     <div class="field-group">
       <label class="field-label" for="f-context">Tell us about the business in a sentence or two. ${req}</label>
-      <textarea id="f-context" rows="3" placeholder="For example: a 200-person insurance broker. My team handles commercial underwriting, about 500 submissions a month."></textarea>
+      <textarea id="f-context" rows="3" placeholder="e.g. A 50-person firm. My team looks after new clients."></textarea>
     </div>
     <div class="btn-row">${back(0)}${next(2)}</div>
   </div>
@@ -88,7 +88,7 @@ export default {
     <h2 class="step-question"><label for="f-build">What do you want to build? ${req}</label></h2>
     <p class="step-hint">No need for technical detail. Describe it the way you would to a colleague. What would this thing do?</p>
     <div class="field-group">
-      <textarea id="f-build" rows="5" placeholder="For example: a tool that reads our client intake forms, pulls out the key data and fills in our underwriting templates. Today it’s all by hand and takes about two hours a submission."></textarea>
+      <textarea id="f-build" rows="5" placeholder="e.g. Something that reads incoming requests and fills in our paperwork for us."></textarea>
     </div>
     <div class="btn-row">${back(1)}${next(3)}</div>
   </div>
@@ -100,11 +100,11 @@ export default {
     <p class="step-hint">You? Your team? Your customers? Knowing who feels it helps us build the right thing.</p>
     <div class="field-group">
       <label class="field-label" for="f-who">Who would use this? ${req}</label>
-      <textarea id="f-who" rows="3" placeholder="For example: my underwriting team of eight. They spend hours on data entry. Some are comfortable with new tools, some aren’t."></textarea>
+      <textarea id="f-who" rows="3" placeholder="e.g. My team, and the customers we serve."></textarea>
     </div>
     <div class="field-group">
       <label class="field-label" for="f-howmany">Roughly how many people does it touch? ${req}</label>
-      <input type="text" id="f-howmany" placeholder="For example: eight on my team, and 50 brokers downstream">
+      <input type="text" id="f-howmany" placeholder="e.g. Eight on my team, a few hundred customers">
     </div>
     <div class="btn-row">${back(2)}${next(4)}</div>
   </div>
@@ -115,7 +115,7 @@ export default {
     <h2 class="step-question"><label for="f-process">Walk us through what happens today. ${req}</label></h2>
     <p class="step-hint">The process, step by step. Where does it start and end? Where does it break or slow down? This is the most useful part: the more you share, the better the prototype we can bring.</p>
     <div class="field-group">
-      <textarea id="f-process" rows="6" placeholder="For example:&#10;1. A broker emails us a submission PDF&#10;2. An underwriter reads 20 to 40 pages&#10;3. They pull out revenue, claims history and limits by hand&#10;4. They type it into our quoting system&#10;5. They check it against our appetite guide&#10;About two hours each, 25 a day"></textarea>
+      <textarea id="f-process" rows="6" placeholder="e.g.&#10;1. A request comes in by email&#10;2. Someone copies the details into a spreadsheet&#10;3. It gets checked and passed on"></textarea>
     </div>
     <div class="btn-row">${back(3)}${next(5)}</div>
   </div>
@@ -126,7 +126,7 @@ export default {
     <h2 class="step-question"><label for="f-outcome">If this worked perfectly, what would change? ${req}</label></h2>
     <p class="step-hint">Time saved, revenue unlocked, fewer errors, a team freed up. What are you really after?</p>
     <div class="field-group">
-      <textarea id="f-outcome" rows="4" placeholder="For example: two hours back on every submission, about 1,000 hours a month. We take on more without hiring, and the data entry errors go."></textarea>
+      <textarea id="f-outcome" rows="4" placeholder="e.g. Hours back every week, and fewer mistakes."></textarea>
     </div>
     <div class="btn-row">${back(4)}${next(6)}</div>
   </div>
@@ -140,7 +140,7 @@ export default {
     </div>
     <div class="field-group">
       <label class="field-label" for="f-systems">Any particular systems involved? <span class="opt">Optional</span></label>
-      <input type="text" id="f-systems" placeholder="For example: Salesforce, Excel, SharePoint, an in-house CRM">
+      <input type="text" id="f-systems" placeholder="e.g. Salesforce, Excel, SharePoint">
     </div>
     <div class="btn-row">${back(5)}${next(7)}</div>
   </div>
@@ -153,7 +153,7 @@ export default {
     <div id="review-container" class="review"></div>
     <div class="field-group">
       <label class="field-label" for="f-anything">Anything else we should know? <span class="opt">Optional</span></label>
-      <textarea id="f-anything" rows="3" placeholder="Timing, budget, who else is involved, any worries"></textarea>
+      <textarea id="f-anything" rows="3" placeholder="e.g. Timing, budget, who else is involved"></textarea>
     </div>
     <div class="btn-row">${back(6)}<button type="button" class="button" onclick="submitForm()">Send it <span class="arrow">→</span></button></div>
   </div>
