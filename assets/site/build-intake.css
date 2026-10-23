@@ -1,6 +1,7 @@
 /* The build form, in the site's look. Scoped to .intake so it sits beside site.css. */
 .intake-wrap { padding-top: clamp(40px, 6vw, 72px); }
-.intake { max-width: var(--measure); margin: 0 auto; font-family: var(--label); color: var(--ink); scroll-margin-top: 96px; }
+.intake { max-width: var(--measure); margin: 0 auto; font-family: var(--label); color: var(--ink); }
+.intake .steps { scroll-margin-top: 96px; }
 
 .intake .page-head { margin-bottom: 36px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
 .intake .page-head .eyebrow { margin-bottom: 16px; }
@@ -51,7 +52,8 @@
 .intake .option-card:hover { border-color: var(--faint); }
 .intake .option-card .t { display: block; font-weight: 600; font-size: 15px; }
 .intake .option-card .d { display: block; font-size: 13px; color: var(--muted); margin-top: 3px; }
-.intake .option-card.selected { border-color: var(--ink); background: var(--tint); box-shadow: inset 4px 0 0 var(--sage); }
+.intake .option-card.selected { border-color: var(--ink); background: var(--tint); }
+.intake .option-card.selected .t::after { content: " ✓"; color: var(--sage); }
 
 /* Buttons */
 .intake .btn-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; margin-top: 32px; }

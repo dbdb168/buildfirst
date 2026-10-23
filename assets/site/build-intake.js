@@ -134,7 +134,7 @@ function goTo(step) {
 
   if (step > maxStepReached) maxStepReached = step;
   currentStep = step;
-  document.getElementById('intake').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelector('.intake .steps').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function toggleOption(el, group) {
@@ -241,7 +241,7 @@ function submitForm() {
   document.querySelectorAll('.step-dot').forEach(function(d) {
     d.className = 'step-dot done';
   });
-  document.getElementById('intake').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelector('.intake .steps').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // Track form start
