@@ -10,10 +10,10 @@ export default {
   <div class="wrap">
     <div class="eyebrow">Builds · For a system you run</div>
     <h1>You know what you need. We build it with you.</h1>
-    <p class="dek">A working system for a real, costly problem, built in steps. You see a prototype before you sign anything, and you decide at every step whether to keep going.</p>
+    <p class="dek">A working system for a problem that costs you time or money today, built in steps. You see a prototype before you sign anything, and you decide at every step whether to keep going.</p>
     <div class="actions">
-      <a class="button" href="/build-intake">Tell us what you want to build <span class="arrow">→</span></a>
-      <a class="textlink" href="${SITE.calendar}">Or book a conversation</a>
+      <a class="button" href="/build-intake">Describe what you want to build <span class="arrow">→</span></a>
+      <a class="textlink" href="${SITE.calendar}">Or book a 30-minute conversation</a>
     </div>
   </div>
   ${stairs('small', 4)}
@@ -87,8 +87,8 @@ export default {
     </div>
     <div class="cases">
       <div class="case" data-c="4"><div class="label">Healthcare technology</div><h3>A procurement watch for sellers.</h3><p>An agent reads state procurement sources twice a day and tells sellers what changed and why it matters. It passed the company’s security, legal and insurance reviews, and now runs every month.</p></div>
-      <div class="case" data-c="3"><div class="label">Special education</div><h3>From paper program books to a living record.</h3><p>Teachers capture sessions once. A copilot runs the school’s own decision protocol and suggests the next step. A person always makes the call.</p></div>
-      <div class="case" data-c="2"><div class="label">Insurance · Investor relations</div><h3>A creative engine for an annual event.</h3><p>A design system and prompt library, and an email pipeline from copy to published campaign, with two points where a person reviews before anything goes out.</p></div>
+      <div class="case" data-c="3"><div class="label">Special education</div><h3>From paper program books to one up-to-date record.</h3><p>Teachers record each session once. An AI assistant applies the school’s own rules for the next step and suggests it. A person always makes the call.</p></div>
+      <div class="case" data-c="2"><div class="label">Insurance · Investor relations</div><h3>A creative engine for an annual event.</h3><p>Brand templates, ready-made prompts and an automatic route from first draft to sent email. A person checks it twice before anything goes out.</p></div>
       <div class="case" data-c="1"><div class="label">Insurance brokerage</div><h3>A growth dashboard that started in coaching.</h3><p>A chief executive built the first version in coaching sessions. It became a dashboard for the business and a prospecting prototype, and then a plan for where AI should help next.</p></div>
     </div>
     <div class="quotes two" style="margin-top:40px">
@@ -125,6 +125,6 @@ export default {
   </div>
 </section>
 
-${ctaBand({ title: 'Tell us what you want to build.', text: 'A few minutes describing the problem. We’ll bring a prototype to the first conversation.', primary: ['Start with the build form', '/build-intake'], secondary: ['Book a conversation', SITE.calendar] })}
+${ctaBand({ title: 'Tell us what you want to build.', text: 'A few minutes describing the problem. We’ll bring a prototype to the first conversation.', primary: ['Describe what you want to build', '/build-intake'], secondary: ['Or book a 30-minute conversation', SITE.calendar] })}
 `,
 };

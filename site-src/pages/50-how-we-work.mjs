@@ -76,21 +76,6 @@ export default {
   </div>
 </section>
 
-<section class="section cover">
-  <div class="wrap">
-    <div class="section-head">
-      <div><span class="num">04</span><h2>Start small. Climb when it’s earned.</h2></div>
-      <p class="lede">The four ways we work are steps. Most people start on the first, and the work itself tells you when the next one makes sense.</p>
-    </div>
-    <div class="steps">
-      <div class="stepline"><div><div class="n">1</div><div class="dur">One leader</div></div><div><h3><a href="/coaching">Coaching</a></h3><p>Eight sessions, one to one. You build something real from the first.</p></div></div>
-      <div class="stepline"><div><div class="n">2</div><div class="dur">A leadership team</div></div><div><h3><a href="/workshops">Workshops</a></h3><p>One hands-on day. Everyone builds, nobody watches.</p></div></div>
-      <div class="stepline"><div><div class="n">3</div><div class="dur">Your real problems</div></div><div><h3><a href="/sprints">Sprints</a></h3><p>Two days, three problems, working prototypes your people built.</p></div></div>
-      <div class="stepline"><div><div class="n">4</div><div class="dur">A system you run</div></div><div><h3><a href="/builds">Builds</a></h3><p>Prototype first, then a pilot, then the real thing.</p></div></div>
-    </div>
-  </div>
-</section>
-
 ${ctaBand()}
 `,
 };

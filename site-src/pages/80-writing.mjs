@@ -47,6 +47,6 @@ export default {
   </div>
 </section>
 
-${ctaBand()}
+${ctaBand({ title: 'Get the next one first.', text: 'New recipes and essays from The AI Cookbook, sent to your inbox as we write them. Free, and you can stop any time.', primary: ['Subscribe to The AI Cookbook', `${SITE.substack}/subscribe`], secondary: null })}
 `,
 };

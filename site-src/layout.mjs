@@ -71,7 +71,7 @@ ${SITE.review ? '<div class="review-banner">Draft for review. Not live, and the 
   <div class="wrap">
     <a class="wordmark" href="/" aria-label="BuildFirst home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>BuildFirst</a>
     ${nav(path)}
-    <a class="button cta" href="/contact">Start a conversation</a>
+    <a class="button cta" href="${SITE.calendar}">Book a 30-minute conversation</a>
     <button class="menu-toggle" aria-controls="nav" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -122,7 +122,7 @@ export const quote = (q, big = false) => `
   <figcaption><b>${q.who}</b>${q.context || ''}</figcaption>
 </figure>`;
 
-export const ctaBand = ({ title = 'Tell us what you’re working on.', text = 'A first conversation is thirty minutes and costs nothing. We’ll tell you honestly whether we can help, and what we’d try first.', primary = ['Book a conversation', SITE.calendar], secondary = ['Email instead', `mailto:${SITE.email}`] } = {}) => `
+export const ctaBand = ({ title = 'Tell us what you’re working on.', text = 'A first conversation is thirty minutes and costs nothing. We’ll tell you honestly whether we can help, and what we’d try first.', primary = ['Book a 30-minute conversation', SITE.calendar], secondary = ['Email instead', `mailto:${SITE.email}`] } = {}) => `
 <section class="cta-band">
   <div class="wrap">
     <h2>${title}</h2>
