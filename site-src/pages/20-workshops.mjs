@@ -12,7 +12,7 @@ export default {
     <h1>Get your leadership team building together.</h1>
     <p class="dek">One hands-on day. Everyone builds, nobody watches. Your team leaves with working tools, a shared language and three or four experiments to take back.</p>
     <div class="actions">
-      <a class="button" href="${SITE.calendar}">Talk about a workshop <span class="arrow">→</span></a>
+      <a class="button" href="${SITE.calendar}">Book a 30-minute conversation <span class="arrow">→</span></a>
       <a class="textlink" href="/sprints">Need prototypes instead? See sprints</a>
     </div>
   </div>
@@ -53,8 +53,8 @@ export default {
       <p class="lede">Before the day, we talk to the sponsor and build every exercise ourselves inside your constraints, so nothing breaks on the day because of a tool you’re not allowed to use.</p>
     </div>
     <div class="steps">
-      <div class="stepline"><div><div class="n">1</div><div class="dur">Morning</div></div><div><h3>The art of the possible.</h3><p>Everyone builds something personal and low-stakes first, so people can play without feeling exposed in front of each other. By the break, the room has stopped being an audience.</p></div></div>
-      <div class="stepline"><div><div class="n">2</div><div class="dur">Midday</div></div><div><h3>Grounding.</h3><p>Where AI earns its place, what’s real and what’s hype, and what governance you actually need. This is where the organisational questions surface, including the ones people don’t usually say out loud.</p></div></div>
+      <div class="stepline"><div><div class="n">1</div><div class="dur">Morning</div></div><div><h3>Build something for yourself.</h3><p>Everyone builds something personal and low-stakes first, so people can play without feeling exposed in front of each other. By the break, the room has stopped being an audience.</p></div></div>
+      <div class="stepline"><div><div class="n">2</div><div class="dur">Midday</div></div><div><h3>What’s real, and what to govern.</h3><p>Where AI earns its place, what’s real and what’s hype, and what governance you actually need. This is where the organisational questions surface, including the ones people don’t usually say out loud.</p></div></div>
       <div class="stepline"><div><div class="n">3</div><div class="dur">Afternoon</div></div><div><h3>A prototype for the work.</h3><p>Each person picks something they would happily hand off, and builds a first version of it. The team ends the day by agreeing three or four experiments to take back.</p></div></div>
     </div>
   </div>
