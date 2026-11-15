@@ -23,8 +23,8 @@ export default {
     </div>
     <div class="cases">
       <div class="case" data-c="1"><div class="label">Technology executive · Financial services</div><h3>From reading about it to building with it.</h3><p>A senior technology leader built a personal decision tool in the first session, and went on to lead their own team’s tooling decisions from experience.</p></div>
-      <div class="case" data-c="1"><div class="label">Commercial banking executive</div><h3>A working tool in the first session.</h3><p>In session one, a commercial banking leader built a tool to think a real problem through, and saved time doing it. By the third session, it felt like a think tank.</p></div>
-      <div class="case" data-c="1"><div class="label">Chief executive · Insurance brokerage</div><h3>Coaching that turned into a dashboard.</h3><p>What started as sessions on the chief executive’s own work became a growth dashboard, a prospecting prototype and a two-lane plan for AI across the business.</p></div>
+      <div class="case" data-c="1"><div class="label">Commercial banking executive</div><h3>A working tool in the first session.</h3><p>In session one, a commercial banking leader built a tool to think a real problem through, and saved 25 minutes on the first try. By the third session, it felt like a think tank.</p></div>
+      <div class="case" data-c="1"><div class="label">Chief executive · Insurance brokerage</div><h3>Coaching that turned into a dashboard.</h3><p>What started as sessions on the chief executive’s own work became a growth dashboard, a prospecting prototype and a plan for where AI should help next.</p></div>
     </div>
     <div class="quotes" style="margin-top:40px">
       ${quote(Q.realLifePrompt)}
@@ -55,8 +55,8 @@ export default {
     </div>
     <div class="cases">
       <div class="case" data-c="4"><div class="label">Healthcare technology</div><h3>A procurement watch for sellers.</h3><p>An agent reads state procurement sources twice a day and tells sellers what changed and why it matters. It went through enterprise security, legal and insurance review, now runs every month and is spreading across product lines.</p></div>
-      <div class="case" data-c="4"><div class="label">Special education</div><h3>From paper program books to a living record.</h3><p>Session data captured once. A copilot that runs the school’s own decision protocol and suggests the next step, never makes it. Build or buy weighed honestly, and privacy settled before any real data.</p></div>
-      <div class="case" data-c="4"><div class="label">Insurance · Investor relations</div><h3>A creative engine for an annual event.</h3><p>A design system, a prompt library and an automated email pipeline into the company’s own systems, with two human review points before anything goes out.</p></div>
+      <div class="case" data-c="4"><div class="label">Special education</div><h3>From paper program books to one up-to-date record.</h3><p>Teachers record each session once. An AI assistant applies the school’s own rules for the next step and suggests it, but never makes the call. Build or buy weighed honestly, and privacy settled before any real data.</p></div>
+      <div class="case" data-c="4"><div class="label">Insurance · Investor relations</div><h3>A creative engine for an annual event.</h3><p>Brand templates, ready-made prompts and an automatic route from first draft to sent email, inside the company’s own systems. A person checks it twice before anything goes out.</p></div>
     </div>
     <div class="quotes two" style="margin-top:40px">
       ${quote(Q.battleCard)}
@@ -70,7 +70,7 @@ export default {
     <div class="two-col">
       <div><span class="num">04</span><h2>And our own.</h2></div>
       <div class="prose">
-        <p class="lede">We run our own work on what we build. A personal operating system of small agents handles the admin of a busy life: auditable, with the least access it needs, and a person in the loop.</p>
+        <p class="lede">We run our own work on what we build. Small AI agents handle the admin of a busy life. Each keeps a record of what it did, gets only the access it needs, and a person checks its work.</p>
         <p>We write about what works and what breaks in <a href="/writing">The AI Cookbook</a>.</p>
       </div>
     </div>

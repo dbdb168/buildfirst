@@ -3,17 +3,17 @@ import { Q } from '../quotes.mjs';
 
 export default {
   path: '/coaching',
-  title: 'Coaching: BuildFirst Sherpa',
+  title: 'Coaching',
   description: 'One-to-one AI coaching for senior leaders. Eight sessions over eight to ten weeks. You build something real in the first session and leave fluent.',
   body: `
 <section class="hero compact">
   <div class="wrap">
-    <div class="eyebrow">Coaching · BuildFirst Sherpa</div>
-    <h1>From conversant to fluent, one build at a time.</h1>
+    <div class="eyebrow">Coaching · One to one</div>
+    <h1>From talking about AI to using it, one build at a time.</h1>
     <p class="dek">One-to-one coaching for leaders who learn by doing. You build something real in the first session, and by the end the judgement is yours.</p>
     <div class="actions">
-      <a class="button" href="${SITE.calendar}">Book a conversation <span class="arrow">→</span></a>
-      <a class="textlink" href="/assessment">Take the assessment first</a>
+      <a class="button" href="${SITE.calendar}">Book a 30-minute conversation <span class="arrow">→</span></a>
+      <a class="textlink" href="/assessment">Take the ten-minute assessment</a>
     </div>
   </div>
   ${stairs('small', 1)}
@@ -95,7 +95,7 @@ export default {
       <div><span class="num">04</span><h2>What you leave with.</h2></div>
       <div class="prose">
         <ul class="squares">
-          <li><strong>Your own fluency.</strong> The four skills that matter more than prompting: delegation, description, discernment and diligence.</li>
+          <li><strong>Your own fluency.</strong> Knowing what to hand to AI, how to ask for it, how to judge what comes back, and how to use it responsibly.</li>
           <li><strong>Three or four tools you built.</strong> Small, working, yours. They become the evidence for bigger decisions.</li>
           <li><strong>Sharper calls.</strong> On tools, vendors, governance and where to invest, made from your own experience.</li>
           <li><strong>A habit that lasts.</strong> Ten minutes a day, and the confidence to ask the machine how to fix it when something doesn’t work.</li>
@@ -131,7 +131,6 @@ export default {
         <details><summary>Which tools will we use?</summary><p>Whatever fits you. We work in Claude most days, but we’re tool-agnostic. If your company runs on Microsoft Copilot, we start there.</p></details>
         <details><summary>What about our data?</summary><p>We start on made-up data, so nothing confidential is at risk while you learn. When real work comes in, we sign an NDA and stay inside the tools and rules your company already has.</p></details>
         <details><summary>Can two of us do it together?</summary><p>Yes. Two leaders from the same firm can share the programme, which helps when you’ll be making the decisions together.</p></details>
-        <details><summary>What happens after?</summary><p>It sticks, because you built it yourself. Some clients stop there. Others bring their team into a <a href="/workshops">workshop</a>, or turn a tool they built into a <a href="/builds">system the whole business uses</a>.</p></details>
       </div>
     </div>
   </div>

@@ -21,7 +21,7 @@ export default {
     <h1>You’ve got a business to run. Now you’ve got to work out AI, too.</h1>
     <p class="dek">Reading about AI was never going to show you what it can do. To lead your team through this, you have to have used it yourself. That’s what we help you do.</p>
     <div class="actions">
-      <a class="button" href="/contact">Start a conversation <span class="arrow">→</span></a>
+      <a class="button" href="${SITE.calendar}">Book a 30-minute conversation <span class="arrow">→</span></a>
       <a class="textlink" href="/assessment">Take the ten-minute assessment</a>
     </div>
   </div>
@@ -60,7 +60,7 @@ export default {
 <section class="section">
   <div class="wrap">
     <div class="split">
-      <div><span class="num">03</span><h2>In their words.</h2><p class="lede" style="margin-top:18px">Quiet things clients have said along the way. We keep names out of it; most of this work happens under NDA.</p><p style="margin-top:24px"><a class="textlink" href="/work">See the work</a></p></div>
+      <div><span class="num">03</span><h2>In their words.</h2><p class="lede" style="margin-top:18px">Things clients have said. No names: most of this work is under NDA.</p><p style="margin-top:24px"><a class="textlink" href="/work">See the work</a></p></div>
       <div class="stack-gap">
         ${quote(Q.realLifePrompt, true)}
         ${quote(Q.thinkTank)}
@@ -76,11 +76,6 @@ export default {
       <div><span class="num">04</span><h2>Build first. Learn fast. Repeat.</h2></div>
       <p class="lede">The name is the method. We get something real into your hands early, learn from the people who use it, and go round again. Nothing gets bigger until it has earned it.</p>
     </div>
-    <div class="loop">
-      <div><div class="w">Build.</div><p>Start with a real problem and make a first version in hours, on made-up data, so nothing is at risk.</p></div>
-      <div><div class="w">Learn.</div><p>Put it in front of the people who would use it. What they do with it tells you more than any plan.</p></div>
-      <div><div class="w">Repeat.</div><p>Refine, then decide together: keep building, buy something instead, or stop and rethink.</p></div>
-    </div>
     <p style="margin-top:40px"><a class="textlink" href="/how-we-work">How we work</a></p>
   </div>
 </section>
@@ -95,7 +90,7 @@ export default {
       <div class="case" data-c="4"><div class="label">Build · Healthcare technology</div><h3>A procurement watch for a sales team.</h3><p>An agent that reads state procurement sources twice a day and tells sellers what changed and why it matters. It passed the company’s security, legal and insurance reviews and now runs every month.</p></div>
       <div class="case" data-c="1"><div class="label">Coaching · Regional banking</div><h3>A working tool in the first session.</h3><p>Senior bankers who had read plenty about AI built their own tools in session one. One took what they built straight into a board conversation.</p></div>
       <div class="case" data-c="2"><div class="label">Workshop · Fortune 500 bank</div><h3>An engineering leadership team, building together.</h3><p>A day in three acts. Everyone built something personal first, then something for the work, inside the bank’s own tools and rules.</p></div>
-      <div class="case" data-c="3"><div class="label">Build · Special education</div><h3>From paper program books to a living record.</h3><p>Teachers capture sessions once. A copilot runs the school’s own decision protocol and suggests the next step. A person always makes the call.</p></div>
+      <div class="case" data-c="3"><div class="label">Build · Special education</div><h3>From paper program books to one up-to-date record.</h3><p>Teachers record each session once. An AI assistant applies the school’s own rules for the next step and suggests it. A person always makes the call.</p></div>
     </div>
     <p style="margin-top:36px"><a class="textlink" href="/work">More about the work</a></p>
   </div>

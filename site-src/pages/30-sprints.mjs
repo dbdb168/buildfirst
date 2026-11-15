@@ -12,7 +12,7 @@ export default {
     <h1>Two days to a working prototype.</h1>
     <p class="dek">Your people bring three real problems. Two days later they have three working prototypes they built themselves, and a clear read on which one deserves a pilot.</p>
     <div class="actions">
-      <a class="button" href="${SITE.calendar}">Talk about a sprint <span class="arrow">→</span></a>
+      <a class="button" href="${SITE.calendar}">Book a 30-minute conversation <span class="arrow">→</span></a>
       <a class="textlink" href="/builds">Already know what you need? See builds</a>
     </div>
   </div>
@@ -99,7 +99,7 @@ export default {
       <div class="prose">
         <ul class="squares">
           <li><strong>Three working prototypes</strong>, built by your people, on made-up data.</li>
-          <li><strong>A reusable practice environment</strong> shaped like your data, for the next round.</li>
+          <li><strong>A practice set of made-up data</strong>, shaped like yours, for the next round.</li>
           <li><strong>A clear read on what to pilot first</strong>, and a prioritised brief for your data team.</li>
           <li><strong>The barriers, named and ranked.</strong> The organisational ones usually matter more than the technical ones.</li>
         </ul>

@@ -17,7 +17,7 @@ export default {
 <section class="section">
   <div class="wrap">
     <div class="contact-grid">
-      <a class="contact-card" data-c="1" href="${SITE.calendar}"><div class="label">Thirty minutes, no cost</div><h3>Book a conversation.</h3><p>Tell us what you’re trying to do with AI. We’ll tell you honestly whether we can help, and what we’d try first.</p><span class="go">Pick a time <span>→</span></span></a>
+      <a class="contact-card" data-c="1" href="${SITE.calendar}"><div class="label">No cost</div><h3>Book a 30-minute conversation.</h3><p>Tell us what you’re trying to do with AI. We’ll tell you honestly whether we can help, and what we’d try first.</p><span class="go">Pick a time <span>→</span></span></a>
       <a class="contact-card" data-c="4" href="/build-intake"><div class="label">A few minutes</div><h3>Tell us what you want to build.</h3><p>Describe the problem. We’ll bring a working prototype to the first conversation, not a proposal.</p><span class="go">Describe it <span>→</span></span></a>
       <a class="contact-card" data-c="2" href="/assessment"><div class="label">Ten minutes</div><h3>Take the assessment.</h3><p>See where you are with AI today and what would help most next. A good start before a first call.</p><span class="go">Start the assessment <span>→</span></span></a>
     </div>
