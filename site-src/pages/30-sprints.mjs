@@ -1,5 +1,4 @@
-import { SITE, stairs, quote, ctaBand } from '../layout.mjs';
-import { Q } from '../quotes.mjs';
+import { SITE, stairs, ctaBand } from '../layout.mjs';
 
 export default {
   path: '/sprints',
@@ -13,7 +12,7 @@ export default {
     <p class="dek">Your people bring three real problems. Two days later they have three working prototypes they built themselves, and a clear read on which one deserves a pilot.</p>
     <div class="actions">
       <a class="button" href="${SITE.calendar}">Book a 30-minute conversation <span class="arrow">→</span></a>
-      <a class="textlink" href="/builds">Already know what you need? See builds</a>
+      <a class="textlink" href="/builds">Already know what you need? See what we build</a>
     </div>
   </div>
   ${stairs('small', 3)}
@@ -86,7 +85,6 @@ export default {
           <li><strong>The second</strong> goes after the next problems, with your team taking more of the lead.</li>
           <li><strong>The third</strong> includes training one of your people to facilitate.</li>
         </ul>
-        ${quote(Q.notTooSoon)}
       </div>
     </div>
   </div>

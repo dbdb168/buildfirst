@@ -166,7 +166,7 @@ export default {
       <p>You’ve done your part. We’ll read everything you shared and start building. When we meet, we’ll have a prototype for you to react to, not a pitch deck.</p>
       <div class="btn-row">
         <a class="button" href="https://calendar.app.google/rkTTjqxVoTrrZAki8" target="_blank" rel="noopener">Book thirty minutes <span class="arrow">→</span></a>
-        <a class="button ghost" href="/builds">Back to Builds</a>
+        <a class="button ghost" href="/builds">Back to What we build</a>
       </div>
     </div>
   </div>

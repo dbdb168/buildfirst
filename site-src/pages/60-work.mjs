@@ -1,5 +1,4 @@
-import { stairs, quote, ctaBand } from '../layout.mjs';
-import { Q } from '../quotes.mjs';
+import { stairs, ctaBand, clientsBlock } from '../layout.mjs';
 
 export default {
   path: '/work',
@@ -23,13 +22,8 @@ export default {
     </div>
     <div class="cases">
       <div class="case" data-c="1"><div class="label">Technology executive · Financial services</div><h3>From reading about it to building with it.</h3><p>A senior technology leader built a personal decision tool in the first session, and went on to lead their own team’s tooling decisions from experience.</p></div>
-      <div class="case" data-c="1"><div class="label">Commercial banking executive</div><h3>A working tool in the first session.</h3><p>In session one, a commercial banking leader built a tool to think a real problem through, and saved 25 minutes on the first try. By the third session, it felt like a think tank.</p></div>
+      <div class="case" data-c="1"><div class="label">Commercial banking executive</div><h3>A working tool in the first session.</h3><p>In session one, a commercial banking leader built a tool to think a real problem through, and saved 25 minutes on the first try.</p></div>
       <div class="case" data-c="1"><div class="label">Chief executive · Insurance brokerage</div><h3>Coaching that turned into a dashboard.</h3><p>What started as sessions on the chief executive’s own work became a growth dashboard, a prospecting prototype and a plan for where AI should help next.</p></div>
-    </div>
-    <div class="quotes" style="margin-top:40px">
-      ${quote(Q.realLifePrompt)}
-      ${quote(Q.thinkTank)}
-      ${quote(Q.spotOn)}
     </div>
   </div>
 </section>
@@ -40,9 +34,8 @@ export default {
       <div><span class="num">02</span><h2>Workshops and working sessions.</h2></div>
       <p class="lede">Teams building together, inside their own tools and rules.</p>
     </div>
-    <div class="split">
+    <div class="cases">
       <div class="case" data-c="2"><div class="label">Workshop · Fortune 500 bank</div><h3>An engineering leadership team, building together.</h3><p>Thirteen senior engineering leaders, one day, three acts. Everyone built something personal first, then something for the work, inside the bank’s own AI tools and rules.</p></div>
-      <div class="stack-gap">${quote(Q.makingUsThink)}</div>
     </div>
   </div>
 </section>
@@ -58,10 +51,6 @@ export default {
       <div class="case" data-c="4"><div class="label">Special education</div><h3>From paper program books to one up-to-date record.</h3><p>Teachers record each session once. An AI assistant applies the school’s own rules for the next step and suggests it, but never makes the call. Build or buy weighed honestly, and privacy settled before any real data.</p></div>
       <div class="case" data-c="4"><div class="label">Insurance · Investor relations</div><h3>A creative engine for an annual event.</h3><p>Brand templates, ready-made prompts and an automatic route from first draft to sent email, inside the company’s own systems. A person checks it twice before anything goes out.</p></div>
     </div>
-    <div class="quotes two" style="margin-top:40px">
-      ${quote(Q.battleCard)}
-      ${quote(Q.soClose)}
-    </div>
   </div>
 </section>
 
@@ -76,6 +65,8 @@ export default {
     </div>
   </div>
 </section>
+
+${clientsBlock('05', 'Since the beginning of 2026, we’ve worked with over 10 clients across seven industries, from global enterprises to solopreneurs. One of them has probably faced a challenge your shape. Ask to speak to them, and they’ll tell you what working with us is like.')}
 
 ${ctaBand()}
 `,
