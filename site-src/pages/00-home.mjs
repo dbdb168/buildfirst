@@ -94,19 +94,10 @@ export default {
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <div><span class="num">03</span><h2>How we build it.</h2></div>
-    </div>
-    ${howWeBuild}
-  </div>
-</section>
-
 <section class="section cover">
   <div class="wrap">
     <div class="two-col">
-      <div><span class="num">04</span><h2>After launch.</h2></div>
+      <div><span class="num">03</span><h2>After launch.</h2></div>
       <div class="prose">
         <p class="lede">Once a build is live, you choose how much to hand to us: run it yourself with our code and documentation, have us maintain it, or have us manage it end to end. Software made for how you work, without a bloated SaaS bill or an outsourcing contract that keeps growing.</p>
         <p><a class="textlink" href="/looking-after">How we look after what we build</a></p>
@@ -115,7 +106,7 @@ export default {
   </div>
 </section>
 
-${clientsBlock('05')}
+${clientsBlock('04')}
 
 ${ctaBand({ title: 'Tell us what you want to build.', text: 'Thirty minutes, no cost. We’ll tell you whether we can help and what we’d build first.', secondary: ['Describe what you want to build', '/build-intake'] })}
 `,
