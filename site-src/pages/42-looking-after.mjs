@@ -8,7 +8,7 @@ export default {
 <section class="hero compact">
   <div class="wrap">
     <div class="eyebrow">How we look after what we build</div>
-    <h1>More of our clients ask us to run what we build for them.</h1>
+    <h1>Many of our clients ask us to run what we build for them.</h1>
     <p class="dek">We build agents and software for our clients. More and more, they ask us to run and maintain what we’ve built for them once it’s live.</p>
     <div class="actions">
       <a class="button" href="${SITE.calendar}">Book a 30-minute conversation <span class="arrow">→</span></a>
