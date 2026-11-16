@@ -1,5 +1,4 @@
-import { SITE, stairs, quote, ctaBand } from '../layout.mjs';
-import { Q } from '../quotes.mjs';
+import { SITE, stairs, ctaBand } from '../layout.mjs';
 
 export default {
   path: '/workshops',
@@ -66,7 +65,6 @@ export default {
       <div><span class="num">03</span><h2>In practice.</h2></div>
       <div class="stack-gap">
         <div class="case" data-c="2"><div class="label">Workshop · Fortune 500 bank</div><h3>Thirteen engineering leaders, one day, everyone built.</h3><p>A senior engineering leadership team worked through all three acts inside the bank’s own AI tools and rules. Every exercise had been tested against those rules beforehand. The team left with working tools and a list of experiments, and a new conversation about how their work gets done.</p></div>
-        ${quote(Q.makingUsThink)}
       </div>
     </div>
   </div>

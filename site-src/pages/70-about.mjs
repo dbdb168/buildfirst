@@ -16,13 +16,12 @@ export default {
 
 <section class="section">
   <div class="wrap">
-    <div class="split">
-      <div class="portrait" role="img" aria-label="Portrait of David Beath (photo to come)"><span>Photo to come</span></div>
+    <div>
       <div class="prose">
         <p class="lede">Now I build AI tools every day, and I write down what I learn, breakage included, in The AI Cookbook.</p>
         <p>BuildFirst exists because of something I kept seeing. Capable leaders, told to run the business and work out AI at the same time, with nobody to show them how. They’d read everything. It still felt hollow, because reading never shows you what AI can do.</p>
         <p>You can’t get fluent by reading about it. You build, break it and go again. That’s what we do together.</p>
-        <p>I work in Claude most days, but I’m tool-agnostic, so we use whatever fits you best. I’m based in Richmond, Virginia, and I teach product innovation as an adjunct at Virginia Commonwealth University.</p>
+        <p>I’m tool-agnostic, so we use whatever fits you best. I’m based in Richmond, Virginia, and I teach product innovation as an adjunct at Virginia Commonwealth University.</p>
       </div>
     </div>
   </div>

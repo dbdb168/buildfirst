@@ -16,7 +16,7 @@ export const OFFERS = [
   { step: 1, slug: 'coaching', name: 'Coaching', who: 'For one leader, or two', line: 'Eight sessions, one to one. You build something real from the first.' },
   { step: 2, slug: 'workshops', name: 'Workshops', who: 'For a leadership team', line: 'One hands-on day. Everyone builds, nobody watches.' },
   { step: 3, slug: 'sprints', name: 'Sprints', who: 'For your real problems', line: 'Two days, three problems, working prototypes your people built.' },
-  { step: 4, slug: 'builds', name: 'Builds', who: 'For a system you run', line: 'Prototype first, then a pilot, then the real thing.' },
+  { step: 4, slug: 'builds', name: 'What we build', who: 'For a system you run', line: 'AI agents and software, built around how your business works.' },
 ];
 
 const swatch = ['', 'var(--terracotta)', 'var(--ochre)', 'var(--sage)', 'var(--blue)'];
@@ -28,16 +28,16 @@ export function stairs(cls = '', step) {
 
 function nav(current) {
   const is = (p) => (current === p || current.startsWith(p + '/') ? ' aria-current="page"' : '');
-  const offerLinks = OFFERS.map(
+  const learnLinks = OFFERS.filter((o) => o.slug !== 'builds').map(
     (o) => `<a href="/${o.slug}"${is('/' + o.slug)}><i class="sw" style="background:${swatch[o.step]}"></i><span><span class="t">${o.name}</span><span class="d">${o.line}</span></span></a>`
   ).join('');
   return `
 <nav class="nav" id="nav" aria-label="Main">
-  <div class="has-menu"><a href="/#offers"${OFFERS.some((o) => current === '/' + o.slug) ? ' aria-current="page"' : ''}>What we do</a><div class="menu">${offerLinks}</div></div>
+  <a href="/builds"${is('/builds')}>What we build</a>
+  <div class="has-menu"><a href="/coaching"${['/coaching', '/workshops', '/sprints'].includes(current) ? ' aria-current="page"' : ''}>Coaching and workshops</a><div class="menu">${learnLinks}</div></div>
   <a href="/how-we-work"${is('/how-we-work')}>How we work</a>
   <a href="/work"${is('/work')}>Work</a>
   <a href="/about"${is('/about')}>About</a>
-  <a href="/writing"${is('/writing')}>Writing</a>
 </nav>`;
 }
 
@@ -82,11 +82,11 @@ ${body}
   <div class="wrap">
     <div>
       <a class="wordmark" href="/"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>BuildFirst</a>
-      <p>Hands-on AI for leaders and the businesses they run. Build first, learn fast, repeat. Based in Richmond, Virginia.</p>
+      <p>AI agents and software for banks, insurers, healthcare and schools. Richmond, Virginia.</p>
     </div>
     <div>
       <h4>What we do</h4>
-      <ul>${OFFERS.map((o) => `<li><a href="/${o.slug}">${o.name}</a></li>`).join('')}</ul>
+      <ul><li><a href="/builds">What we build</a></li><li><a href="/looking-after">How we look after what we build</a></li>${OFFERS.filter((o) => o.slug !== 'builds').map((o) => `<li><a href="/${o.slug}">${o.name}</a></li>`).join('')}</ul>
     </div>
     <div>
       <h4>BuildFirst</h4>
@@ -133,4 +133,18 @@ export const ctaBand = ({ title = 'Tell us what you’re working on.', text = 'A
     </div>
   </div>
   ${stairs('small')}
+</section>`;
+
+// "Our clients" block, shared by Home, Coaching and Work.
+export const clientsBlock = (num = '', text = 'We’ve worked with 10+ clients across seven industries, from global enterprises to solopreneurs. One of them has probably faced a challenge your shape. Ask to speak to them, and they’ll tell you what working with us is like.') => `
+<section class="section">
+  <div class="wrap">
+    <div class="two-col">
+      <div>${num ? `<span class="num">${num}</span>` : ''}<h2>Our clients.</h2></div>
+      <div class="prose">
+        <p class="lede">${text}</p>
+        <div class="actions"><a class="button" href="mailto:${SITE.email}?subject=${encodeURIComponent('I’d like to speak to a client')}">Ask to speak to a client <span class="arrow">→</span></a></div>
+      </div>
+    </div>
+  </div>
 </section>`;

@@ -1,59 +1,52 @@
-import { SITE, stairs, quote, ctaBand } from '../layout.mjs';
-import { Q } from '../quotes.mjs';
+import { SITE, stairs, ctaBand } from '../layout.mjs';
+import { buildSteps, howWeBuild } from './00-home.mjs';
 
 export default {
   path: '/builds',
-  title: 'Builds: prototype first, then prove it',
-  description: 'Custom AI systems built in steps. A prototype before you sign, then discovery, a pilot on real data and production, with a go or no-go at each step.',
+  title: 'What we build',
+  description: 'AI agents and software, built around how your business works. Built with the people who will use it, tested on real work, then launched.',
   body: `
 <section class="hero compact">
   <div class="wrap">
-    <div class="eyebrow">Builds · For a system you run</div>
-    <h1>You know what you need. We build it with you.</h1>
-    <p class="dek">A working system for a problem that costs you time or money today, built in steps. You see a prototype before you sign anything, and you decide at every step whether to keep going.</p>
+    <div class="eyebrow">What we build</div>
+    <h1>AI agents and software, built around how your business works.</h1>
+    <p class="dek">Agents that find leads and do the checking. Software that takes paper, spreadsheets and manual steps out of the work. Built with the people who will use it, tested on real work, then launched.</p>
     <div class="actions">
       <a class="button" href="/build-intake">Describe what you want to build <span class="arrow">→</span></a>
-      <a class="textlink" href="${SITE.calendar}">Or book a 30-minute conversation</a>
+      <a class="textlink" href="${SITE.calendar}">Book a 30-minute conversation</a>
     </div>
   </div>
   ${stairs('small', 4)}
 </section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="two-col">
-      <div><span class="num">01</span><h2>A prototype before you sign.</h2></div>
-      <div class="prose">
-        <p class="lede">Tell us what you need in a few minutes. We’ll come to the first conversation with a prototype. Not a proposal, not a slide.</p>
-        <p>It runs on made-up data, so nothing of yours is at risk. It won’t be finished, and it isn’t meant to be. It’s there so you can react to something real, and so we can both see whether we understand the problem.</p>
-        <div class="contrast">
-          <div class="today"><div class="k">The usual way</div><p>Weeks of discovery and a long proposal before anyone sees a thing. By the time it works, the problem has moved.</p></div>
-          <div class="tomorrow"><div class="k">Our way</div><p>Something working on day one. Every step after that earns the next, and each one is priced when you get to it.</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="section tint">
   <div class="wrap">
     <div class="section-head">
-      <div><span class="num">02</span><h2>Four steps. A decision at each.</h2></div>
-      <p class="lede">Build first, learn from the people who use it, then go round again. Nothing gets bigger until it has earned it.</p>
+      <div><span class="num">01</span><h2>How a build works.</h2></div>
+      <p class="lede">Each step is priced when you reach it. You can stop at any step.</p>
     </div>
-    <div class="steps">
-      <div class="stepline"><div><div class="n">1</div><div class="dur">Two to six weeks</div></div><div><h3>Discovery to prototype.</h3><p>We work alongside the people who will use it, on made-up data. We look honestly at what’s already on the market. You get a working prototype, a written build-or-buy view and a plan for a pilot.</p></div></div>
-      <div class="stepline"><div><div class="n">2</div><div class="dur">A few weeks, live</div></div><div><h3>A pilot on real data.</h3><p>The privacy, security and regulatory work comes first, before any real data is touched. Then a small group uses it on real work, and we measure what changes against how things were before.</p></div></div>
-      <div class="stepline"><div><div class="n">3</div><div class="dur">Priced at the pilot’s end</div></div><div><h3>Production.</h3><p>Built and launched for everyone who needs it, priced from what the pilot showed. It can run in your own environment, or we can host and run it for you.</p></div></div>
-      <div class="stepline"><div><div class="n">4</div><div class="dur">Monthly</div></div><div><h3>Run and improve.</h3><p>We keep it working, watch how it’s used and make it better. Building costs the most, improving costs less, and looking after it costs less again.</p></div></div>
-    </div>
+    ${buildSteps(
+      'Built on made-up data. You get something working to react to.',
+      'We work alongside the people who will use it. You get a working prototype, a written build-or-buy view and a plan for a pilot.',
+      'Privacy, security and regulatory work first. A small group uses it on real work. You get measured results against how things were.',
+      'Built and launched for everyone who needs it, in your environment or hosted by us.',
+    )}
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
     <div class="section-head">
-      <div><span class="num">03</span><h2>Every first step ends with a choice.</h2></div>
+      <div><span class="num">02</span><h2>How we build it.</h2></div>
+    </div>
+    ${howWeBuild}
+  </div>
+</section>
+
+<section class="section cover">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="num">03</span><h2>Every step ends with a choice.</h2></div>
       <p class="lede">Whatever you choose, the groundwork is yours to keep.</p>
     </div>
     <div class="decide">
@@ -64,36 +57,16 @@ export default {
   </div>
 </section>
 
-<section class="section cover">
-  <div class="wrap">
-    <div class="section-head">
-      <div><span class="num">04</span><h2>Four promises in every build.</h2></div>
-      <p class="lede">Most of our builds are in places where privacy, review and a human making the call are not optional. So these come as standard.</p>
-    </div>
-    <div class="principles">
-      <div class="principle"><h3>Your data stays in your hands.</h3><p>It lives where you decide, under the agreements you need, and the privacy work is done before anything real goes in.</p></div>
-      <div class="principle"><h3>Your people are the editors.</h3><p>The system suggests. A person decides. Nothing important happens without someone checking it.</p></div>
-      <div class="principle"><h3>Every answer shows its source.</h3><p>If the system says something, you can see where it came from, down to the page.</p></div>
-      <div class="principle"><h3>We decide together.</h3><p>At every step, with the evidence on the table. You can stop whenever the evidence says stop.</p></div>
-    </div>
-  </div>
-</section>
-
 <section class="section">
   <div class="wrap">
     <div class="section-head">
-      <div><span class="num">05</span><h2>Some of what we’ve built.</h2></div>
-      <p class="lede">Most of it under NDA, so no names. All of it real.</p>
+      <div><span class="num">04</span><h2>What we’ve built.</h2></div>
     </div>
     <div class="cases">
-      <div class="case" data-c="4"><div class="label">Healthcare technology</div><h3>A procurement watch for sellers.</h3><p>An agent reads state procurement sources twice a day and tells sellers what changed and why it matters. It passed the company’s security, legal and insurance reviews, and now runs every month.</p></div>
-      <div class="case" data-c="3"><div class="label">Special education</div><h3>From paper program books to one up-to-date record.</h3><p>Teachers record each session once. An AI assistant applies the school’s own rules for the next step and suggests it. A person always makes the call.</p></div>
-      <div class="case" data-c="2"><div class="label">Insurance · Investor relations</div><h3>A creative engine for an annual event.</h3><p>Brand templates, ready-made prompts and an automatic route from first draft to sent email. A person checks it twice before anything goes out.</p></div>
-      <div class="case" data-c="1"><div class="label">Insurance brokerage</div><h3>A growth dashboard that started in coaching.</h3><p>A chief executive built the first version in coaching sessions. It became a dashboard for the business and a prospecting prototype, and then a plan for where AI should help next.</p></div>
-    </div>
-    <div class="quotes two" style="margin-top:40px">
-      ${quote(Q.battleCard)}
-      ${quote(Q.soClose)}
+      <div class="case" data-c="4"><div class="label">Fortune 500 healthcare technology</div><h3>Sales leads, twice a day.</h3><p>An agent checks about 50 state procurement sources and delivers leads to sellers, with what changed and why it matters. Passed the company’s security, legal and insurance reviews. In production.</p></div>
+      <div class="case" data-c="2"><div class="label">Fortune 500 insurer</div><h3>Event emails without the production grind.</h3><p>One draft becomes a finished, on-brand email inside the company’s CRM, with two human checks before anything goes out.</p></div>
+      <div class="case" data-c="3"><div class="label">Special education school</div><h3>Less paper, problems spotted the same day.</h3><p>Paper program books become one live record that applies the school’s own rules and suggests the next step. A person decides. In build now.</p></div>
+      <div class="case" data-c="1"><div class="label">Insurance brokerage</div><h3>Growth in one view.</h3><p>A dashboard built with the chief executive in coaching, then a prototype for finding new prospects.</p></div>
     </div>
   </div>
 </section>
@@ -101,13 +74,10 @@ export default {
 <section class="section tint">
   <div class="wrap">
     <div class="two-col">
-      <div><span class="num">06</span><h2>After the build.</h2></div>
+      <div><span class="num">05</span><h2>After launch.</h2></div>
       <div class="prose">
-        <p class="lede">Some clients want us to keep running what we built. Some want a senior hand in the room as the work grows.</p>
-        <ul class="squares">
-          <li><strong>Run and improve.</strong> A fixed monthly arrangement to operate, maintain and enhance the system, with running costs passed through at cost.</li>
-          <li><strong>A senior hand on a regular rhythm.</strong> Time with your leadership team on what to build next, what to buy and what to stop, for as long as it’s useful.</li>
-        </ul>
+        <p class="lede">Once a build is live, you choose how much to hand to us: run it yourself with our code and documentation, have us maintain it, or have us manage it end to end.</p>
+        <p><a class="textlink" href="/looking-after">How we look after what we build</a></p>
       </div>
     </div>
   </div>
@@ -116,15 +86,14 @@ export default {
 <section class="section">
   <div class="wrap">
     <div class="two-col">
-      <div><span class="num">07</span><h2>How a proposal arrives.</h2></div>
+      <div><span class="num">06</span><h2>How a proposal arrives.</h2></div>
       <div class="prose">
         <p>Short, and about you. A few pages that start with what you told us and end with a small first step, a technical overview for your IT and security teams, and a short narrated video you can pass around. We send it ourselves, with a note.</p>
-        <div class="callout"><p>Not sure a build is the right place to start? Many builds begin as something a leader made in <a href="/coaching">coaching</a>, or one of three prototypes from a <a href="/sprints">sprint</a>.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-${ctaBand({ title: 'Tell us what you want to build.', text: 'A few minutes describing the problem. We’ll bring a prototype to the first conversation.', primary: ['Describe what you want to build', '/build-intake'], secondary: ['Or book a 30-minute conversation', SITE.calendar] })}
+${ctaBand({ title: 'Tell us what you want to build.', text: 'A few minutes describing the problem is enough to start.', primary: ['Describe what you want to build', '/build-intake'], secondary: ['Book a 30-minute conversation', SITE.calendar] })}
 `,
 };
