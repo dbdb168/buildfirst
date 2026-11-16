@@ -136,7 +136,7 @@ export const ctaBand = ({ title = 'Tell us what you’re working on.', text = 'A
 </section>`;
 
 // "Our clients" block, shared by Home, Coaching and Work.
-export const clientsBlock = (num = '', text = 'We’ve worked with 10+ clients across seven industries, from global enterprises to solopreneurs. One of them has probably faced a challenge your shape. Ask to speak to them, and they’ll tell you what working with us is like.') => `
+export const clientsBlock = (num = '', text = 'Since the beginning of 2026, we’ve worked with more than 10 clients across seven industries, from global enterprises to solopreneurs. One of them has probably faced a challenge your shape. Ask to speak to them, and they’ll tell you what working with us is like.') => `
 <section class="section">
   <div class="wrap">
     <div class="two-col">
