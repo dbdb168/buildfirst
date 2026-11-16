@@ -66,7 +66,7 @@ export default {
   </div>
 </section>
 
-${clientsBlock('05', 'Since the beginning of 2026, we’ve worked with over 10 clients across seven industries, from global enterprises to solopreneurs. One of them has probably faced a challenge your shape. Ask to speak to them, and they’ll tell you what working with us is like.')}
+${clientsBlock('05')}
 
 ${ctaBand()}
 `,
